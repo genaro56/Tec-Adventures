@@ -24,18 +24,18 @@ import javax.swing.JPanel;
  * @author jesus
  */
 public class Game implements Runnable {
-    private BufferStrategy bs;      // to have several buffers when displaying
-    private Graphics g;             // to paint objects
-    private Display display;        // to display in the game
-    String title;                   // title of the window
-    private int width;              // width of the window
-    private int height;             // height of the window
-    private Thread thread;          // thread to create the game
-    private boolean running;        // to set the game
-    private Player player;          // to use a player
-    //private Enemy asteroid;         // to have an enemy   
+    private BufferStrategy bs;         // to have several buffers when displaying
+    private Graphics g;                // to paint objects
+    private Display display;           // to display in the game
+    String title;                      // title of the window
+    private int width;                 // width of the window
+    private int height;                // height of the window
+    private Thread thread;             // thread to create the game
+    private boolean running;           // to set the game
+    private Player player;             // to use a player
+    //private Enemy asteroid;          // to have an enemy   
     private Mapa map;                  //To move the map
-    private KeyManager keyManager;  // to manage the keyboard
+    private KeyManager keyManager;     // to manage the keyboard
     private MouseManager mouseManager; // to manage the mouse
     private int life;                  // to manage the lifes   
     
