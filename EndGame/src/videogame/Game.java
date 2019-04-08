@@ -34,7 +34,7 @@ public class Game implements Runnable {
     private boolean running;           // to set the game
     private Player player;             // to use a player
     //private Enemy asteroid;          // to have an enemy   
-    private Mapa map;                  //To move the map
+    private Mapa map;                  // to move the map
     private KeyManager keyManager;     // to manage the keyboard
     private MouseManager mouseManager; // to manage the mouse
     private int life;                  // to manage the lifes   
