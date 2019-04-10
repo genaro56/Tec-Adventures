@@ -27,7 +27,7 @@ public class Assets {
      */
     public static void init() {
         background = ImageLoader.loadImage("/images/Background.jpg");
-        player = ImageLoader.loadImage("/images/Prototipo_1.png");
+        player = ImageLoader.loadImage("/images/Prototipo_2.png");
         asteroid = ImageLoader.loadImage("/images/asteroid.png");
         colision = ImageLoader.loadImage("/images/colision.png");
         explotion = ImageLoader.loadImage("/images/Explosion.png");
