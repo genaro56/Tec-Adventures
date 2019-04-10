@@ -37,7 +37,12 @@ public class Game implements Runnable {
     private Mapa map;                  // to move the map
     private KeyManager keyManager;     // to manage the keyboard
     private MouseManager mouseManager; // to manage the mouse
-    private int life;                  // to manage the lifes   
+    private int life;                  // to manage the lifes 
+    //Tenemos que hacer un areglo 
+    //o lista encadenada de edificios 
+    //para crear todos lo que vamosa usar
+    //private likedList<Edificio> edificios;
+    private Edificio rectoria;
     
     
     /**
@@ -81,14 +86,28 @@ public class Game implements Runnable {
     private void init() {
          display = new Display(title, getWidth(), getHeight());  
          Assets.init();
-         player = new Player(0, 350, -20, 100, 100, this);
-         //asteroid = new Enemy(getWidth()-100, 0, 100, 100, this);
-         map = new Mapa(0, -977, -39, getHeight()*4, getWidth()*4, this);
+         // Se crea el jugador
+         player = new Player(-10, 520, -20, 50, 50, this);         
+         // Se cra el mapa para que se pueda desplazar la vista
+         map = new Mapa(-50, -500, getHeight()*3, getWidth()*3, this);
+         // Aquí se van a crear todos los edificios dentro de la lista
+         /* Algo como esto (Podemos crear un achivo 
+            con todas las ubicaciones y tamaños y de ahí sacar
+            la información y guardarla en un arreglo
+         int iNum = (int)(Math.random()* 8 + 5);
+         for(int i = 0; i < iNum; i++){
+             int iPosX = (int) (Math.random() * (getWidth() - 100));
+             int iPosY = (int) (Math.random() * (getHeight() *0.5d - 100) - 1.5d * getHeight());
+             edifiios.add(new Edificio(iPosX, iPosY, vel, 100, 100, this));                          
+         }
+         */
+         //Esta es una creación individual
+         rectoria =  new Edificio(370, 350, 230, 140, this);
          display.getJframe().addKeyListener(keyManager);
-         display.getJframe().addMouseListener(mouseManager);
-         display.getJframe().addMouseMotionListener(mouseManager);
-         display.getCanvas().addMouseListener(mouseManager);
-         display.getCanvas().addMouseMotionListener(mouseManager);
+         //display.getJframe().addMouseListener(mouseManager);
+         //display.getJframe().addMouseMotionListener(mouseManager);
+         //display.getCanvas().addMouseListener(mouseManager);
+         //display.getCanvas().addMouseMotionListener(mouseManager);
     }
     
     @Override
@@ -113,6 +132,7 @@ public class Game implements Runnable {
             lastTime = now;
             
             // if delta is positive we tick the game
+            //Tenemos que modificar la forma en que termina el juego y es aquí
             if (delta >= 1) {
                 tick();
                 render();
@@ -135,6 +155,9 @@ public class Game implements Runnable {
     }
     private void tick() {
        keyManager.tick();
+       //Estos son las llamadas a los métodos para 
+       //guardar cargar y reiniciar
+       //Pero necesitamos arreglar los métodos
         /*if (getKeyManager().guardar) {
             try {
                 //Graba los valores en el archivo.
@@ -161,12 +184,15 @@ public class Game implements Runnable {
                 System.out.println("Error en " + ex.toString());
             }
         }*/
-
+        //Aquí se activa cada tick del juego cuando no está pausado
         if (!getKeyManager().pause) {
             move(getKeyManager());
         //player.tick();
         //map.tick();
         /*asteroid.tick();
+        //Aquí tenemos que modificar para que sean la intersecciones 
+        //con los edificios y que se active la opción de minijuego
+        
         if(asteroid.intersecta(player)){
             asteroid.setX(getWidth()-100);
             asteroid.setY(0);
@@ -178,16 +204,21 @@ public class Game implements Runnable {
             Assets.bomb.play();
             life--;
         }*/
+        // Esto podría funcionar solo si usamos enemigos
+        // y lo anterior se usaría para los enemigos
         if(life < 0){
             stop();
         }
         }
     }
+    
+    //Esto sirve para sincronizar los movimientos del mapa y los edificios 
+    //con el jugador
     private void move(KeyManager km) {
         if (km.down || km.left || km.up || km.right) {
             if (km.right && map.getX() <= getWidth() - map.getWidth()
                     || km.right && player.getX() <= getWidth()/4-50
-                    || km.left && map.getX() >= -39
+                    || km.left && map.getX() >= -50
                     || km.left && player.getX() >= getWidth()/4+50                                 
                     || km.up && map.getY() >= 0
                     || km.up && player.getY() >= getHeight()/2+50
@@ -198,10 +229,13 @@ public class Game implements Runnable {
 
             } else {
                 map.tick();
+                rectoria.tick();
             }
         }
     }
     
+    // Tenemos que definir todas la variables que vamos a guardar 
+    // en el archivo para poder arreglar las funciones
 /*    public void leeArchivo(String archivo) throws IOException {
 
         BufferedReader fileIn;
@@ -299,11 +333,19 @@ public class Game implements Runnable {
         {
             g = bs.getDrawGraphics();
             g.drawImage(Assets.background, 0, 0, width, height, null);                        
-            map.render(g);
+            map.render(g);            
             player.render(g);
+            rectoria.render(g);
             //asteroid.render(g);
             g.setColor(Color.yellow);
-            g.drawString("Vidas: "+ life +" "+player.getX()+" "+player.getY(), 5, 20);
+            g.drawString("Vidas: "+ life, 5, 20);
+            g.setColor(Color.red);
+            g.drawString("Player X: " + player.getX(), 5, 30);
+            g.drawString("Player y: " + player.getY(), 5, 40);
+            g.drawString("map X: " + map.getX(), 5, 50);
+            g.drawString("map y: " + map.getY(), 5, 60);
+            g.drawString("rectoria X: " + rectoria.getX(), 5, 70);
+            g.drawString("rectoria y: " + rectoria.getY(), 5, 80);
             if(life <= 0){
                 g.drawImage(Assets.end, (getWidth()/2)-450, (getHeight()/2)-150, 900, 300, null);                
             }

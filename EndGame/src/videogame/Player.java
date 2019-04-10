@@ -60,17 +60,6 @@ public class Player extends Item{
 
     @Override
     public void tick() {
-        // moving player depending on flags
-        if (game.getMouseManager().isIzquierdo()) {
-            int xm = game.getMouseManager().getX();
-            int ym = game.getMouseManager().getY();
-                    if(xm > getX() && xm < getX() + getWidth())
-                        if(ym > getY() && ym < getY() + getHeight()){
-                            setX(xm-50);
-                            setY(ym-50);                           
-                        }                                    
-            //game.getMouseManager().setIzquierdo(false);
-        }
         if (game.getKeyManager().up) {
            setY(getY() - 1);
         }
@@ -87,8 +76,8 @@ public class Player extends Item{
         if (getX() + getWidth() >= game.getWidth()) {
             setX(game.getWidth() - 100);
         }
-        else if (getX() <= -20) {
-            setX(-20);
+        else if (getX() <= -10) {
+            setX(-10);
         }
         if (getY() + getHeight() >= game.getHeight()) {
             setY(game.getHeight() - 100);
@@ -104,12 +93,8 @@ public class Player extends Item{
     
 
     @Override
-    public void render(Graphics g) {
-        if (colision > 0){
-            g.drawImage(Assets.colision, getX(), getY(), getWidth(), getHeight(), null);
-        }
-        else
-            g.drawImage(Assets.planet, getX(), getY(), getWidth(), getHeight(), null);        
+    public void render(Graphics g) {     
+        g.drawImage(Assets.player, getX(), getY(), getWidth(), getHeight(), null);        
     }
 }
 

@@ -16,7 +16,7 @@ public class FinalGame {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Game g = new Game("Juego", 800, 500);
+        Game g = new Game("Juego", 800, 800);
         g.start();
     }
     
