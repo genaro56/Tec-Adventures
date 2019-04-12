@@ -1,0 +1,27 @@
+posiciones:
+Mapa: -50 -500
+
+Rectoria: 370 350
+CETEC:
+Biblioteca:
+
+Aulas1:
+Aulas2: 400 600
+Aulas3:
+Aulas4:
+Aulas5(Biotecnología):
+Aulas6:
+Aulas7:
+CIAP:
+Arquitectura:
+
+
+Carreta:
+Centrales:
+Jubileo:
+TheFoodBox
+
+Domo:
+Gimnasio:
+Pesas:
+
