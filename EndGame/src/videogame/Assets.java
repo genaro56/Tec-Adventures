@@ -21,6 +21,10 @@ public class Assets {
     public static SoundClip bomb;           // to store the sound
     public static BufferedImage end;        // to store the end image    
     public static BufferedImage rectoria;        // to store the end image    
+    public static BufferedImage A2;
+    public static BufferedImage boton;        // to store the button image 
+    //vamos a poner un menu de pausa, no solo una imagen
+    public static BufferedImage pause;        // to store the pause image
 
     /**
      * initializing the images of the game
@@ -33,7 +37,10 @@ public class Assets {
         explotion = ImageLoader.loadImage("/images/Explosion.png");
         end = ImageLoader.loadImage("/images/GameOver.png");
         rectoria = ImageLoader.loadImage("/images/Rectoria.png");
+        A2 = ImageLoader.loadImage("/images/A-2.png");
         map = ImageLoader.loadImage("/images/map.jpg");
+        boton = ImageLoader.loadImage("/images/boton.png");
+        pause = ImageLoader.loadImage("/images/pause.png");
         bomb = new SoundClip("/audio/crash.wav");
     }
     

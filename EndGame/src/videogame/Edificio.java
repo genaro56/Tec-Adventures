@@ -17,13 +17,17 @@ public class Edificio extends Item{
     private int width;
     private int height;
     private Game game;
+    //private String name;
+    private int edN;
     private int colision;
     
-    public Edificio(int x, int y, int width, int height, Game game) {
+    public Edificio(int x, int y, int width, int height, Game game, /*String name*/ int edN) {
         super(x, y);
         this.width = width;
         this.height = height;
         this.game = game;
+        //this.name = name;
+        this.edN = edN;
         colision = 0;
     }
     public int getWidth() {
@@ -65,11 +69,20 @@ public class Edificio extends Item{
     public Rectangle getPerimetro(){
         return new Rectangle(getX(), getY(), getWidth(), getHeight());
     }
-    
+    public boolean intersecta(Player obj){        
+        return getPerimetro().intersects(obj.getPerimetro());
+    }
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(Assets.rectoria, getX(), getY(), getWidth(), getHeight(), null);        
+        switch (edN) {
+            case 1:
+                g.drawImage(Assets.rectoria, getX(), getY(), getWidth(), getHeight(), null);
+                break;
+            case 2:
+                g.drawImage(Assets.A2, getX(), getY(), getWidth(), getHeight(), null);
+                break;
+        }     
     }
 }
 
