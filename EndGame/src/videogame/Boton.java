@@ -16,7 +16,10 @@ public class Boton extends Item{
     private int height;
     private Game game;    
     private boolean isVisible;
-    private int miniGame;
+    private int edificioNo;
+    private MiniGame minigame;
+    private boolean clicked;
+    
         
     public Boton(int x, int y, int width, int height, Game game) {
         super(x, y);        
@@ -24,6 +27,7 @@ public class Boton extends Item{
         this.height = height;
         this.game = game;
         isVisible = false;
+        clicked = false;
     }
 
     public int getHeight() {
@@ -34,13 +38,14 @@ public class Boton extends Item{
         return width;
     }
 
-    public int getMiniGame() {
-        return miniGame;
+    public int getEdificioNo() {
+        return edificioNo;
     }
 
-    public void setMiniGame(int miniGame) {
-        this.miniGame = miniGame;
+    public void setEdificioNo(int edificioNo) {
+        this.edificioNo = edificioNo;
     }
+   
 
     public void setIsVisible(boolean isVisible) {
         this.isVisible = isVisible;
@@ -50,21 +55,32 @@ public class Boton extends Item{
     
     public void tick() {
         // moving player depending on flags
+        //clicked = !clicked;
         if (isVisible && game.getMouseManager().isIzquierdo()) {
+            //clicked = !clicked;
             int xm = game.getMouseManager().getX();
             int ym = game.getMouseManager().getY();
                     if(xm > getX() && xm < getX() + getWidth())
                         if(ym > getY() && ym < getY() + getHeight()){
-                            //game.miniGame[miniGame].start();                           
+                            //clicked = !clicked;
+                            //game.miniGame[miniGame].start(); 
+                            clicked = true;
+                            //minigame = new MiniGame(game, edificioNo);
+                            //minigame.run();
                         }                                    
-            //game.getMouseManager().setIzquierdo(false);
+            game.getMouseManager().setIzquierdo(false);
         }
     }
     
     
-    public void render(Graphics g) {     
-        if(isVisible)
-            g.drawImage(Assets.boton, getX(), getY(), getWidth(), getHeight(), null);          
+    public void render(Graphics g) {
+        if (isVisible) {
+            if (!clicked) {
+                g.drawImage(Assets.boton, getX(), getY(), getWidth(), getHeight(), null);
+            } else {
+                g.drawImage(Assets.botonC, getX(), getY(), getWidth(), getHeight(), null);
+            }
+        }
     }
     
 }

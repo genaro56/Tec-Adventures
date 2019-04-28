@@ -23,6 +23,7 @@ public class Assets {
     public static BufferedImage rectoria;        // to store the end image    
     public static BufferedImage A2;
     public static BufferedImage boton;        // to store the button image 
+    public static BufferedImage botonC;        // to store the button image
     //vamos a poner un menu de pausa, no solo una imagen
     public static BufferedImage pause;        // to store the pause image
 
@@ -40,6 +41,7 @@ public class Assets {
         A2 = ImageLoader.loadImage("/images/A-2.png");
         map = ImageLoader.loadImage("/images/map.jpg");
         boton = ImageLoader.loadImage("/images/boton.png");
+        botonC = ImageLoader.loadImage("/images/botonC.png");
         pause = ImageLoader.loadImage("/images/pause.png");
         bomb = new SoundClip("/audio/crash.wav");
     }

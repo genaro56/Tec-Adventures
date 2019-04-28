@@ -18,10 +18,10 @@ import javax.swing.JPanel;
  */
 public class MiniGame implements Runnable {
 
-    private BufferStrategy bs;         // to have several buffers when displaying
+    /*private BufferStrategy bs;         // to have several buffers when displaying
     private Graphics g;                // to paint objects
-    private Display display;           // to display in the game
-    String title;                      // title of the window
+    private Display display;           // to display in the game*/
+    private Game game;
     private int width;                 // width of the window
     private int height;                // height of the window
     private Thread thread;             // thread to create the game
@@ -38,17 +38,13 @@ public class MiniGame implements Runnable {
      * @param width to set the width of the window
      * @param height to set the height of the window
      */
-    public MiniGame(String title, int width, int height) {
-        this.title = title;
-        this.width = width;
-        this.height = height;
-        running = false;
+    public MiniGame(Game game, int number) {
+        width = 800;
+        height = 500;
+        running = true;
         keyManager = new KeyManager();
         mouseManager = new MouseManager();
         life = 5;
-        JPanel campo = new JPanel(new GridLayout(0, 2));
-        JLabel jl_pwf = new JLabel("Escriba la contraseña: ");
-        campo.add(jl_pwf);
     }
 
     /**
@@ -72,26 +68,11 @@ public class MiniGame implements Runnable {
     /**
      * initializing the display window of the game
      */
-    private void init() {
-        display = new Display(title, getWidth(), getHeight());
+    private void init() {        
         Assets.init();
-        // Se crea el jugador
         
-        // Se cra el mapa para que se pueda desplazar la vista
-        
-        // Aquí se van a crear todos los edificios dentro de la lista
-        /* Algo como esto (Podemos crear un achivo 
-            con todas las ubicaciones y tamaños y de ahí sacar
-            la información y guardarla en un arreglo
-         int iNum = (int)(Math.random()* 8 + 5);
-         for(int i = 0; i < iNum; i++){
-             int iPosX = (int) (Math.random() * (getWidth() - 100));
-             int iPosY = (int) (Math.random() * (getHeight() *0.5d - 100) - 1.5d * getHeight());
-             edifiios.add(new Edificio(iPosX, iPosY, vel, 100, 100, this));                          
-         }
-         */
         //Esta es una creación individual        
-        display.getJframe().addKeyListener(keyManager);
+        game.display.getJframe().addKeyListener(keyManager);
         
         //display.getJframe().addMouseListener(mouseManager);
         //display.getJframe().addMouseMotionListener(mouseManager);
@@ -103,7 +84,7 @@ public class MiniGame implements Runnable {
     public void run() {
         init();
         // frames per second
-        int fps = 60;
+        int fps = 30;
         // time for each tick in nano segs
         double timeTick = 1000000000 / fps;
         // initializing delta
@@ -112,7 +93,7 @@ public class MiniGame implements Runnable {
         long now;
         // initializing last time to the computer time in nanosecs
         long lastTime = System.nanoTime();
-        while (running) {
+        while (life > 0) {
             // setting the time now to the actual time
             now = System.nanoTime();
             // acumulating to delta the difference between times in timeTick units
@@ -125,11 +106,6 @@ public class MiniGame implements Runnable {
             if (delta >= 1) {
                 tick();
                 render();
-                if (life <= 0) {
-                    render();
-                    running = false;
-                }
-                delta--;
             }
         }
         stop();
@@ -161,27 +137,26 @@ public class MiniGame implements Runnable {
 
     private void render() {
         // get the buffer strategy from the display
-        bs = display.getCanvas().getBufferStrategy();
+        game.bs = game.display.getCanvas().getBufferStrategy();
         /* if it is null, we define one with 3 buffers to display images of
         the game, if not null, then we display every image of the game but
         after clearing the Rectanlge, getting the graphic object from the 
         buffer strategy element. 
         show the graphic and dispose it to the trash system
          */
-        if (bs == null) {
-            display.getCanvas().createBufferStrategy(3);
+        if (game.bs == null) {
+            game.display.getCanvas().createBufferStrategy(3);
         } else {
-            g = bs.getDrawGraphics();
-            g.drawImage(Assets.background, 0, 0, width, height, null);            
-            boton.render(g);
+            game.g = game.bs.getDrawGraphics();
+            game.g.drawImage(Assets.background, 0, 0, width, height, null);
             if (life <= 0) {
-                g.drawImage(Assets.end, (getWidth() / 2) - 450, (getHeight() / 2) - 150, 900, 300, null);
+                game.g.drawImage(Assets.end, (getWidth() / 2) - 450, (getHeight() / 2) - 150, 900, 300, null);
             }
             if (getKeyManager().pause) {
-                g.drawImage(Assets.pause, 0, (getHeight() / 3), getWidth(), getHeight() / 3, null);
+                game.g.drawImage(Assets.pause, 0, (getHeight() / 3), getWidth(), getHeight() / 3, null);
             }
-            bs.show();
-            g.dispose();
+            game.bs.show();
+            game.g.dispose();
         }
 
     }

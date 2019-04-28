@@ -25,9 +25,9 @@ import javax.swing.JPanel;
  */
 public class Game implements Runnable {
 
-    private BufferStrategy bs;         // to have several buffers when displaying
-    private Graphics g;                // to paint objects
-    private Display display;           // to display in the game
+    public BufferStrategy bs;         // to have several buffers when displaying
+    public Graphics g;                // to paint objects
+    public Display display;           // to display in the game
     String title;                      // title of the window
     private int width;                 // width of the window
     private int height;                // height of the window
@@ -46,6 +46,7 @@ public class Game implements Runnable {
     private Edificio rectoria;
     private Edificio A2;
     private Boton boton;
+    private MiniGame minigame;
 
     /**
      * to create title, width and height and set the game is still not running
@@ -95,6 +96,7 @@ public class Game implements Runnable {
         player = new Player(-10, 520, -20, 50, 50, this);
         // Se cra el mapa para que se pueda desplazar la vista
         map = new Mapa(-50, -500, getHeight() * 3, getWidth() * 3, this);
+        //minigame = new MiniGame(this, );
         // Aquí se van a crear todos los edificios dentro de la lista
         /* Algo como esto (Podemos crear un achivo 
             con todas las ubicaciones y tamaños y de ahí sacar
@@ -109,8 +111,9 @@ public class Game implements Runnable {
         //Esta es una creación individual
         rectoria = new Edificio(370, 350, 230, 140, this, 1);
         A2 = new Edificio(470, 625, 600, 120, this, 2);
-        display.getJframe().addKeyListener(keyManager);
         boton = new Boton(0,0,100,100,this);
+        display.getJframe().addKeyListener(keyManager);
+        
         display.getJframe().addMouseListener(mouseManager);
         display.getJframe().addMouseMotionListener(mouseManager);
         display.getCanvas().addMouseListener(mouseManager);
@@ -204,6 +207,7 @@ public class Game implements Runnable {
         /*usar un for para revisar todos los edificios*/
         if(rectoria.intersecta(player)){
             boton.setIsVisible(true);
+            //boton.setEdificioNo(1);//aquí se pondría el numero del for
             boton.tick();
             /*asteroid.setX(getWidth()-100);
             asteroid.setY(0);
