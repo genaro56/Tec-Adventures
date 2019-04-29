@@ -63,8 +63,12 @@ public class Boton extends Item{
     public void tick() {
         // moving player depending on flags
         //clicked = !clicked;
-        if (isVisible && game.getMouseManager().isIzquierdo()) {
+        if (isVisible ){
             //clicked = !clicked;
+            if(game.getKeyManager().enter){
+               game.setMG(true); 
+            }
+            if( game.getMouseManager().isIzquierdo()) {
             int xm = game.getMouseManager().getX();
             int ym = game.getMouseManager().getY();
                     if(xm >= getX() && xm <= getX() + getWidth())
@@ -78,6 +82,7 @@ public class Boton extends Item{
                             //minigame.run();
                         }                                    
             game.getMouseManager().setIzquierdo(false);
+            }
         }
         if(!isVisible)
             clicked = false;

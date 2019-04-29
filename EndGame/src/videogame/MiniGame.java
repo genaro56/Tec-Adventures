@@ -25,7 +25,7 @@ import javax.swing.JPanel;
 public class MiniGame /*implements Runnable */{
 
     //private BufferStrategy bs;         // to have several buffers when displaying
-    private Graphics g;                // to paint objects
+    //private Graphics g;                // to paint objects
     //private Display display;           // to display in the game
     private Game game;
     private int width;                 // width of the window
@@ -57,6 +57,7 @@ public class MiniGame /*implements Runnable */{
         height = 500;
         acierta = false;
         falla = false;
+        this.game = game;
         //keyManager = new KeyManager();
         //mouseManager = new MouseManager();
         life = 5;
@@ -126,17 +127,17 @@ public class MiniGame /*implements Runnable */{
                     respuestas[i].tick();
                 }
                 System.out.println("hola");
-                /*if(game.getKeyManager().down) {
+                if(game.getKeyManager().down) {
                     selected++;                
                 }                    
                 if(game.getKeyManager().up){
                     selected--;
-                }*/
+                }
                 selected = (selected-1)%4 + 1;
-                /*if(game.getKeyManager().enter){
+                if(game.getKeyManager().enter){
                     setAcierta(selected == res[level], selected);
                     setFalla(!acierta, selected);
-                }*/
+                }
                 
                         
             }
@@ -161,7 +162,7 @@ public class MiniGame /*implements Runnable */{
            
             g.drawImage(Assets.pregunta, 250, 50, 300, 100, null); 
             g.drawString(pregunta[level], 300, 100);            
-           System.out.println(pregunta);
+           System.out.println(pregunta[level]);
            
            for(int i = 1; i < 5; i++){
                g.drawImage(Assets.pregunta, 350, i*150, 100, 50, null); }
