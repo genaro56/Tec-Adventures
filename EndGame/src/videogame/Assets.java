@@ -26,7 +26,11 @@ public class Assets {
     public static BufferedImage botonC;        // to store the button image
     //vamos a poner un menu de pausa, no solo una imagen
     public static BufferedImage pause;        // to store the pause image
-
+    public static BufferedImage pregunta;
+    public static BufferedImage correcta;
+    public static BufferedImage incorrecta;
+    public static BufferedImage seleccion;
+    
     /**
      * initializing the images of the game
      */
@@ -44,6 +48,10 @@ public class Assets {
         botonC = ImageLoader.loadImage("/images/botonC.png");
         pause = ImageLoader.loadImage("/images/pause.png");
         bomb = new SoundClip("/audio/crash.wav");
+        pregunta = ImageLoader.loadImage("/images/pregunta.png");
+        correcta = ImageLoader.loadImage("/images/correcta.png");
+        incorrecta = ImageLoader.loadImage("/images/incorrecta.png");
+        seleccion = ImageLoader.loadImage("/images/seleccion.png");
     }
     
 }

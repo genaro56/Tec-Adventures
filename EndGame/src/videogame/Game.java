@@ -47,6 +47,7 @@ public class Game implements Runnable {
     private Edificio A2;
     private Boton boton;
     private MiniGame minigame;
+    private boolean MG;
 
     /**
      * to create title, width and height and set the game is still not running
@@ -63,6 +64,7 @@ public class Game implements Runnable {
         keyManager = new KeyManager();
         mouseManager = new MouseManager();
         life = 5;
+        MG = false;
         JPanel campo = new JPanel(new GridLayout(0, 2));
         JLabel jl_pwf = new JLabel("Escriba la contraseña: ");
         campo.add(jl_pwf);
@@ -86,6 +88,10 @@ public class Game implements Runnable {
         return height;
     }
 
+    public void setMG(boolean MG) {
+        this.MG = MG;
+    }
+
     /**
      * initializing the display window of the game
      */
@@ -96,7 +102,7 @@ public class Game implements Runnable {
         player = new Player(-10, 520, -20, 50, 50, this);
         // Se cra el mapa para que se pueda desplazar la vista
         map = new Mapa(-50, -500, getHeight() * 3, getWidth() * 3, this);
-        //minigame = new MiniGame(this, );
+        minigame = new MiniGame(this, 1);
         // Aquí se van a crear todos los edificios dentro de la lista
         /* Algo como esto (Podemos crear un achivo 
             con todas las ubicaciones y tamaños y de ahí sacar
@@ -111,9 +117,9 @@ public class Game implements Runnable {
         //Esta es una creación individual
         rectoria = new Edificio(370, 350, 230, 140, this, 1);
         A2 = new Edificio(470, 625, 600, 120, this, 2);
-        boton = new Boton(0,0,100,100,this);
+        boton = new Boton(0, 0, 100, 100, this);
         display.getJframe().addKeyListener(keyManager);
-        
+
         display.getJframe().addMouseListener(mouseManager);
         display.getJframe().addMouseMotionListener(mouseManager);
         display.getCanvas().addMouseListener(mouseManager);
@@ -166,7 +172,7 @@ public class Game implements Runnable {
 
     private void tick() {
         keyManager.tick();
-        
+
         //Estos son las llamadas a los métodos para 
         //guardar cargar y reiniciar
         //Pero necesitamos arreglar los métodos
@@ -198,18 +204,19 @@ public class Game implements Runnable {
         }*/
         //Aquí se activa cada tick del juego cuando no está pausado
         if (!getKeyManager().pause) {
-            move(getKeyManager());
-            //player.tick();
-            //map.tick();
-            //asteroid.tick();
-        //Aquí tenemos que modificar para que sean la intersecciones 
-        //con los edificios y que se active la opción de minijuego
-        /*usar un for para revisar todos los edificios*/
-        if(rectoria.intersecta(player)){
-            boton.setIsVisible(true);
-            //boton.setEdificioNo(1);//aquí se pondría el numero del for
-            boton.tick();
-            /*asteroid.setX(getWidth()-100);
+            if (!MG) {
+                move(getKeyManager());
+                //player.tick();
+                //map.tick();
+                //asteroid.tick();
+                //Aquí tenemos que modificar para que sean la intersecciones 
+                //con los edificios y que se active la opción de minijuego
+                /*usar un for para revisar todos los edificios*/
+                if (rectoria.intersecta(player)) {
+                    boton.setIsVisible(true);
+                    //boton.setEdificioNo(1);//aquí se pondría el numero del for
+                    boton.tick();
+                    /*asteroid.setX(getWidth()-100);
             asteroid.setY(0);
             asteroid.setVelocity(asteroid.getVelocity() + 1);
             asteroid.setColision(30);
@@ -218,12 +225,17 @@ public class Game implements Runnable {
             player.setColision(30);
             Assets.bomb.play();
             life--;*/
-        }else
-        boton.setIsVisible(false);
-            // Esto podría funcionar solo si usamos enemigos
-            // y lo anterior se usaría para los enemigos
-            if (life < 0) {
-                stop();
+                } else {
+                    boton.setIsVisible(false);
+                    boton.setClicked(false);
+                }
+                // Esto podría funcionar solo si usamos enemigos
+                // y lo anterior se usaría para los enemigos
+                if (life < 0) {
+                    stop();
+                }
+            } else {
+                minigame.tick();
             }
         }
     }
@@ -344,28 +356,33 @@ public class Game implements Runnable {
         if (bs == null) {
             display.getCanvas().createBufferStrategy(3);
         } else {
+
             g = bs.getDrawGraphics();
             g.drawImage(Assets.background, 0, 0, width, height, null);
-            map.render(g);
-            player.render(g);
-            rectoria.render(g);
-            A2.render(g);
-            boton.render(g);
-            //asteroid.render(g);
-            g.setColor(Color.yellow);
-            g.drawString("Vidas: " + life, 5, 20);
-            g.setColor(Color.red);
-            g.drawString("Player X: " + player.getX(), 5, 30);
-            g.drawString("Player y: " + player.getY(), 5, 40);
-            g.drawString("map X: " + map.getX(), 5, 50);
-            g.drawString("map y: " + map.getY(), 5, 60);
-            g.drawString("rectoria X: " + rectoria.getX(), 5, 70);
-            g.drawString("rectoria y: " + rectoria.getY(), 5, 80);
-            if (life <= 0) {
-                g.drawImage(Assets.end, (getWidth() / 2) - 450, (getHeight() / 2) - 150, 900, 300, null);
-            }
-            if (getKeyManager().pause) {
-                g.drawImage(Assets.pause, 0, (getHeight() / 3), getWidth(), getHeight() / 3, null);
+            if (!MG) {
+                map.render(g);
+                player.render(g);
+                rectoria.render(g);
+                A2.render(g);
+                boton.render(g);
+                //asteroid.render(g);
+                g.setColor(Color.yellow);
+                g.drawString("Vidas: " + life, 5, 20);
+                g.setColor(Color.red);
+                g.drawString("Player X: " + player.getX(), 5, 30);
+                g.drawString("Player y: " + player.getY(), 5, 40);
+                g.drawString("map X: " + map.getX(), 5, 50);
+                g.drawString("map y: " + map.getY(), 5, 60);
+                g.drawString("rectoria X: " + rectoria.getX(), 5, 70);
+                g.drawString("rectoria y: " + rectoria.getY(), 5, 80);
+                if (life <= 0) {
+                    g.drawImage(Assets.end, (getWidth() / 2) - 450, (getHeight() / 2) - 150, 900, 300, null);
+                }
+                if (getKeyManager().pause) {
+                    g.drawImage(Assets.pause, 0, (getHeight() / 3), getWidth(), getHeight() / 3, null);
+                }
+            } else {
+                minigame.render(g);
             }
             bs.show();
             g.dispose();
