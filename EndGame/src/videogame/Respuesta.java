@@ -16,13 +16,23 @@ public class Respuesta extends Item{
     private int height;
     private Game game;    
     private boolean isVisible;
-    private int miniGame;
+    private int number;
+    private String respuesta;
+    private boolean correct;
+    private MiniGame minigame;
         
-    public Respuesta(int x, int y, int width, int height, Game game) {
+    public Respuesta(int x, int y, String respuesta, int number, int correct, Game game, MiniGame minigame) {
         super(x, y);        
-        this.width = width;
-        this.height = height;
+        width = 100;
+        height = 50;
+        this.respuesta = respuesta;
         this.game = game;
+        this.minigame = minigame;
+        this.number = number;
+        if(number == correct){
+            this.correct = true;
+        }else this.correct = false;
+        
         isVisible = false;
     }
 
@@ -34,13 +44,13 @@ public class Respuesta extends Item{
         return width;
     }
 
-    public int getMiniGame() {
+    /*public int getMiniGame() {
         return miniGame;
     }
 
     public void setMiniGame(int miniGame) {
         this.miniGame = miniGame;
-    }
+    }*/
 
     public void setIsVisible(boolean isVisible) {
         this.isVisible = isVisible;
@@ -53,9 +63,11 @@ public class Respuesta extends Item{
         if (isVisible && game.getMouseManager().isIzquierdo()) {
             int xm = game.getMouseManager().getX();
             int ym = game.getMouseManager().getY();
-                    if(xm > getX() && xm < getX() + getWidth())
-                        if(ym > getY() && ym < getY() + getHeight()){
-                            //game.miniGame[miniGame].start();                           
+                    if(xm >= getX() && xm <= getX() + getWidth())
+                        if(ym >= getY() && ym <= getY() + getHeight()){
+                            //game.miniGame[miniGame].start();
+                            minigame.setAcierta(correct, number);
+                            minigame.setFalla(!correct, number);
                         }                                    
             //game.getMouseManager().setIzquierdo(false);
         }
@@ -63,8 +75,9 @@ public class Respuesta extends Item{
     
     
     public void render(Graphics g) {     
-        if(isVisible)
-            g.drawImage(Assets.boton, getX(), getY(), getWidth(), getHeight(), null);          
+        /*if()
+        g.drawImage(Assets.pregunta, getX(), getY(), 100, 50, null); */
+           g.drawString(respuesta, getX()+25, getY()+25);          
     }
     
 }

@@ -6,6 +6,8 @@
 package videogame;
 
 import java.awt.Graphics;
+import static java.time.Clock.system;
+//import system
 
 /**
  *
@@ -50,6 +52,11 @@ public class Boton extends Item{
     public void setIsVisible(boolean isVisible) {
         this.isVisible = isVisible;
     }
+
+    public void setClicked(boolean clicked) {
+        this.clicked = clicked;
+    }
+    
     
     
     
@@ -67,11 +74,14 @@ public class Boton extends Item{
                             
                             clicked = true;
                             System.out.println(clicked);
+                            game.setMG(true);
                             //minigame = new MiniGame(game, edificioNo);
                             //minigame.run();
                         }                                    
             game.getMouseManager().setIzquierdo(false);
         }
+        if(!isVisible)
+            clicked = false;
     }
     
     
