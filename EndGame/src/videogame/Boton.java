@@ -60,11 +60,13 @@ public class Boton extends Item{
             //clicked = !clicked;
             int xm = game.getMouseManager().getX();
             int ym = game.getMouseManager().getY();
-                    if(xm > getX() && xm < getX() + getWidth())
-                        if(ym > getY() && ym < getY() + getHeight()){
+                    if(xm >= getX() && xm <= getX() + getWidth())
+                        if(ym >= getY() && ym <= getY() + getHeight()){
                             //clicked = !clicked;
-                            //game.miniGame[miniGame].start(); 
+                            //game.miniGame[miniGame].start();
+                            
                             clicked = true;
+                            System.out.println(clicked);
                             //minigame = new MiniGame(game, edificioNo);
                             //minigame.run();
                         }                                    
