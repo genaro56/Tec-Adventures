@@ -32,6 +32,7 @@ public class Assets {
      */
     public static void init() {
         background = ImageLoader.loadImage("/images/Background.jpg");
+        //background2 = ImageLoader.loadImage("/images/Fondo_BiblioTec.png");
         player = ImageLoader.loadImage("/images/Prototipo_2.png");
         asteroid = ImageLoader.loadImage("/images/asteroid.png");
         colision = ImageLoader.loadImage("/images/colision.png");

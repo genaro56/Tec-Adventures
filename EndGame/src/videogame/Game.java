@@ -98,16 +98,23 @@ public class Game implements Runnable {
         map = new Mapa(-50, -500, getHeight() * 3, getWidth() * 3, this);
         //minigame = new MiniGame(this, );
         // Aquí se van a crear todos los edificios dentro de la lista
-        /* Algo como esto (Podemos crear un achivo 
+        /* Algo como esto (Podemos crear un achivo */
+         display = new Display(title, getWidth(), getHeight());  
+         Assets.init();
+         // Se crea el jugador
+         player = new Player(-10, 520, -20, 36, 36, this);         
+         // Se cra el mapa para que se pueda desplazar la vista
+         map = new Mapa(-50, -500, getHeight()*3, getWidth()*3, this);
+         // Aquí se van a crear todos los edificios dentro de la lista
+         /* Algo como esto (Podemos crear un achivo 
             con todas las ubicaciones y tamaños y de ahí sacar
             la información y guardarla en un arreglo
          int iNum = (int)(Math.random()* 8 + 5);
          for(int i = 0; i < iNum; i++){
              int iPosX = (int) (Math.random() * (getWidth() - 100));
              int iPosY = (int) (Math.random() * (getHeight() *0.5d - 100) - 1.5d * getHeight());
-             edifiios.add(new Edificio(iPosX, iPosY, vel, 100, 100, this));                          
-         }
-         */
+             edifios.add(new Edificio(iPosX, iPosY, vel, 100, 100, this));                          
+         }*/
         //Esta es una creación individual
         rectoria = new Edificio(370, 350, 230, 140, this, 1);
         A2 = new Edificio(470, 625, 600, 120, this, 2);
