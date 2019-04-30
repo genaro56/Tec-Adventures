@@ -17,11 +17,12 @@ public class Respuesta extends Item{
     private Game game;    
     private boolean isVisible;
     private int number;
+    private int orderNumber;
     private String respuesta;
     private boolean correct;
     private MiniGame minigame;
         
-    public Respuesta(int x, int y, String respuesta, int number, int correct, Game game, MiniGame minigame) {
+    public Respuesta(int x, int y, String respuesta, int number, int correct, int orderNumber, Game game, MiniGame minigame) {
         super(x, y);        
         width = 100;
         height = 50;
@@ -29,6 +30,7 @@ public class Respuesta extends Item{
         this.game = game;
         this.minigame = minigame;
         this.number = number;
+        this.orderNumber = orderNumber; //para saber en qué posición se encuentra
         if(number == correct){ // verifica si es el numero de la respuesta correcta
             this.correct = true;
         }else this.correct = false;
@@ -66,8 +68,8 @@ public class Respuesta extends Item{
                     if(xm >= getX() && xm <= getX() + getWidth())
                         if(ym >= getY() && ym <= getY() + getHeight()){
                             //game.miniGame[miniGame].start();
-                            minigame.setAcierta(correct, number); // se verifica si es la respuesta correcta
-                            minigame.setFalla(!correct, number);  
+                            minigame.setAcierta(correct, orderNumber); // se verifica si es la respuesta correcta
+                            minigame.setFalla(!correct, orderNumber);  
                             minigame.setCounter(30); // se inicia el conter del minigame
                         }                                    
             //game.getMouseManager().setIzquierdo(false);
