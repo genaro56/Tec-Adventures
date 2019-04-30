@@ -29,7 +29,7 @@ public class Respuesta extends Item{
         this.game = game;
         this.minigame = minigame;
         this.number = number;
-        if(number == correct){
+        if(number == correct){ // verifica si es el numero de la respuesta correcta
             this.correct = true;
         }else this.correct = false;
         
@@ -66,15 +66,19 @@ public class Respuesta extends Item{
                     if(xm >= getX() && xm <= getX() + getWidth())
                         if(ym >= getY() && ym <= getY() + getHeight()){
                             //game.miniGame[miniGame].start();
-                            minigame.setAcierta(correct, number);
+                            minigame.setAcierta(correct, number); // se verifica si es la respuesta correcta
                             minigame.setFalla(!correct, number);  
-                            minigame.setCounter(30);
+                            minigame.setCounter(30); // se inicia el conter del minigame
                         }                                    
             //game.getMouseManager().setIzquierdo(false);
         }
     }
     
     
+    /**
+     * Se imprime la respuesta
+     * @param g 
+     */
     public void render(Graphics g) {     
         /*if()
         g.drawImage(Assets.pregunta, getX(), getY(), 100, 50, null); */
