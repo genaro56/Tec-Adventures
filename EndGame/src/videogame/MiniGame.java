@@ -22,7 +22,7 @@ import javax.swing.JPanel;
  *
  * @author jesus
  */
-public class MiniGame /*implements Runnable */{
+public class MiniGame /*implements Runnable */ {
 
     //private BufferStrategy bs;         // to have several buffers when displaying
     //private Graphics g;                // to paint objects
@@ -42,8 +42,8 @@ public class MiniGame /*implements Runnable */{
     private Respuesta[] respuestas = new Respuesta[5];
     private int[] res = new int[6];
     private int selected;
-    
-    
+    private int counter;
+    private boolean finish;
 
     /**
      * to create title, width and height and set the game is still not running
@@ -52,7 +52,7 @@ public class MiniGame /*implements Runnable */{
      * @param width to set the width of the window
      * @param height to set the height of the window
      */
-    public MiniGame(Game game, int number){
+    public MiniGame(Game game, int number) {
         width = 800;
         height = 500;
         acierta = false;
@@ -63,11 +63,12 @@ public class MiniGame /*implements Runnable */{
         life = 5;
         level = 1;
         selected = 1;
+        counter = 30;
         try {
-                leeArchivo("edificio" + number);
-            } catch (IOException ex) {
-                System.out.println("Error en " + ex.toString());
-            }
+            leeArchivo("edificio" + number);
+        } catch (IOException ex) {
+            System.out.println("Error en " + ex.toString());
+        }
         iniciaRespuestas();
     }
 
@@ -102,48 +103,68 @@ public class MiniGame /*implements Runnable */{
         this.falla = falla;
         selected = n;
     }
-    
-    
 
-    
+    public void setCounter(int counter) {
+        this.counter = counter;
+    }
     
 
     public void tick() {
         //keyManager.tick();
-        if(acierta){//verifica si la respuesta fue correcta
-            if(level  == 5){//es lo que hace cuando respondió todas las preguntas bien
-                
-            }else{//cuando aún no termina todas las preguntas
-                level++;
-                iniciaRespuestas();
+        if (acierta) {//verifica si la respuesta fue correcta
+            if (level == 5) {//es lo que hace cuando respondió todas las preguntas bien
+                if(game.getKeyManager().enter)
+                    finish = true;
+                if(game.getKeyManager().exit)
+                    game.setMG(!acierta);
+            } else {//cuando aún no termina todas las preguntas
+                if (/*game.getKeyManager().enter*/counter <= 0) {
+                    System.out.println(level);
+                    level++;
+                    System.out.println(level);
+                    iniciaRespuestas();
+                    acierta = false;
+                }else counter--;
             }
-            acierta = false;
-        }else{
-            if(falla){//cuando la respuesta es incorrecta
-                if(game.getKeyManager().enter || game.getKeyManager().exit)
-                game.setMG(falla);
-            }else{//cuando no ha respondido
-                for(int i = 1; i < 5; i++){
-                    respuestas[i].tick();
+
+        } else {
+            if (falla) {//cuando la respuesta es incorrecta
+                if(game.getKeyManager().enter)
+                    finish = true;
+                if (/*game.getKeyManager().sig ||*/ game.getKeyManager().exit) {                    
+                //if(game.getKeyManager().exit)
+                    game.setMG(!falla);
                 }
-                System.out.println("hola");
-                if(game.getKeyManager().down) {
-                    selected++;                
-                }                    
-                if(game.getKeyManager().up){
+            } else {//cuando no ha respondido
+                if(counter <= 0){
+                for (int i = 1; i < 5; i++) {
+                    Respuesta respond = respuestas[i];
+                    respond.tick();
+                }
+                
+                if (game.getKeyManager().down) {
+                    selected++;
+                    counter = 10;
+                }
+                if (game.getKeyManager().up) {
                     selected--;
+                    counter = 10;
                 }
-                selected = (selected-1)%4 + 1;
-                if(game.getKeyManager().enter){
+                
+                
+                selected = (selected + 3) % 4 + 1;
+                 System.out.println(selected);
+
+                if (game.getKeyManager().enter) {
                     setAcierta(selected == res[level], selected);
                     setFalla(!acierta, selected);
+                    counter = 30;
                 }
-                
-                        
+                }else{counter--;}
+
             }
         }
-        
-        
+
         //Aquí se activa cada tick del juego cuando no está pausado
         /*if (!getKeyManager().pause) {            
         
@@ -154,29 +175,38 @@ public class MiniGame /*implements Runnable */{
         }*/
     }
 
-    
-
     public void render(Graphics g) {
-        
-            g.drawImage(Assets.background, 0, 0, width, height, null);
-           
-            g.drawImage(Assets.pregunta, 250, 50, 300, 100, null); 
-            g.drawString(pregunta[level], 300, 100);            
-           System.out.println(pregunta[level]);
-           
-           for(int i = 1; i < 5; i++){
-               g.drawImage(Assets.pregunta, 350, i*150, 100, 50, null); }
-            g.drawImage(Assets.seleccion, 350, selected*150, 100, 50, null);
+
+        g.drawImage(Assets.background, 0, 0, width, height, null);
+        if(!finish){
+
+        g.drawImage(Assets.pregunta, 250, 50, 300, 100, null);
+        g.drawString(pregunta[level], 300, 100);
+        //System.out.println(pregunta[level]);
+
+        for (int i = 1; i < 5; i++) {
+            g.drawImage(Assets.pregunta, 350, i * 150, 100, 50, null);
+        }
+        g.drawImage(Assets.seleccion, 350, selected * 150, 100, 50, null);
+        if (acierta) {
+            g.drawImage(Assets.correcta, 350, selected * 150, 100, 50, null);
+        }
+        if (falla) {
+            g.drawImage(Assets.incorrecta, 350, selected * 150, 100, 50, null);
+        }
+        for (int i = 1; i < 5; i++) {
+            respuestas[i].render(g);
+        }
+        }else{
             if(acierta){
-                g.drawImage(Assets.correcta, 350, selected*150, 100, 50, null);
+                g.drawImage(Assets.win, game.getWidth()/2-300, game.getHeight()/2-300, 600, 600, null);
             }
-            if(falla){
-                g.drawImage(Assets.incorrecta, 350, selected*150, 100, 50, null);
+            else if(falla){
+                g.drawImage(Assets.lose, game.getWidth()/2-300, game.getHeight()/2-300, 600, 600, null);
+                
             }
-            for(int i = 1; i < 5; i++){   
-               respuestas[i].render(g);
-           }
-           /*g.drawImage(Assets.pregunta, 250, 175, 100, 50, null); 
+        }
+        /*g.drawImage(Assets.pregunta, 250, 175, 100, 50, null); 
            g.drawString(respuesta[level][1], 300, 200);
            
            g.drawImage(Assets.pregunta, 250, 275, 100, 50, null); 
@@ -187,9 +217,9 @@ public class MiniGame /*implements Runnable */{
             
             g.drawImage(Assets.pregunta, 250, 475, 100, 50, null); 
             g.drawString(respuesta[level][4], 300, 500);*/
-        
+
     }
-    
+
     public void leeArchivo(String archivo) throws IOException {
 
         BufferedReader fileIn;
@@ -202,26 +232,24 @@ public class MiniGame /*implements Runnable */{
             fileOut.close();
             fileIn = new BufferedReader(new FileReader(archivo));
         }
-        for(int i = 1; i < 6; i++){
-        pregunta[i] = fileIn.readLine();
-        
-        
-        for (int j = 1; j < 5; j++) {            
-            respuesta[i][j] = fileIn.readLine();            
-        }
-        String dato = fileIn.readLine();
-        res[i] = (Integer.parseInt(dato));       
+        for (int i = 1; i < 6; i++) {
+            pregunta[i] = fileIn.readLine();
+
+            for (int j = 1; j < 5; j++) {
+                respuesta[i][j] = fileIn.readLine();
+            }
+            String dato = fileIn.readLine();
+            res[i] = (Integer.parseInt(dato));
         }
 
         fileIn.close();
     }
-    
-    public void iniciaRespuestas(){
-        for(int i = 1; i < 5; i++){
-            respuestas[i] = new Respuesta(350, i*150, respuesta[level][i], i, res[i], game, this);
+
+    public void iniciaRespuestas() {
+        for (int i = 1; i < 5; i++) {
+            respuestas[i] = new Respuesta(350, i * 150, respuesta[level][i], i, res[level], game, this);
+            //System.out.println(i + ": " +  res[level]);
         }
     }
-
-
 
 }

@@ -91,6 +91,9 @@ public class Game implements Runnable {
     public void setMG(boolean MG) {
         this.MG = MG;
     }
+    public void startMinigame(int number){
+        
+    }
 
     /**
      * initializing the display window of the game
@@ -102,7 +105,7 @@ public class Game implements Runnable {
         player = new Player(-10, 520, -20, 50, 50, this);
         // Se cra el mapa para que se pueda desplazar la vista
         map = new Mapa(-50, -500, getHeight() * 3, getWidth() * 3, this);
-        minigame = new MiniGame(this, 1);
+        //minigame = new MiniGame(this, 1);
         // Aquí se van a crear todos los edificios dentro de la lista
         /* Algo como esto (Podemos crear un achivo 
             con todas las ubicaciones y tamaños y de ahí sacar
@@ -214,6 +217,7 @@ public class Game implements Runnable {
                 /*usar un for para revisar todos los edificios*/
                 if (rectoria.intersecta(player)) {
                     boton.setIsVisible(true);
+                    minigame = new MiniGame(this, 1);
                     //boton.setEdificioNo(1);//aquí se pondría el numero del for
                     boton.tick();
                     /*asteroid.setX(getWidth()-100);

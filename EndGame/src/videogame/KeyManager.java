@@ -25,6 +25,7 @@ public class KeyManager implements KeyListener {
     public boolean reiniciar;    // flag to load game
     public boolean exit;         // flag to load game
     public boolean enter;
+    public boolean sig;
     
     
     public boolean shot;
@@ -80,5 +81,7 @@ public class KeyManager implements KeyListener {
         shot = keys[KeyEvent.VK_SPACE];
         exit = keys[KeyEvent.VK_ESCAPE];
         enter = keys[KeyEvent.VK_ENTER];
+        sig = keys[KeyEvent.VK_SPACE];
+        
     }
 }

@@ -30,6 +30,8 @@ public class Assets {
     public static BufferedImage correcta;
     public static BufferedImage incorrecta;
     public static BufferedImage seleccion;
+    public static BufferedImage lose;
+    public static BufferedImage win;
     
     /**
      * initializing the images of the game
@@ -52,6 +54,9 @@ public class Assets {
         correcta = ImageLoader.loadImage("/images/correcta.png");
         incorrecta = ImageLoader.loadImage("/images/incorrecta.png");
         seleccion = ImageLoader.loadImage("/images/seleccion.png");
+         lose = ImageLoader.loadImage("/images/lose.png");
+         win = ImageLoader.loadImage("/images/win.png");
     }
     
 }
+

@@ -33,7 +33,7 @@ public class Respuesta extends Item{
             this.correct = true;
         }else this.correct = false;
         
-        isVisible = false;
+        //isVisible = false;
     }
 
     public int getHeight() {
@@ -60,14 +60,15 @@ public class Respuesta extends Item{
     
     public void tick() {
         // moving player depending on flags
-        if (isVisible && game.getMouseManager().isIzquierdo()) {
+        if (game.getMouseManager().isIzquierdo()) {
             int xm = game.getMouseManager().getX();
             int ym = game.getMouseManager().getY();
                     if(xm >= getX() && xm <= getX() + getWidth())
                         if(ym >= getY() && ym <= getY() + getHeight()){
                             //game.miniGame[miniGame].start();
                             minigame.setAcierta(correct, number);
-                            minigame.setFalla(!correct, number);
+                            minigame.setFalla(!correct, number);  
+                            minigame.setCounter(30);
                         }                                    
             //game.getMouseManager().setIzquierdo(false);
         }
