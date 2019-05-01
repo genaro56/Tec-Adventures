@@ -16,6 +16,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.LinkedList;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -42,7 +43,12 @@ public class Game implements Runnable {
     //Tenemos que hacer un areglo 
     //o lista encadenada de edificios 
     //para crear todos lo que vamosa usar
-    //private likedList<Edificio> edificios;
+    private LinkedList<Edificio> edificios;
+    private int[] posEdifX = new int[30];
+    private int[] posEdifY = new int[30];
+    private int[] edifWidth = new int[30];
+    private int[] edifHeight = new int[30];
+
     private Edificio rectoria;
     private Edificio A2;
     private Boton boton;
@@ -63,6 +69,8 @@ public class Game implements Runnable {
         running = false;
         keyManager = new KeyManager();
         mouseManager = new MouseManager();
+        edificios = new LinkedList<Edificio>();
+
         life = 5;
         MG = false;
         JPanel campo = new JPanel(new GridLayout(0, 2));
@@ -91,8 +99,9 @@ public class Game implements Runnable {
     public void setMG(boolean MG) {
         this.MG = MG;
     }
-    public void startMinigame(int number){
-        
+
+    public void startMinigame(int number) {
+
     }
 
     /**
@@ -118,8 +127,18 @@ public class Game implements Runnable {
          }
          */
         //Esta es una creación individual
-        rectoria = new Edificio(370, 350, 230, 140, this, 1);
+        //rectoria = new Edificio(370, 350, 230, 140, this, 1);
         A2 = new Edificio(470, 625, 600, 120, this, 2);
+        
+        try {
+                leeArchivo("guardado.txt");
+            } catch (IOException ex) {
+                System.out.println("Error en " + ex.toString());
+            }
+        for (int i = 1; i <= 1; i++) {
+            edificios.add(new Edificio(posEdifX[i], posEdifY[i], edifWidth[i], edifHeight[i], this, i));
+        }
+
         boton = new Boton(0, 0, 100, 100, this);
         display.getJframe().addKeyListener(keyManager);
 
@@ -215,12 +234,14 @@ public class Game implements Runnable {
                 //Aquí tenemos que modificar para que sean la intersecciones 
                 //con los edificios y que se active la opción de minijuego
                 /*usar un for para revisar todos los edificios*/
-                if (rectoria.intersecta(player)) {
-                    boton.setIsVisible(true);
-                    minigame = new MiniGame(this, 1);
-                    //boton.setEdificioNo(1);//aquí se pondría el numero del for
-                    boton.tick();
-                    /*asteroid.setX(getWidth()-100);
+                for (int i = 1; i <= 1; i++) {
+                    Edificio edif = edificios.get(i-1);
+                    if (edif.intersecta(player)) {
+                        boton.setIsVisible(true);
+                        minigame = new MiniGame(this, i);
+                        //boton.setEdificioNo(1);//aquí se pondría el numero del for
+                        boton.tick();
+                        /*asteroid.setX(getWidth()-100);
             asteroid.setY(0);
             asteroid.setVelocity(asteroid.getVelocity() + 1);
             asteroid.setColision(30);
@@ -229,9 +250,10 @@ public class Game implements Runnable {
             player.setColision(30);
             Assets.bomb.play();
             life--;*/
-                } else {
-                    boton.setIsVisible(false);
-                    boton.setClicked(false);
+                    } else {
+                        boton.setIsVisible(false);
+                        boton.setClicked(false);
+                    }
                 }
                 // Esto podría funcionar solo si usamos enemigos
                 // y lo anterior se usaría para los enemigos
@@ -260,7 +282,10 @@ public class Game implements Runnable {
 
             } else {
                 map.tick();
-                rectoria.tick();
+                for(int i = 0; i < 1; i++){
+                    edificios.get(i).tick();
+                }
+                //rectoria.tick();
                 A2.tick();
             }
         }
@@ -268,7 +293,7 @@ public class Game implements Runnable {
 
     // Tenemos que definir todas la variables que vamos a guardar 
     // en el archivo para poder arreglar las funciones
-/*    public void leeArchivo(String archivo) throws IOException {
+    public void leeArchivo(String archivo) throws IOException {
 
         BufferedReader fileIn;
         try {
@@ -282,45 +307,22 @@ public class Game implements Runnable {
         }
         String dato = fileIn.readLine();
         life = (Integer.parseInt(dato));
-        dato = fileIn.readLine();
-        score = (Integer.parseInt(dato));
-        dato = fileIn.readLine();
-        alienDirection = (Integer.parseInt(dato));
-        dato = fileIn.readLine();
-        alienY = (Integer.parseInt(dato));
-        dato = fileIn.readLine();
-        player.setX((Integer.parseInt(dato)));
-        dato = fileIn.readLine();
-        player.setVisible((Boolean.parseBoolean(dato)));
-        dato = fileIn.readLine();
-        obj.setX((Integer.parseInt(dato)));
-        dato = fileIn.readLine();
-        obj.setY((Integer.parseInt(dato)));
-        dato = fileIn.readLine();
-        obj.setVisible((Boolean.parseBoolean(dato)));
-        dato = fileIn.readLine();
-        cObject = (Integer.parseInt(dato));
-        for (int j = 0; j < cObject; j++) {
-            Alien alien = aliens.get(j);
+        for (int i = 1; i <= 1; i++) {
             dato = fileIn.readLine();
-            alien.setX(Integer.parseInt(dato));
             dato = fileIn.readLine();
-            alien.setY((Integer.parseInt(dato)));
+            posEdifX[i] = (Integer.parseInt(dato));
             dato = fileIn.readLine();
-            alien.setDirection(Integer.parseInt(dato));
+            posEdifY[i] = (Integer.parseInt(dato));
             dato = fileIn.readLine();
-            alien.setVisible(Boolean.parseBoolean(dato));
+            edifWidth[i] = (Integer.parseInt(dato));
             dato = fileIn.readLine();
-            alien.getBomb().setX(Integer.parseInt(dato));
-            dato = fileIn.readLine();
-            alien.getBomb().setY(Integer.parseInt(dato));
-            dato = fileIn.readLine();
-            alien.getBomb().setDestroyed(Boolean.parseBoolean(dato));
+            edifHeight[i] = (Integer.parseInt(dato));
         }
 
         fileIn.close();
     }
 
+    /*
     public void grabaArchivo(String archivo) throws IOException {
 
         PrintWriter fileOut = new PrintWriter(new FileWriter(archivo));
@@ -366,7 +368,10 @@ public class Game implements Runnable {
             if (!MG) {
                 map.render(g);
                 player.render(g);
-                rectoria.render(g);
+                for(int i = 0; i < 1; i++){
+                    edificios.get(i).render(g);
+                }
+                //rectoria.render(g);
                 A2.render(g);
                 boton.render(g);
                 //asteroid.render(g);
@@ -377,8 +382,8 @@ public class Game implements Runnable {
                 g.drawString("Player y: " + player.getY(), 5, 40);
                 g.drawString("map X: " + map.getX(), 5, 50);
                 g.drawString("map y: " + map.getY(), 5, 60);
-                g.drawString("rectoria X: " + rectoria.getX(), 5, 70);
-                g.drawString("rectoria y: " + rectoria.getY(), 5, 80);
+                //g.drawString("rectoria X: " + rectoria.getX(), 5, 70);
+               // g.drawString("rectoria y: " + rectoria.getY(), 5, 80);
                 if (life <= 0) {
                     g.drawImage(Assets.end, (getWidth() / 2) - 450, (getHeight() / 2) - 150, 900, 300, null);
                 }

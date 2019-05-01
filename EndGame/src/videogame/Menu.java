@@ -296,7 +296,6 @@ public class MiniGame /*implements Runnable */ {
                 respuesta[i][j] = fileIn.readLine();
             }
             String dato = fileIn.readLine();
-            System.out.println(dato);
             res[i] = (Integer.parseInt(dato));
         }
 
