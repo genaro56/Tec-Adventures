@@ -44,7 +44,7 @@ public class Assets {
         colision = ImageLoader.loadImage("/images/colision.png");
         explotion = ImageLoader.loadImage("/images/Explosion.png");
         end = ImageLoader.loadImage("/images/GameOver.png");
-        A2 = ImageLoader.loadImage("/images/A-2.png");
+        A2 = ImageLoader.loadImage("/images/Aulas2.png");
         map = ImageLoader.loadImage("/images/map.jpg");
         boton = ImageLoader.loadImage("/images/boton.png");
         botonC = ImageLoader.loadImage("/images/botonC.png");
