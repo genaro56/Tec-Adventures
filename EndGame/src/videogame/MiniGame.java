@@ -22,7 +22,7 @@ import javax.swing.JPanel;
  *
  * @author jesus
  */
-public class MiniGame /*implements Runnable */{
+public class MiniGame {
 
     //private BufferStrategy bs;         // to have several buffers when displaying
     private Graphics g;                // to paint objects
@@ -30,11 +30,8 @@ public class MiniGame /*implements Runnable */{
     private Game game;
     private int width;                 // width of the window
     private int height;                // height of the window
-    //private Thread thread;             // thread to create the game
     private boolean acierta;           // to set the game 
     private boolean falla;
-    /*private KeyManager keyManager;     // to manage the keyboard
-    private MouseManager mouseManager; // to manage the mouse*/
     private int life;                  // to manage the lifes 
     private String[] pregunta = new String[6];
     private String[][] respuesta = new String[6][5];
@@ -62,6 +59,7 @@ public class MiniGame /*implements Runnable */{
         life = 5;
         level = 1;
         selected = 1;
+        this.game = game;
         try {
                 leeArchivo("edificio" + number);
             } catch (IOException ex) {
@@ -108,7 +106,7 @@ public class MiniGame /*implements Runnable */{
     
 
     public void tick() {
-        //keyManager.tick();
+        game.getKeyManager().tick();
         if(acierta){//verifica si la respuesta fue correcta
             if(level  == 5){//es lo que hace cuando respondió todas las preguntas bien
                 
@@ -122,17 +120,17 @@ public class MiniGame /*implements Runnable */{
                 if(game.getKeyManager().enter || game.getKeyManager().exit)
                 game.setMG(falla);
             }else{//cuando no ha respondido
+                System.out.println("hola");
+                     
                 for(int i = 1; i < 5; i++){
                     respuestas[i].tick();
                 }
-                System.out.println("hola");
-                /*if(game.getKeyManager().down) {
-                    selected++;                
-                }                    
-                if(game.getKeyManager().up){
+                               
+                /*if(game.getKeyManager().up){
                     selected--;
                 }*/
                 selected = (selected-1)%4 + 1;
+                
                 /*if(game.getKeyManager().enter){
                     setAcierta(selected == res[level], selected);
                     setFalla(!acierta, selected);
