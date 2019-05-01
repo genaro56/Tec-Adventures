@@ -118,7 +118,7 @@ public class Game implements Runnable {
          }
          */
         //Esta es una creación individual
-        rectoria = new Edificio(370, 350, 230, 140, this, 1);
+        rectoria = new Edificio(370, 350, 180, 230, this, 1);
         A2 = new Edificio(470, 625, 600, 120, this, 2);
         boton = new Boton(0, 0, 100, 100, this);
         display.getJframe().addKeyListener(keyManager);

@@ -12,6 +12,7 @@ import java.awt.image.BufferedImage;
  * @author jesus
  */
 public class Assets {
+
     public static BufferedImage background; // to store background image
     public static BufferedImage player;     // to store the player image
     public static BufferedImage asteroid;   // to store the player image
@@ -32,7 +33,7 @@ public class Assets {
     public static BufferedImage seleccion;
     public static BufferedImage lose;
     public static BufferedImage win;
-    
+
     /**
      * initializing the images of the game
      */
@@ -43,7 +44,6 @@ public class Assets {
         colision = ImageLoader.loadImage("/images/colision.png");
         explotion = ImageLoader.loadImage("/images/Explosion.png");
         end = ImageLoader.loadImage("/images/GameOver.png");
-        rectoria = ImageLoader.loadImage("/images/Rectoria.png");
         A2 = ImageLoader.loadImage("/images/A-2.png");
         map = ImageLoader.loadImage("/images/map.jpg");
         boton = ImageLoader.loadImage("/images/boton.png");
@@ -54,9 +54,10 @@ public class Assets {
         correcta = ImageLoader.loadImage("/images/correcta.png");
         incorrecta = ImageLoader.loadImage("/images/incorrecta.png");
         seleccion = ImageLoader.loadImage("/images/seleccion.png");
-         lose = ImageLoader.loadImage("/images/lose.png");
-         win = ImageLoader.loadImage("/images/win.png");
-    }
-    
-}
+        lose = ImageLoader.loadImage("/images/lose.png");
+        win = ImageLoader.loadImage("/images/win.png");
+        rectoria = ImageLoader.loadImage("/images/Rectoría_final.png");
 
+    }
+
+}
