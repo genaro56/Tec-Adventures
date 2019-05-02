@@ -126,8 +126,7 @@ public class Game implements Runnable {
              edifiios.add(new Edificio(iPosX, iPosY, vel, 100, 100, this));                          
          }
          */
-        //Esta es una creación individual
-        rectoria = new Edificio(370, 350, 180, 230, this, 1);
+        //Esta es una creación individual        
         //rectoria = new Edificio(370, 350, 230, 140, this, 1);
         A2 = new Edificio(470, 625, 600, 120, this, 2);
         
