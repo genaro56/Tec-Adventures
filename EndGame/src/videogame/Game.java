@@ -45,13 +45,14 @@ public class Game implements Runnable {
     //o lista encadenada de edificios 
     //para crear todos lo que vamosa usar
     private LinkedList<Edificio> edificios;
+    private int cantEdif;
     private int[] posEdifX = new int[30];
     private int[] posEdifY = new int[30];
     private int[] edifWidth = new int[30];
     private int[] edifHeight = new int[30];
 
-    private Edificio rectoria;
-    private Edificio A2;
+    //private Edificio rectoria;
+    //private Edificio A2;
     private Boton boton;
     private MiniGame minigame;
     private boolean MG;
@@ -204,7 +205,7 @@ public class Game implements Runnable {
 
     private void tick() {
         keyManager.tick();
-        player.tick();
+        
 
         //Estos son las llamadas a los métodos para 
         //guardar cargar y reiniciar
@@ -281,6 +282,10 @@ public class Game implements Runnable {
     //con el jugador
     private void move(KeyManager km) {
         if (km.down || km.left || km.up || km.right) {
+            player.getPlayerAb().tick();
+            player.getPlayerAr().tick();
+            player.getPlayerDe().tick();
+            player.getPlayerIz().tick();
             if (km.right && map.getX() <= getWidth() - map.getWidth()
                     || km.right && player.getX() <= getWidth() / 4 - 50
                     || km.left && map.getX() >= -50
@@ -313,7 +318,8 @@ public class Game implements Runnable {
             File puntos = new File(archivo);
             PrintWriter fileOut = new PrintWriter(puntos);
             fileOut.println("5");
-            fileOut.println("");
+            fileOut.println("1");
+            fileOut.println("Rectoria");
             fileOut.println("370");
             fileOut.println("350");
             fileOut.println("230");
@@ -323,7 +329,9 @@ public class Game implements Runnable {
         }
         String dato = fileIn.readLine();
         life = (Integer.parseInt(dato));
-        for (int i = 1; i <= 2; i++) {
+        dato = fileIn.readLine();
+        cantEdif = (Integer.parseInt(dato));
+        for (int i = 1; i <= cantEdif; i++) {
             dato = fileIn.readLine();
             dato = fileIn.readLine();
             System.out.println(dato);
@@ -360,7 +368,7 @@ public class Game implements Runnable {
 
         PrintWriter fileOut = new PrintWriter(new FileWriter(archivo));
         fileOut.println("" + life);        
-        for (int i = 1; i <= 2; i++) {
+        for (int i = 1; i <= cantEdif; i++) {
             Edificio edificio = edificios.get(i-1);
             fileOut.println("");
             fileOut.println("" + edificio.getX());
@@ -395,7 +403,7 @@ public class Game implements Runnable {
             if (!MG) {
                 map.render(g);
                 player.render(g);
-                for (int i = 0; i < 2; i++) {
+                for (int i = 0; i < cantEdif; i++) {
                     edificios.get(i).render(g);
                 }
                 //rectoria.render(g);

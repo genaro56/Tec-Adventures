@@ -64,6 +64,23 @@ public class Player extends Item{
     public void setColision(int colision) {
         this.colision = colision;
     }
+
+    public Animation getPlayerAb() {
+        return playerAb;
+    }
+
+    public Animation getPlayerAr() {
+        return playerAr;
+    }
+
+    public Animation getPlayerDe() {
+        return playerDe;
+    }
+
+    public Animation getPlayerIz() {
+        return playerIz;
+    }
+    
     
 
     @Override
@@ -81,8 +98,8 @@ public class Player extends Item{
            setX(getX() + 3);
         }
         // reset x position and y position if colision
-        if (getX() + getWidth() >= game.getWidth()) {
-            setX(game.getWidth() - 50);
+        if (getX() + 40 >= game.getWidth()) {
+            setX(game.getWidth() - 40);
         }
         else if (getX() <= -10) {
             setX(-10);
@@ -90,14 +107,10 @@ public class Player extends Item{
         if (getY() + getHeight() >= game.getHeight()) {
             setY(game.getHeight() - 50);
         }
-        else if (getY() <= 0) {
-            setY(0);
+        else if (getY() <= -10) {
+            setY(-10);
         }
-        colision--;
-        this.playerAr.tick();
-        this.playerAb.tick();
-        this.playerIz.tick();
-        this.playerDe.tick();
+        colision--;        
     }
     public Rectangle getPerimetro(){
         return new Rectangle(getX(), getY(), getWidth(), getHeight());
