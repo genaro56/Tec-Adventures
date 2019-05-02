@@ -123,6 +123,7 @@ public class MiniGame /*implements Runnable */ {
                 }
                 if (game.getKeyManager().exit) {
                     game.setMG(!acierta); //finaliza el minigame
+                    game.setScore(game.getScore() + 10);
                 }
             } else {//cuando aún no termina todas las preguntas
                 if (/*game.getKeyManager().enter*/counter <= 0) {
@@ -138,13 +139,19 @@ public class MiniGame /*implements Runnable */ {
 
         } else {
             if (falla) {//cuando la respuesta es incorrecta
+                if(counter <= 0) {
                 if (game.getKeyManager().enter) {
                     finish = true;
                 }
                 if (/*game.getKeyManager().sig ||*/game.getKeyManager().exit) {
                     //if(game.getKeyManager().exit)
                     game.setMG(!falla);//finaliza el minigame
-                }
+
+                    if(game.getScore() >= 2)
+                    game.setScore(game.getScore() - 2);
+                    else
+                        game.setScore(0);
+                }}else counter--;
             } else {//cuando no ha respondido
                 if (counter <= 0) {
                     for (int i = 1; i < 5; i++) { //se hace el tick de cada respuesta

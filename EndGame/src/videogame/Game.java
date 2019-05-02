@@ -40,6 +40,7 @@ public class Game implements Runnable {
     private KeyManager keyManager;     // to manage the keyboard
     private MouseManager mouseManager; // to manage the mouse
     private int life;                  // to manage the lifes 
+    private int score;
     //Tenemos que hacer un areglo 
     //o lista encadenada de edificios 
     //para crear todos lo que vamosa usar
@@ -71,6 +72,7 @@ public class Game implements Runnable {
         edificios = new LinkedList<Edificio>();
 
         life = 5;
+        score = 0;
         MG = false;
         JPanel campo = new JPanel(new GridLayout(0, 2));
         JLabel jl_pwf = new JLabel("Escriba la contraseña: ");
@@ -98,6 +100,15 @@ public class Game implements Runnable {
     public void setMG(boolean MG) {
         this.MG = MG;
     }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+    
 
     public void startMinigame(int number) {
 
@@ -193,6 +204,7 @@ public class Game implements Runnable {
 
     private void tick() {
         keyManager.tick();
+        player.tick();
 
         //Estos son las llamadas a los métodos para 
         //guardar cargar y reiniciar
@@ -383,12 +395,14 @@ public class Game implements Runnable {
                 g.drawString("map y: " + map.getY(), 5, 60);
                 //g.drawString("rectoria X: " + rectoria.getX(), 5, 70);
                // g.drawString("rectoria y: " + rectoria.getY(), 5, 80);
+               g.drawString("Score: " + score, 5, 80);
                 if (life <= 0) {
                     g.drawImage(Assets.end, (getWidth() / 2) - 450, (getHeight() / 2) - 150, 900, 300, null);
                 }
                 if (getKeyManager().pause) {
                     g.drawImage(Assets.pause, 0, (getHeight() / 3), getWidth(), getHeight() / 3, null);
                 }
+                
             } else {
                 minigame.render(g);
             }
