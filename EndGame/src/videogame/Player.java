@@ -61,16 +61,16 @@ public class Player extends Item{
     @Override
     public void tick() {
         if (game.getKeyManager().up) {
-           setY(getY() - 3);
+           setY(getY() - 1);
         }
         if (game.getKeyManager().down) {
-           setY(getY() + 3);
+           setY(getY() + 1);
         }
         if (game.getKeyManager().left) {
-           setX(getX() - 3);
+           setX(getX() - 1);
         }
         if (game.getKeyManager().right) {
-           setX(getX() + 3);
+           setX(getX() + 1);
         }
         // reset x position and y position if colision
         if (getX() + getWidth() >= game.getWidth()) {
