@@ -144,6 +144,7 @@ public class MiniGame /*implements Runnable */ {
                 }
                 if (game.getKeyManager().exit) {
                     game.setMG(!acierta); //finaliza el minigame
+                    game.setScore(game.getScore() + 10);
                 }
             } else {//cuando aún no termina todas las preguntas
                 if (/*game.getKeyManager().enter*/counter <= 0) {
@@ -166,6 +167,10 @@ public class MiniGame /*implements Runnable */ {
                 if (/*game.getKeyManager().sig ||*/game.getKeyManager().exit) {
                     //if(game.getKeyManager().exit)
                     game.setMG(!falla);//finaliza el minigame
+                    if(game.getScore() >= 2)
+                    game.setScore(game.getScore() - 2);
+                    else
+                        game.setScore(0);
                 }}else counter--;
             } else {//cuando no ha respondido
                 if (counter <= 0) {
