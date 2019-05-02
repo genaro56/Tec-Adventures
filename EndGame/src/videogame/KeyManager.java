@@ -49,14 +49,19 @@ public class KeyManager implements KeyListener {
               keys['P'] = true;  
         }
         else
-           keys[e.getKeyCode()] = true;
+           keys[e.getKeyCode()] = true;        
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
         // set false to every key released
-        if(e.getKeyCode() != 'P')
+        if(e.getKeyCode() != 'P'){
         keys[e.getKeyCode()] = false;
+        if(enter){
+            if(dpause)
+            keys['P'] = false;
+        }
+        }
         else{ if(dpause){
             keys['P'] = false;
             dpause = false;
