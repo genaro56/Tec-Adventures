@@ -138,11 +138,13 @@ public class MiniGame /*implements Runnable */ {
         //keyManager.tick();
         if (acierta) {//verifica si la respuesta fue correcta
             if (level == 5) {//es lo que hace cuando respondió todas las preguntas bien
+                
                 // botones para salir directamente o mostrar siguiente pantalla
                 if (game.getKeyManager().enter) {
                     finish = true;
                 }
                 if (game.getKeyManager().exit) {
+                    game.setScore(game.getScore() + 10);
                     game.setMG(!acierta); //finaliza el minigame
                 }
             } else {//cuando aún no termina todas las preguntas
@@ -158,7 +160,7 @@ public class MiniGame /*implements Runnable */ {
             }
 
         } else {
-            if (falla) {//cuando la respuesta es incorrecta
+            if (falla) {//cuando la respuesta es incorrecta                
                 if (counter <= 0) {
                 if (game.getKeyManager().enter) {
                     finish = true;
@@ -166,6 +168,9 @@ public class MiniGame /*implements Runnable */ {
                 if (/*game.getKeyManager().sig ||*/game.getKeyManager().exit) {
                     //if(game.getKeyManager().exit)
                     game.setMG(!falla);//finaliza el minigame
+                    if(game.getScore() >= 2)
+                    game.setScore(game.getScore() - 2);
+                    else game.setScore(0);
                 }}else counter--;
             } else {//cuando no ha respondido
                 if (counter <= 0) {
