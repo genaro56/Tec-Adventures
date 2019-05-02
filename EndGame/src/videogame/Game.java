@@ -41,6 +41,7 @@ public class Game implements Runnable {
     private MouseManager mouseManager; // to manage the mouse
     private int life;                  // to manage the lifes 
     private int score;
+    private boolean inicio;
     //Tenemos que hacer un areglo 
     //o lista encadenada de edificios 
     //para crear todos lo que vamosa usar
@@ -72,6 +73,7 @@ public class Game implements Runnable {
         keyManager = new KeyManager();
         mouseManager = new MouseManager();
         edificios = new LinkedList<Edificio>();
+        inicio = false;
 
         life = 5;
         score = 0;
@@ -205,6 +207,7 @@ public class Game implements Runnable {
 
     private void tick() {
         keyManager.tick();
+        if(inicio){
         
 
         //Estos son las llamadas a los métodos para 
@@ -275,6 +278,11 @@ public class Game implements Runnable {
             } else {
                 minigame.tick();
             }
+        }}
+        
+        else{
+            if(getKeyManager().enter)
+                inicio = true;
         }
     }
 
@@ -399,7 +407,8 @@ public class Game implements Runnable {
         } else {
 
             g = bs.getDrawGraphics();
-            g.drawImage(Assets.background, 0, 0, width, height, null);
+            //g.drawImage(Assets.background, 0, 0, width, height, null);
+            if(inicio){
             if (!MG) {
                 map.render(g);
                 player.render(g);
@@ -424,11 +433,14 @@ public class Game implements Runnable {
                     g.drawImage(Assets.end, (getWidth() / 2) - 450, (getHeight() / 2) - 150, 900, 300, null);
                 }
                 if (getKeyManager().pause) {
-                    g.drawImage(Assets.pause, 0, (getHeight() / 3), getWidth(), getHeight() / 3, null);
+                    g.drawImage(Assets.pause, 0,0, getWidth(), getHeight(), null);
                 }
 
             } else {
                 minigame.render(g);
+            }
+            }else{
+                g.drawImage(Assets.menu,0,0, getWidth(), getHeight(), null);
             }
             bs.show();
             g.dispose();

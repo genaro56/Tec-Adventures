@@ -39,6 +39,8 @@ public class Assets {
     public static BufferedImage lose;
     public static BufferedImage win;
     public static BufferedImage respuesta;
+    public static BufferedImage menu;
+    
 
     /**
      * initializing the images of the game
@@ -59,7 +61,7 @@ public class Assets {
         map = ImageLoader.loadImage("/images/map.jpg");
         boton = ImageLoader.loadImage("/images/enterButton.jpg");
         botonC = ImageLoader.loadImage("/images/botonC.png");
-        pause = ImageLoader.loadImage("/images/pause.png");
+        pause = ImageLoader.loadImage("/images/menupausa.png");
         bomb = new SoundClip("/audio/crash.wav");
         respuesta = ImageLoader.loadImage("/images/botonAzul.png");
         pregunta = ImageLoader.loadImage("/images/preguntaButton.jpg.png");
@@ -68,6 +70,7 @@ public class Assets {
         seleccion = ImageLoader.loadImage("/images/greenSelection.png");
          lose = ImageLoader.loadImage("/images/lose.png");
          win = ImageLoader.loadImage("/images/win.png");
+         menu = ImageLoader.loadImage("/images/Menu.jpeg");
 
         playerSp = ImageLoader.loadImage("/images/tec3.png");
          
