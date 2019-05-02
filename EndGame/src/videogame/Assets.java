@@ -15,6 +15,11 @@ public class Assets {
 
     public static BufferedImage background; // to store background image
     public static BufferedImage player;     // to store the player image
+    public static BufferedImage playerSp;   // player sprites
+    public static BufferedImage playerAr[]; // animacion arriba
+    public static BufferedImage playerAb[]; // animacion abajo
+    public static BufferedImage playerDe[]; // animacion derecha
+    public static BufferedImage playerIz[]; // animacion izquierda
     public static BufferedImage asteroid;   // to store the player image
     public static BufferedImage colision;   // to store the player image
     public static BufferedImage explotion;  // to store the player image
@@ -41,6 +46,10 @@ public class Assets {
     public static void init() {
         background = ImageLoader.loadImage("/images/rectoria.jpg");
         player = ImageLoader.loadImage("/images/Prototipo_2.png");
+
+        background = ImageLoader.loadImage("/images/Background.jpg");
+        player = ImageLoader.loadImage("/images/prot.png");
+
         asteroid = ImageLoader.loadImage("/images/asteroid.png");
         colision = ImageLoader.loadImage("/images/colision.png");
         explotion = ImageLoader.loadImage("/images/Explosion.png");
@@ -60,6 +69,30 @@ public class Assets {
          lose = ImageLoader.loadImage("/images/lose.png");
          win = ImageLoader.loadImage("/images/win.png");
 
+        playerSp = ImageLoader.loadImage("/images/tec3.png");
+         
+         SpreadSheet spreadsheet = new SpreadSheet(playerSp);
+         playerAr = new BufferedImage[9];
+         playerAb = new BufferedImage[9];
+         playerDe = new BufferedImage[9];
+         playerIz = new BufferedImage[9];
+         
+         for(int x=0; x<9; x++){
+             playerAr[x] = spreadsheet.crop(x*64, 0, 64, 64); 
+         }
+         
+         for(int x=0; x<9; x++){
+             playerAb[x] = spreadsheet.crop(x*64, 128, 64, 64);
+         }
+         
+         for(int x=0; x<9; x++){
+             playerDe[x] = spreadsheet.crop(x*64, 192, 64, 64);
+         }
+         
+         for(int x=0; x<9; x++){
+             playerIz[x] = spreadsheet.crop(x*64, 64, 64, 64);
+         }
+         
     }
 
 }
