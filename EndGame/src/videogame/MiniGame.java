@@ -215,10 +215,10 @@ public class MiniGame /*implements Runnable */ {
             //System.out.println(pregunta[level]);
 
             for (int i = 1; i < 5; i++) {//los fondos de las respuestas
-                g.drawImage(Assets.respuesta, 350, i * 150, 100, 50, null);
+                g.drawImage(Assets.respuesta, 350, i * 150, 150, 50, null);
             }
             // la imagen de selección(resalta la respuesta seleccionada)
-            g.drawImage(Assets.seleccion, 350, selected * 150, 100, 50, null);
+            g.drawImage(Assets.seleccion, 350, selected * 150, 150, 50, null);
             
             //cuando se presiona una respuesta resalta dependiendo de si es correcta
             if (acierta) {

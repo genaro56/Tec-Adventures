@@ -148,7 +148,7 @@ public class Game implements Runnable {
             edificios.add(new Edificio(posEdifX[i], posEdifY[i], edifWidth[i], edifHeight[i], this, i));
         }
 
-        boton = new Boton(0, 0, 100, 100, this);
+        boton = new Boton(0, 0, 250, 200, this);
         display.getJframe().addKeyListener(keyManager);
 
         display.getJframe().addMouseListener(mouseManager);
