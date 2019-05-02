@@ -33,30 +33,32 @@ public class Assets {
     public static BufferedImage seleccion;
     public static BufferedImage lose;
     public static BufferedImage win;
+    public static BufferedImage respuesta;
 
     /**
      * initializing the images of the game
      */
     public static void init() {
-        background = ImageLoader.loadImage("/images/Background.jpg");
+        background = ImageLoader.loadImage("/images/rectoria.jpg");
         player = ImageLoader.loadImage("/images/Prototipo_2.png");
         asteroid = ImageLoader.loadImage("/images/asteroid.png");
         colision = ImageLoader.loadImage("/images/colision.png");
         explotion = ImageLoader.loadImage("/images/Explosion.png");
         end = ImageLoader.loadImage("/images/GameOver.png");
+        rectoria = ImageLoader.loadImage("/images/Rectoría_final.png");
         A2 = ImageLoader.loadImage("/images/Aulas2.png");
         map = ImageLoader.loadImage("/images/map.jpg");
-        boton = ImageLoader.loadImage("/images/boton.png");
+        boton = ImageLoader.loadImage("/images/enterButton.jpg");
         botonC = ImageLoader.loadImage("/images/botonC.png");
         pause = ImageLoader.loadImage("/images/pause.png");
         bomb = new SoundClip("/audio/crash.wav");
-        pregunta = ImageLoader.loadImage("/images/pregunta.png");
+        respuesta = ImageLoader.loadImage("/images/botonAzul.png");
+        pregunta = ImageLoader.loadImage("/images/preguntaButton.jpg.png");
         correcta = ImageLoader.loadImage("/images/correcta.png");
         incorrecta = ImageLoader.loadImage("/images/incorrecta.png");
-        seleccion = ImageLoader.loadImage("/images/seleccion.png");
-        lose = ImageLoader.loadImage("/images/lose.png");
-        win = ImageLoader.loadImage("/images/win.png");
-        rectoria = ImageLoader.loadImage("/images/Rectoría_final.png");
+        seleccion = ImageLoader.loadImage("/images/greenSelection.png");
+         lose = ImageLoader.loadImage("/images/lose.png");
+         win = ImageLoader.loadImage("/images/win.png");
 
     }
 
