@@ -6,8 +6,6 @@
 package videogame;
 
 import java.awt.Graphics;
-import static java.time.Clock.system;
-//import system
 
 /**
  *

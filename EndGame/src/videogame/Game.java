@@ -204,6 +204,7 @@ public class Game implements Runnable {
 
     private void tick() {
         keyManager.tick();
+        player.tick();
 
         //Estos son las llamadas a los métodos para 
         //guardar cargar y reiniciar
@@ -248,7 +249,7 @@ public class Game implements Runnable {
                     Edificio edif = edificios.get(i - 1);
                     if (edif.intersecta(player)) {
                         boton.setIsVisible(true);
-                        minigame = new MiniGame(this, i);
+                        minigame = new MiniGame(this, i, width, height);
                         //boton.setEdificioNo(1);//aquí se pondría el numero del for
                         boton.tick();
                         /*asteroid.setX(getWidth()-100);
