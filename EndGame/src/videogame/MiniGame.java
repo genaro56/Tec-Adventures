@@ -48,6 +48,10 @@ public class MiniGame /*implements Runnable */ {
     private int selected;                              // para identificar qué respuesta está seleccionada
     private int counter;                               // para crear retrasos en los tiempos
     private boolean finish;                            // para verificar si ya se terminó el minijuego
+    
+    // Vamos  usarlas para que se desplieguen preguntas y respuestas en orden aleatorio
+    private int[] questionOrder = new int[6];                       // para guardar el orden de las preguntas
+    private int[] answerOrder = new int[5];                         // para guardar el orden de las respuestas
 
     /**
      * to create title, width and height and set the game is still not running
@@ -64,10 +68,27 @@ public class MiniGame /*implements Runnable */ {
         this.game = game;
         //keyManager = new KeyManager();
         //mouseManager = new MouseManager();
-        //life = 5;
-        level = 1;
+        //life = 5;      
+        
+        level = 1;    // se va a iniciar en el nivel 1 del arreglo
         selected = 1; // comienza en la primer respuesta
         counter = 30; // se inicia con un retraso por si se accedió con un enter
+        
+        for (int i = 1; i < 6; i++) { // se crea el orden aleatorio de las preguntas
+            boolean no;
+            int iNum;
+            do{// se crea valor aleatorio
+                no =  false;
+            iNum = (int)(Math.random()* 5+1);
+            for(int j = 1; j < 5; j++){ // se verifica que no esté la pegunta
+                if(iNum == questionOrder[j]){                    
+                    no = true;
+                }
+            }
+            }while(no);
+            questionOrder[i] = iNum;// se guarda el numero de pregunta
+        }
+        
         // aquí lee el achivo dependiendo del número del edificio
         try {
             leeArchivo("edificio" + number);
@@ -138,13 +159,14 @@ public class MiniGame /*implements Runnable */ {
 
         } else {
             if (falla) {//cuando la respuesta es incorrecta
+                if (counter <= 0) {
                 if (game.getKeyManager().enter) {
                     finish = true;
                 }
                 if (/*game.getKeyManager().sig ||*/game.getKeyManager().exit) {
                     //if(game.getKeyManager().exit)
                     game.setMG(!falla);//finaliza el minigame
-                }
+                }}else counter--;
             } else {//cuando no ha respondido
                 if (counter <= 0) {
                     for (int i = 1; i < 5; i++) { //se hace el tick de cada respuesta
@@ -169,7 +191,7 @@ public class MiniGame /*implements Runnable */ {
                     // para seleccionar la respuesta
                     // podríamos usar espacio también
                     if (game.getKeyManager().enter) { //usamos enter
-                        setAcierta(selected == res[level], selected); //verificamos si es correcta o no
+                        setAcierta(answerOrder[selected] == res[questionOrder[level]], selected); //verificamos si es correcta o no
                         setFalla(!acierta, selected);
                         counter = 30;
                     }
@@ -203,7 +225,7 @@ public class MiniGame /*implements Runnable */ {
             
             //el fondo para la pregunta y la pregunta
             g.drawImage(Assets.pregunta, 250, 50, 300, 100, null);
-            g.drawString(pregunta[level], 300, 100);
+            g.drawString(pregunta[questionOrder[level]], 300, 100);
             //System.out.println(pregunta[level]);
 
             for (int i = 1; i < 5; i++) {//los fondos de las respuestas
@@ -285,8 +307,25 @@ public class MiniGame /*implements Runnable */ {
      *
      */
     public void iniciaRespuestas() {
+        //int iNum = (int)(Math.random()* 4+1);
+        for(int j = 1; j < 5; j++){// se limpia el arreglo en cada nivel
+            answerOrder[j] = 0;
+        }
         for (int i = 1; i < 5; i++) {
-            respuestas[i] = new Respuesta(350, i * 150, respuesta[level][i], i, res[level], game, this);
+            boolean no;
+            int iNum;
+            do{// se crea el orden aleatorio
+                no =  false;
+            iNum = (int)(Math.random()* 4+1);
+            for(int j = 1; j < 5; j++){//se verifica que no se haya insertado la respuestas
+                if(iNum == answerOrder[j]){                    
+                    no = true;
+                }
+            }
+            }while(no);
+            answerOrder[i] = iNum; //se inicia el arreglo del orden de respuestas
+            // se inician las respuestas
+            respuestas[i] = new Respuesta(350, i * 150, respuesta[questionOrder[level]][iNum], iNum, res[questionOrder[level]], i, game, this);
             //System.out.println(i + ": " +  res[level]);
         }
     }
