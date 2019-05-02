@@ -49,7 +49,6 @@ public class Game implements Runnable {
     private int[] edifWidth = new int[30];
     private int[] edifHeight = new int[30];
 
-    private Edificio rectoria;
     private Edificio A2;
     private Boton boton;
     private MiniGame minigame;
@@ -113,7 +112,7 @@ public class Game implements Runnable {
         // Se crea el jugador
         player = new Player(-10, 520, -20, 50, 50, this);
         // Se cra el mapa para que se pueda desplazar la vista
-        map = new Mapa(-50, -500, getHeight() * 3, getWidth() * 3, this);
+        map = new Mapa(0, 0, getHeight(), getWidth(), this);
         //minigame = new MiniGame(this, 1);
         // Aquí se van a crear todos los edificios dentro de la lista
         /* Algo como esto (Podemos crear un achivo 
@@ -128,7 +127,7 @@ public class Game implements Runnable {
          */
         //Esta es una creación individual
         //rectoria = new Edificio(370, 350, 230, 140, this, 1);
-        A2 = new Edificio(470, 625, 600, 120, this, 2);
+        A2 = new Edificio(270, 680, 600, 120, this, 2);
         
         try {
                 leeArchivo("guardado.txt");

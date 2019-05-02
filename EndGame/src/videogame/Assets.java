@@ -34,12 +34,13 @@ public class Assets {
     public static BufferedImage lose;
     public static BufferedImage win;
     public static BufferedImage respuesta;
+    public static BufferedImage start;
 
     /**
      * initializing the images of the game
      */
     public static void init() {
-        background = ImageLoader.loadImage("/images/rectoria.jpg");
+        background = ImageLoader.loadImage("/images/bg.png");
         player = ImageLoader.loadImage("/images/Prototipo_2.png");
         asteroid = ImageLoader.loadImage("/images/asteroid.png");
         colision = ImageLoader.loadImage("/images/colision.png");
@@ -47,7 +48,7 @@ public class Assets {
         end = ImageLoader.loadImage("/images/GameOver.png");
         rectoria = ImageLoader.loadImage("/images/Rectoría_final.png");
         A2 = ImageLoader.loadImage("/images/Aulas2.png");
-        map = ImageLoader.loadImage("/images/map.jpg");
+        map = ImageLoader.loadImage("/images/bg.png");
         boton = ImageLoader.loadImage("/images/enterButton.jpg");
         botonC = ImageLoader.loadImage("/images/botonC.png");
         pause = ImageLoader.loadImage("/images/pause.png");
@@ -59,6 +60,7 @@ public class Assets {
         seleccion = ImageLoader.loadImage("/images/greenSelection.png");
          lose = ImageLoader.loadImage("/images/lose.png");
          win = ImageLoader.loadImage("/images/win.png");
+         start = ImageLoader.loadImage("/images/start.png");
 
     }
 
