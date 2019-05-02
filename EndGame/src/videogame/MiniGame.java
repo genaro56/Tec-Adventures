@@ -203,6 +203,7 @@ public class MiniGame /*implements Runnable */ {
             
             //el fondo para la pregunta y la pregunta
             g.drawImage(Assets.pregunta, 250, 50, 300, 100, null);
+            g.setColor(Color.white);
             g.drawString(pregunta[level], 300, 100);
             //System.out.println(pregunta[level]);
 
