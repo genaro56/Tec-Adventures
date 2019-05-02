@@ -31,7 +31,7 @@ public class Player extends Item{
         this.height = height;
         this.game = game;
         colision = 0;
-        this.playerAr = new Animation(Assets.playerAr, 100);
+        this.playerAr = new Animation(Assets.playerAr, 10);
         this.playerAb = new Animation(Assets.playerAb, 100);
         this.playerDe = new Animation(Assets.playerDe, 100);
         this.playerIz = new Animation(Assets.playerIz, 100);
