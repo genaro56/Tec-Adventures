@@ -296,7 +296,6 @@ public class MiniGame /*implements Runnable */ {
                 respuesta[i][j] = fileIn.readLine();
             }
             String dato = fileIn.readLine();
-            System.out.println(dato);
             res[i] = (Integer.parseInt(dato));
         }
 
@@ -309,6 +308,7 @@ public class MiniGame /*implements Runnable */ {
      */
     public void iniciaRespuestas() {
         //int iNum = (int)(Math.random()* 4+1);
+        System.out.println("hola");
         for(int j = 1; j < 5; j++){// se limpia el arreglo en cada nivel
             answerOrder[j] = 0;
         }
