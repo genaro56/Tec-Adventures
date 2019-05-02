@@ -45,7 +45,7 @@ public class Assets {
      * initializing the images of the game
      */
     public static void init() {
-        background = ImageLoader.loadImage("/images/bg.png");
+        background = ImageLoader.loadImage("/images/bg_alt.png");
         player = ImageLoader.loadImage("/images/Prototipo_2.png");
 
         background = ImageLoader.loadImage("/images/Background.jpg");
@@ -57,7 +57,7 @@ public class Assets {
         end = ImageLoader.loadImage("/images/GameOver.png");
         rectoria = ImageLoader.loadImage("/images/Rectoría_final.png");
         A2 = ImageLoader.loadImage("/images/Aulas2.png");
-        map = ImageLoader.loadImage("/images/bg.png");
+        map = ImageLoader.loadImage("/images/bg_alt.png");
         boton = ImageLoader.loadImage("/images/enterButton.jpg");
         botonC = ImageLoader.loadImage("/images/botonC.png");
         pause = ImageLoader.loadImage("/images/pause.png");
