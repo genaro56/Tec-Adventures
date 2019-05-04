@@ -60,6 +60,7 @@ public class KeyManager implements KeyListener {
         if(enter){
             if(dpause)
             keys['P'] = false;
+            dpause = false;
         }
         }
         else{ if(dpause){
