@@ -54,16 +54,16 @@ public class Edificio extends Item{
     @Override
     public void tick() {      
         if (game.getKeyManager().up) {
-           setY(getY() + 1);
+           setY(getY() + 3);
         }
         if (game.getKeyManager().down) {
-           setY(getY() - 1);
+           setY(getY() - 3);
         }
         if (game.getKeyManager().left) {
-           setX(getX() + 1);
+           setX(getX() + 3);
         }
         if (game.getKeyManager().right) {
-           setX(getX() - 1);
+           setX(getX() - 3);
         }
     }
     public Rectangle getPerimetro(){

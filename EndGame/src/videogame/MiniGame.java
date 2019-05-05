@@ -125,6 +125,7 @@ public class MiniGame /*implements Runnable */ {
                 if (game.getKeyManager().exit) {
                     game.setScore(game.getScore() + 10);
                     game.setMG(!acierta); //finaliza el minigame
+                    game.setScore(game.getScore() + 10);
                 }
             } else {//cuando aún no termina todas las preguntas
                 if (/*game.getKeyManager().enter*/counter <= 0) {
@@ -139,10 +140,8 @@ public class MiniGame /*implements Runnable */ {
             }
 
         } else {
-
-            if (falla) {//cuando la respuesta es incorrecta                
-                if (counter <= 0) {
-
+            if (falla) {//cuando la respuesta es incorrecta
+                if(counter <= 0) {
                 if (game.getKeyManager().enter) {
                     finish = true;
                 }
@@ -154,9 +153,6 @@ public class MiniGame /*implements Runnable */ {
                     game.setScore(game.getScore() - 2);
                     else game.setScore(0);
                 }}else counter--;
-
-                
-
             } else {//cuando no ha respondido
                 if (counter <= 0) {
                     for (int i = 1; i < 5; i++) { //se hace el tick de cada respuesta
@@ -215,14 +211,15 @@ public class MiniGame /*implements Runnable */ {
             
             //el fondo para la pregunta y la pregunta
             g.drawImage(Assets.pregunta, 250, 50, 300, 100, null);
+            g.setColor(Color.white);
             g.drawString(pregunta[level], 300, 100);
             //System.out.println(pregunta[level]);
 
             for (int i = 1; i < 5; i++) {//los fondos de las respuestas
-                g.drawImage(Assets.respuesta, 350, i * 150, 100, 50, null);
+                g.drawImage(Assets.respuesta, 350, i * 150, 150, 50, null);
             }
             // la imagen de selección(resalta la respuesta seleccionada)
-            g.drawImage(Assets.seleccion, 350, selected * 150, 100, 50, null);
+            g.drawImage(Assets.seleccion, 350, selected * 150, 150, 50, null);
             
             //cuando se presiona una respuesta resalta dependiendo de si es correcta
             if (acierta) {

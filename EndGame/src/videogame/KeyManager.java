@@ -66,6 +66,7 @@ public class KeyManager implements KeyListener {
         }
     }
     
+    
     /**
      * to enable or disable moves on every tick
      */
