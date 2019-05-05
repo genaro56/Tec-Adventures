@@ -367,7 +367,7 @@ public class Game implements Runnable {
             dato = fileIn.readLine();
             edifHeight[i] = (Integer.parseInt(dato));
             if(!base){
-                Edificio edificio = edificios.get(i-1);
+                Edificio edificio = edificios.get(i);
             edificio.setX(posEdifX[i]);
             edificio.setY(posEdifY[i]);
             }
@@ -391,9 +391,12 @@ public class Game implements Runnable {
     public void grabaArchivo(String archivo) throws IOException {
 
         PrintWriter fileOut = new PrintWriter(new FileWriter(archivo));
+        fileOut.println("");
         fileOut.println("" + life);        
-        for (int i = 1; i <= cantEdif; i++) {
-            Edificio edificio = edificios.get(i-1);
+        fileOut.println("");
+        fileOut.println(""+cantEdif);
+        for (int i = 0; i < cantEdif; i++) {
+            Edificio edificio = edificios.get(i);
             fileOut.println("");
             fileOut.println("" + edificio.getX());
             fileOut.println("" + edificio.getY());            
