@@ -42,6 +42,7 @@ public class Game implements Runnable {
     private int life;                  // to manage the lifes 
     private int score;
     private boolean inicio;
+    private int dispMen;
     //Tenemos que hacer un areglo 
     //o lista encadenada de edificios 
     //para crear todos lo que vamosa usar
@@ -59,6 +60,7 @@ public class Game implements Runnable {
     private Boton boton;
     private MiniGame minigame;
     private boolean MG;
+    private boolean intersectando;
 
     /**
      * to create title, width and height and set the game is still not running
@@ -253,11 +255,14 @@ public class Game implements Runnable {
                 //Aquí tenemos que modificar para que sean la intersecciones 
                 //con los edificios y que se active la opción de minijuego
                 /*usar un for para revisar todos los edificios*/
-                for (int i = 1; i <= 1; i++) {
+                intersectando = false;
+                for (int i = 1; i <= cantEdif; i++) {
                     Edificio edif = edificios.get(i - 1);
                     if (edif.intersecta(player)) {
                         boton.setIsVisible(true);
                         minigame = new MiniGame(this, i, width, height);
+                        player.setColision(true);
+                        intersectando = true;
                         //boton.setEdificioNo(1);//aquí se pondría el numero del for
                         boton.tick();
                         /*asteroid.setX(getWidth()-100);
@@ -271,8 +276,9 @@ public class Game implements Runnable {
             life--;*/
                     } else {
                         boton.setIsVisible(false);
-                        boton.setClicked(false);
+                        boton.setClicked(false);                                          
                     }
+                    player.setColision(intersectando);      
                 }
                 // Esto podría funcionar solo si usamos enemigos
                 // y lo anterior se usaría para los enemigos
@@ -427,8 +433,8 @@ public class Game implements Runnable {
                 g.setColor(Color.yellow);
                 g.drawString("Vidas: " + life, 5, 20);
                 g.setColor(Color.red);
-                g.drawString("Player X: " + player.getX(), 5, 30);
-                g.drawString("Player y: " + player.getY(), 5, 40);
+                g.drawString("Player X: " + (player.getX() - map.getX()), 5, 30);
+                g.drawString("Player y: " + (player.getY() - map.getY()), 5, 40);
                 g.drawString("map X: " + map.getX(), 5, 50);
                 g.drawString("map y: " + map.getY(), 5, 60);
                 //g.drawString("rectoria X: " + rectoria.getX(), 5, 70);
@@ -446,7 +452,15 @@ public class Game implements Runnable {
                 minigame.render(g);
             }
             }else{
-                g.drawImage(Assets.menu,0,0, getWidth(), getHeight(), null);
+                if(dispMen <= 0){
+                    g.drawImage(Assets.menu,0,0, getWidth(), getHeight(), null);
+                    
+                    dispMen = dispMen <= -30?30:dispMen;
+                }
+                else{
+                    g.drawImage(Assets.menu2,0,0, getWidth(), getHeight(), null);
+                }
+                dispMen--;
             }
             bs.show();
             g.dispose();

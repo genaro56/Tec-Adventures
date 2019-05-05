@@ -41,6 +41,7 @@ public class Assets {
     public static BufferedImage respuesta;
     public static BufferedImage start;
     public static BufferedImage menu;
+    public static BufferedImage menu2;
     
 
     /**
@@ -71,7 +72,8 @@ public class Assets {
         seleccion = ImageLoader.loadImage("/images/greenSelection.png");
          lose = ImageLoader.loadImage("/images/lose.png");
          win = ImageLoader.loadImage("/images/win.png");
-         menu = ImageLoader.loadImage("/images/Menu.jpeg");
+         menu = ImageLoader.loadImage("/images/menu.jpeg");
+         menu2 = ImageLoader.loadImage("/images/menu2.jpeg");
 
 
         playerSp = ImageLoader.loadImage("/images/tec3.png");

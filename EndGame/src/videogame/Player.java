@@ -18,7 +18,12 @@ public class Player extends Item{
     private int width;
     private int height;
     private Game game;
-    private int colision;
+    private boolean colision;
+    private boolean colisionU;
+    private boolean colisionD;
+    private boolean colisionL;
+    private boolean colisionR;
+    private boolean preColision;
     private Animation playerAr;
     private Animation playerAb;
     private Animation playerDe;
@@ -30,7 +35,7 @@ public class Player extends Item{
         this.width = width;
         this.height = height;
         this.game = game;
-        colision = 0;
+        colision = false;
         this.playerAr = new Animation(Assets.playerAr, 10);
         this.playerAb = new Animation(Assets.playerAb, 100);
         this.playerDe = new Animation(Assets.playerDe, 100);
@@ -61,7 +66,7 @@ public class Player extends Item{
         this.height = height;
     }
 
-    public void setColision(int colision) {
+    public void setColision(boolean colision) {
         this.colision = colision;
     }
 
@@ -85,17 +90,48 @@ public class Player extends Item{
 
     @Override
     public void tick() {
-        if (game.getKeyManager().up) {
-           setY(getY() - 3);
+        if (game.getKeyManager().up ) {
+            if(colision){
+                if(!preColision){
+                    preColision = true;
+                    colisionU = true;
+                }
+            }else colisionU = false;
+            System.out.println(colisionU);
+            if(!colisionU)
+            setY(getY() - 3);
         }
         if (game.getKeyManager().down) {
-           setY(getY() + 3);
+            if(colision){
+                if(!preColision){
+                    preColision = true;
+                    colisionD = true;
+                }
+            }else colisionD = false;
+            if(!colisionD)
+                setY(getY() + 3);
         }
         if (game.getKeyManager().left) {
-           setX(getX() - 3);
+            if(colision){
+                if(!preColision){
+                    preColision = true;
+                    colisionL = true;
+                }
+            }else colisionL = false;
+            if(!colisionL)
+                setX(getX() - 3);
+            
         }
         if (game.getKeyManager().right) {
-           setX(getX() + 3);
+             if(colision){
+                if(!preColision){
+                    preColision = true;
+                    colisionR = true;
+                }
+             }else colisionR = false;
+            if(!colisionR)                
+                setX(getX() + 3);
+            
         }
         // reset x position and y position if colision
         if (getX() + 40 >= game.getWidth()) {
@@ -110,7 +146,7 @@ public class Player extends Item{
         else if (getY() <= -10) {
             setY(-10);
         }
-        colision--;        
+        preColision = colision;        
     }
     public Rectangle getPerimetro(){
         return new Rectangle(getX(), getY(), getWidth(), getHeight());
