@@ -1,12 +1,44 @@
+vidas
 5
-2
-Rectoria
+Edificios
+8
+Rectoria:
 450
 186
 460
 280
-
+Aulas 1:
+0
+0
+0
+0
+Aulas 2:
 290
 525
 600
 120
+Aulas 3:
+0
+0
+0
+0
+Aulas 5(Biotecnología):
+0
+0
+0
+0
+Aulas 6:
+0
+0
+0
+0
+Aulas 7:
+0
+0
+0
+0
+Arquitectura:
+0
+0
+0
+0

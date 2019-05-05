@@ -96,8 +96,7 @@ public class Player extends Item{
                     preColision = true;
                     colisionU = true;
                 }
-            }else colisionU = false;
-            System.out.println(colisionU);
+            }else colisionU = false;            
             if(!colisionU)
             setY(getY() - 3);
         }

@@ -75,14 +75,14 @@ public class Edificio extends Item{
 
     @Override
     public void render(Graphics g) {
-        switch (edN) {
-            case 1:
-                g.drawImage(Assets.rectoria, getX(), getY(), getWidth(), getHeight(), null);
-                break;
+        /*switch (edN) {
+            //case 1:*/
+                g.drawImage(Assets.edificios[edN], getX(), getY(), getWidth(), getHeight(), null);
+              /*  break;
             case 2:
                 g.drawImage(Assets.A2, getX(), getY(), getWidth(), getHeight(), null);
                 break;
-        }     
+        }     */
     }
 }
 

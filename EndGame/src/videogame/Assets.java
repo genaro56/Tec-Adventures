@@ -42,7 +42,7 @@ public class Assets {
     public static BufferedImage start;
     public static BufferedImage menu;
     public static BufferedImage menu2;
-    
+    public static BufferedImage[] edificios;
 
     /**
      * initializing the images of the game
@@ -70,36 +70,42 @@ public class Assets {
         correcta = ImageLoader.loadImage("/images/correcta.png");
         incorrecta = ImageLoader.loadImage("/images/incorrecta.png");
         seleccion = ImageLoader.loadImage("/images/greenSelection.png");
-         lose = ImageLoader.loadImage("/images/lose.png");
-         win = ImageLoader.loadImage("/images/win.png");
-         menu = ImageLoader.loadImage("/images/menu.jpeg");
-         menu2 = ImageLoader.loadImage("/images/menu2.jpeg");
-
+        lose = ImageLoader.loadImage("/images/lose.png");
+        win = ImageLoader.loadImage("/images/win.png");
+        menu = ImageLoader.loadImage("/images/menu.jpeg");
+        menu2 = ImageLoader.loadImage("/images/menu2.jpeg");
+        edificios = new BufferedImage[30];
+        
+        for(int i = 0; i < 30; i++){
+            
+            edificios[i] = ImageLoader.loadImage("/images/Edificios/edificio_" + i + ".jpg");
+            System.out.println("exito"+i);
+        }
 
         playerSp = ImageLoader.loadImage("/images/tec3.png");
-         
-         SpreadSheet spreadsheet = new SpreadSheet(playerSp);
-         playerAr = new BufferedImage[9];
-         playerAb = new BufferedImage[9];
-         playerDe = new BufferedImage[9];
-         playerIz = new BufferedImage[9];
-         
-         for(int x=0; x<9; x++){
-             playerAr[x] = spreadsheet.crop(x*64, 0, 64, 64); 
-         }
-         
-         for(int x=0; x<9; x++){
-             playerAb[x] = spreadsheet.crop(x*64, 128, 64, 64);
-         }
-         
-         for(int x=0; x<9; x++){
-             playerDe[x] = spreadsheet.crop(x*64, 192, 64, 64);
-         }
-         
-         for(int x=0; x<9; x++){
-             playerIz[x] = spreadsheet.crop(x*64, 64, 64, 64);
-         }
-         
+
+        SpreadSheet spreadsheet = new SpreadSheet(playerSp);
+        playerAr = new BufferedImage[9];
+        playerAb = new BufferedImage[9];
+        playerDe = new BufferedImage[9];
+        playerIz = new BufferedImage[9];
+
+        for (int x = 0; x < 9; x++) {
+            playerAr[x] = spreadsheet.crop(x * 64, 0, 64, 64);
+        }
+
+        for (int x = 0; x < 9; x++) {
+            playerAb[x] = spreadsheet.crop(x * 64, 128, 64, 64);
+        }
+
+        for (int x = 0; x < 9; x++) {
+            playerDe[x] = spreadsheet.crop(x * 64, 192, 64, 64);
+        }
+
+        for (int x = 0; x < 9; x++) {
+            playerIz[x] = spreadsheet.crop(x * 64, 64, 64, 64);
+        }
+
     }
 
 }

@@ -154,7 +154,7 @@ public class Game implements Runnable {
         } catch (IOException ex) {
             System.out.println("Error en " + ex.toString());
         }
-        for (int i = 1; i <= 2; i++) {
+        for (int i = 0; i < cantEdif; i++) {
             edificios.add(new Edificio(posEdifX[i], posEdifY[i], edifWidth[i], edifHeight[i], this, i));
         }
 
@@ -256,15 +256,15 @@ public class Game implements Runnable {
                 //con los edificios y que se active la opción de minijuego
                 /*usar un for para revisar todos los edificios*/
                 intersectando = false;
-                for (int i = 1; i <= cantEdif; i++) {
-                    Edificio edif = edificios.get(i - 1);
+                for (int i = 0; i < cantEdif; i++) {
+                    Edificio edif = edificios.get(i);
                     if (edif.intersecta(player)) {
-                        boton.setIsVisible(true);
+                        //boton.setIsVisible(true);
                         minigame = new MiniGame(this, i, width, height);
                         player.setColision(true);
                         intersectando = true;
                         //boton.setEdificioNo(1);//aquí se pondría el numero del for
-                        boton.tick();
+                        //boton.tick();
                         /*asteroid.setX(getWidth()-100);
             asteroid.setY(0);
             asteroid.setVelocity(asteroid.getVelocity() + 1);
@@ -274,11 +274,14 @@ public class Game implements Runnable {
             player.setColision(30);
             Assets.bomb.play();
             life--;*/
-                    } else {
-                        boton.setIsVisible(false);
+                    } else {                        
                         boton.setClicked(false);                                          
                     }
+                    if(intersectando){
+                        boton.tick();
+                    }
                     player.setColision(intersectando);      
+                    boton.setIsVisible(intersectando);
                 }
                 // Esto podría funcionar solo si usamos enemigos
                 // y lo anterior se usaría para los enemigos
@@ -347,10 +350,12 @@ public class Game implements Runnable {
  
         }
         String dato = fileIn.readLine();
+        dato = fileIn.readLine();
         life = (Integer.parseInt(dato));
         dato = fileIn.readLine();
+        dato = fileIn.readLine();
         cantEdif = (Integer.parseInt(dato));
-        for (int i = 1; i <= cantEdif; i++) {
+        for (int i = 0; i < cantEdif; i++) {
             dato = fileIn.readLine();
             dato = fileIn.readLine();
             System.out.println(dato);
