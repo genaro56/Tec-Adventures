@@ -36,7 +36,7 @@ public class Game implements Runnable {
     private boolean running;                    // to set the game
     private Player player;                      // to use a player
     /* Solo si si inlcuimos enemigos
-    //private Enemy asteroid;                   // to have an enemy*/   
+    //private Enemy asteroid;                   // to have an enemy*/
     private Mapa map;                           // to move the map
     private KeyManager keyManager;              // to manage the keyboard
     private MouseManager mouseManager;          // to manage the mouse
@@ -46,7 +46,7 @@ public class Game implements Runnable {
     private int dispMen;                        // to animation of menu
     private LinkedList<Edificio> edificios;     // to save the buidings
     private int cantEdif;                       // to manage the buildings' quantity
-    
+
     private int[] posEdifX = new int[30];       // to save the buildings' possition X
     private int[] posEdifY = new int[30];       // to save the buildings' possition Y
     private int[] edifWidth = new int[30];      // to save the buildings' width
@@ -56,6 +56,9 @@ public class Game implements Runnable {
     private MiniGame minigame;                  // to use minigames
     private boolean MG;                         // to activate minigame
     private boolean intersectando;              // to verify player's intejections
+    private boolean intro;
+    private int contIntro;
+    private int contEnter;
 
     /**
      * to create title, width and height and set the game is still not running
@@ -73,6 +76,8 @@ public class Game implements Runnable {
         mouseManager = new MouseManager();
         edificios = new LinkedList<Edificio>();
         inicio = false;
+        intro = false;
+        contIntro = 0;
         life = 5;
         score = 0;
         MG = false;
@@ -136,7 +141,6 @@ public class Game implements Runnable {
         // Se crea el botón que se utilizará para entrar a los minijuegos
         boton = new Boton(0, 0, 250, 200, this);
 
-        
         display.getJframe().addKeyListener(keyManager);
         display.getJframe().addMouseListener(mouseManager);
         display.getJframe().addMouseMotionListener(mouseManager);
@@ -223,17 +227,16 @@ public class Game implements Runnable {
             //Aquí se activa cada tick del juego cuando no está pausado
             if (!getKeyManager().pause) {
                 if (!MG) {
-                    move(getKeyManager());                    
-                    
+                    move(getKeyManager());
+
                     intersectando = false;
                     for (int i = 0; i < cantEdif; i++) {
                         Edificio edif = edificios.get(i);
                         if (edif.intersecta(player)) {
-                            //boton.setIsVisible(true);
                             minigame = new MiniGame(this, i, width, height);
                             player.setColision(true);
                             intersectando = true;
-                            
+
                         } else {
                             boton.setClicked(false);
                         }
@@ -253,8 +256,17 @@ public class Game implements Runnable {
                 }
             }
         } else {
-            if (getKeyManager().enter) {
+            contIntro--;
+            if (intro){
+                contEnter--;
+            if (getKeyManager().enter && contEnter <= 0 || contIntro <= 0)
                 inicio = true;
+            }else {
+                if (getKeyManager().enter){
+                    intro = true;
+                    contIntro = 1200;
+                    contEnter = 30;
+                }
             }
         }
     }
@@ -262,8 +274,8 @@ public class Game implements Runnable {
     //Esto sirve para sincronizar los movimientos del mapa y los edificios 
     //con el jugador
     /**
-     * 
-     * @param km 
+     *
+     * @param km
      */
     private void move(KeyManager km) {
         if (km.down || km.left || km.up || km.right) {
@@ -290,7 +302,6 @@ public class Game implements Runnable {
         }
     }
 
-    
     public void leeArchivo(String archivo, boolean base) throws IOException {
         BufferedReader fileIn;
         try {
@@ -400,15 +411,15 @@ public class Game implements Runnable {
                     g.drawString("Player X: " + (player.getX() - map.getX()), 5, 30);
                     g.drawString("Player y: " + (player.getY() - map.getY()), 5, 40);
                     g.drawString("map X: " + map.getX(), 5, 50);
-                    g.drawString("map y: " + map.getY(), 5, 60);                  
-                                                          
+                    g.drawString("map y: " + map.getY(), 5, 60);
+
                     if (life <= 0) {
                         g.drawImage(Assets.end, (getWidth() / 2) - 450, (getHeight() / 2) - 150, 900, 300, null);
                     }
                     if (getKeyManager().pause) {
                         g.drawImage(Assets.pause, 0, 0, getWidth(), getHeight(), null);
                     }
-                    
+
                     //Para imprimir la puntuación del jugador
                     g.drawString("Score: " + score, 5, 80);//falta formato
 
@@ -417,16 +428,26 @@ public class Game implements Runnable {
                 }
             } else {
                 // Hacer que parpadee la imagen del menu
-                if (dispMen <= 0) {
-                    g.drawImage(Assets.menu, 0, 0, getWidth(), getHeight(), null);
+                if (intro) {
+                    if (dispMen <= 0) {
+                        g.drawImage(Assets.intro, 0, 0, getWidth(), getHeight(), null);
 
-                    dispMen = dispMen <= -30 ? 30 : dispMen;
+                        dispMen = dispMen <= -30 ? 30 : dispMen;
+                    } else {
+                        g.drawImage(Assets.intro2, 0, 0, getWidth(), getHeight(), null);
+                    }
                 } else {
-                    g.drawImage(Assets.menu2, 0, 0, getWidth(), getHeight(), null);
+                    if (dispMen <= 0) {
+                        g.drawImage(Assets.menu, 0, 0, getWidth(), getHeight(), null);
+
+                        dispMen = dispMen <= -30 ? 30 : dispMen;
+                    } else {
+                        g.drawImage(Assets.menu2, 0, 0, getWidth(), getHeight(), null);
+                    }
                 }
                 dispMen--;
             }
-            
+
             bs.show();
             g.dispose();
         }

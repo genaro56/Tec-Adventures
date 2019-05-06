@@ -41,6 +41,8 @@ public class Assets {
     public static BufferedImage start;        //
     public static BufferedImage menu;         //
     public static BufferedImage menu2;        //
+    public static BufferedImage intro;         //
+    public static BufferedImage intro2;        //
     public static BufferedImage[] edificios;  // to store buildings's images
     //public int cantEdif;         
 
@@ -66,6 +68,8 @@ public class Assets {
         win = ImageLoader.loadImage("/images/win.png");
         menu = ImageLoader.loadImage("/images/menu.jpeg");
         menu2 = ImageLoader.loadImage("/images/menu2.jpeg");
+        intro = ImageLoader.loadImage("/images/intro.png");
+        intro2 = ImageLoader.loadImage("/images/intro2.png");
         edificios = new BufferedImage[30];
 
         for (int i = 0; i < 30; i++) {
