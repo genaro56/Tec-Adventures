@@ -16,13 +16,26 @@ import java.awt.image.BufferedImage;
  * @author berny
  */
 public class SpreadSheet {
+
     private BufferedImage sheet;
-    
-    public SpreadSheet(BufferedImage sheet){
+
+    /**
+     *
+     * @param sheet
+     */
+    public SpreadSheet(BufferedImage sheet) {
         this.sheet = sheet;
     }
-    
-    public BufferedImage crop(int x, int y, int width, int height){
+
+    /**
+     *
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+     * @return
+     */
+    public BufferedImage crop(int x, int y, int width, int height) {
         return sheet.getSubimage(x, y, width, height);
     }
 }

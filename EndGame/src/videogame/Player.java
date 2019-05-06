@@ -12,23 +12,32 @@ import java.awt.Rectangle;
  *
  * @author jesus
  */
-public class Player extends Item{
+public class Player extends Item {
 
-    private int direction;
-    private int width;
-    private int height;
-    private Game game;
-    private boolean colision;
-    private boolean colisionU;
-    private boolean colisionD;
-    private boolean colisionL;
-    private boolean colisionR;
-    private boolean preColision;
-    private Animation playerAr;
-    private Animation playerAb;
-    private Animation playerDe;
-    private Animation playerIz;
-    
+    private int direction;         //
+    private int width;             //
+    private int height;            //
+    private Game game;             //
+    private boolean colision;      //
+    private boolean colisionU;     //
+    private boolean colisionD;     //
+    private boolean colisionL;     //
+    private boolean colisionR;     //
+    private boolean preColision;   //
+    private Animation playerAr;    //
+    private Animation playerAb;    //
+    private Animation playerDe;    //
+    private Animation playerIz;    //
+
+    /**
+     * 
+     * @param x
+     * @param y
+     * @param direction
+     * @param width
+     * @param height
+     * @param game 
+     */
     public Player(int x, int y, int direction, int width, int height, Game game) {
         super(x, y);
         this.direction = direction;
@@ -42,34 +51,66 @@ public class Player extends Item{
         this.playerIz = new Animation(Assets.playerIz, 100);
     }
 
+    /**
+     * 
+     * @return 
+     */
     public int getDirection() {
         return direction;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public int getWidth() {
         return width;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public int getHeight() {
         return height;
     }
 
+    /**
+     * 
+     * @param direction 
+     */
     public void setDirection(int direction) {
         this.direction = direction;
     }
 
+    /**
+     * 
+     * @param width 
+     */
     public void setWidth(int width) {
         this.width = width;
     }
 
+    /**
+     * 
+     * @param height 
+     */
     public void setHeight(int height) {
         this.height = height;
     }
 
+    /**
+     * 
+     * @param colision 
+     */
     public void setColision(boolean colision) {
         this.colision = colision;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public Animation getPlayerAb() {
         return playerAb;
     }
@@ -78,99 +119,112 @@ public class Player extends Item{
         return playerAr;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public Animation getPlayerDe() {
         return playerDe;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public Animation getPlayerIz() {
         return playerIz;
     }
-    
-    
 
     @Override
     public void tick() {
-        if (game.getKeyManager().up ) {
-            if(colision){
-                if(!preColision){
+        if (game.getKeyManager().up) {
+            if (colision) {
+                if (!preColision) {
                     preColision = true;
                     colisionU = true;
                 }
-            }else colisionU = false;            
-            if(!colisionU)
-            setY(getY() - 3);
+            } else {
+                colisionU = false;
+            }
+            if (!colisionU) {
+                setY(getY() - 3);
+            }
         }
         if (game.getKeyManager().down) {
-            if(colision){
-                if(!preColision){
+            if (colision) {
+                if (!preColision) {
                     preColision = true;
                     colisionD = true;
                 }
-            }else colisionD = false;
-            if(!colisionD)
+            } else {
+                colisionD = false;
+            }
+            if (!colisionD) {
                 setY(getY() + 3);
+            }
         }
         if (game.getKeyManager().left) {
-            if(colision){
-                if(!preColision){
+            if (colision) {
+                if (!preColision) {
                     preColision = true;
                     colisionL = true;
                 }
-            }else colisionL = false;
-            if(!colisionL)
+            } else {
+                colisionL = false;
+            }
+            if (!colisionL) {
                 setX(getX() - 3);
-            
+            }
+
         }
         if (game.getKeyManager().right) {
-             if(colision){
-                if(!preColision){
+            if (colision) {
+                if (!preColision) {
                     preColision = true;
                     colisionR = true;
                 }
-             }else colisionR = false;
-            if(!colisionR)                
+            } else {
+                colisionR = false;
+            }
+            if (!colisionR) {
                 setX(getX() + 3);
-            
+            }
+
         }
         // reset x position and y position if colision
         if (getX() + 40 >= game.getWidth()) {
             setX(game.getWidth() - 40);
-        }
-        else if (getX() <= -10) {
+        } else if (getX() <= -10) {
             setX(-10);
         }
         if (getY() + getHeight() >= game.getHeight()) {
             setY(game.getHeight() - 50);
-        }
-        else if (getY() <= -10) {
+        } else if (getY() <= -10) {
             setY(-10);
         }
-        preColision = colision;        
+        preColision = colision;
     }
-    public Rectangle getPerimetro(){
+
+    /**
+     * 
+     * @return 
+     */
+    public Rectangle getPerimetro() {
         return new Rectangle(getX(), getY(), getWidth(), getHeight());
     }
-    
 
     @Override
     public void render(Graphics g) {
-        if(game.getKeyManager().up){
+        if (game.getKeyManager().up) {
             g.drawImage(playerAr.getCurrentFrame(), getX(), getY(), getWidth(), getHeight(), null);
-        }
-        else
-        if(game.getKeyManager().down){
+        } else if (game.getKeyManager().down) {
             g.drawImage(playerAb.getCurrentFrame(), getX(), getY(), getWidth(), getHeight(), null);
-        }
-        else
-        if(game.getKeyManager().left){
+        } else if (game.getKeyManager().left) {
             g.drawImage(playerIz.getCurrentFrame(), getX(), getY(), getWidth(), getHeight(), null);
-        }
-        else
-        if(game.getKeyManager().right){
+        } else if (game.getKeyManager().right) {
             g.drawImage(playerDe.getCurrentFrame(), getX(), getY(), getWidth(), getHeight(), null);
+        } else {
+            g.drawImage(Assets.player, getX(), getY(), getWidth(), getHeight(), null);
         }
-        else
-        g.drawImage(Assets.player, getX(), getY(), getWidth(), getHeight(), null);        
     }
 }
-

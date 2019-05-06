@@ -11,18 +11,25 @@ import java.awt.Graphics;
  *
  * @author jesus
  */
-public class Boton extends Item{    
-    private int width;
-    private int height;
-    private Game game;    
-    private boolean isVisible;
-    private int edificioNo;
-    private MiniGame minigame;
-    private boolean clicked;
-    
-        
+public class Boton extends Item {
+
+    private int width;             //
+    private int height;            //
+    private Game game;             //
+    private boolean isVisible;     //
+    private int edificioNo;        //
+    private boolean clicked;       //
+
+    /**
+     *
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+     * @param game
+     */
     public Boton(int x, int y, int width, int height, Game game) {
-        super(x, y);        
+        super(x, y);
         this.width = width;
         this.height = height;
         this.game = game;
@@ -30,63 +37,84 @@ public class Boton extends Item{
         clicked = false;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getHeight() {
         return height;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getWidth() {
         return width;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getEdificioNo() {
         return edificioNo;
     }
 
+    /**
+     *
+     * @param edificioNo
+     */
     public void setEdificioNo(int edificioNo) {
         this.edificioNo = edificioNo;
     }
-   
 
+    /**
+     *
+     * @param isVisible
+     */
     public void setIsVisible(boolean isVisible) {
         this.isVisible = isVisible;
     }
 
+    /**
+     *
+     * @param clicked
+     */
     public void setClicked(boolean clicked) {
         this.clicked = clicked;
     }
-    
-    
-    
-    
+
+    /**
+     *
+     */
     public void tick() {
-        // moving player depending on flags
-        //clicked = !clicked;
-        if (isVisible ){
-            //clicked = !clicked;
-            if(game.getKeyManager().enter){
-               game.setMG(true); 
+        if (isVisible) {
+            if (game.getKeyManager().enter) {
+                game.setMG(true);
             }
-            if( game.getMouseManager().isIzquierdo()) {
-            int xm = game.getMouseManager().getX();
-            int ym = game.getMouseManager().getY();
-                    if(xm >= getX() && xm <= getX() + getWidth())
-                        if(ym >= getY() && ym <= getY() + getHeight()){
-                            //clicked = !clicked;
-                            //game.miniGame[miniGame].start(); 
-                            clicked = true;
-                            System.out.println(clicked);
-                            game.setMG(true);
-                            //minigame = new MiniGame(game, edificioNo);
-                            //minigame.run();
-                        }                                    
-            game.getMouseManager().setIzquierdo(false);
+            if (game.getMouseManager().isIzquierdo()) {
+                int xm = game.getMouseManager().getX();
+                int ym = game.getMouseManager().getY();
+                if (xm >= getX() && xm <= getX() + getWidth()) {
+                    if (ym >= getY() && ym <= getY() + getHeight()) {
+                        clicked = true;
+                        System.out.println(clicked);
+                        game.setMG(true);
+                    }
+                }
+                game.getMouseManager().setIzquierdo(false);
             }
         }
-        if(!isVisible)
+        if (!isVisible) {
             clicked = false;
+        }
     }
-    
-    
+
+    /**
+     * 
+     * @param g 
+     */
     public void render(Graphics g) {
         if (isVisible) {
             if (!clicked) {
@@ -96,5 +124,4 @@ public class Boton extends Item{
             }
         }
     }
-    
 }

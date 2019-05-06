@@ -199,7 +199,6 @@ public class MiniGame /*implements Runnable */ {
     }
 
     public void render(Graphics g) {
-
         //se imprime el fondo (va a ser uno distinto por cada edificio)
         // vamos a hacer un array de fondos
         g.drawImage(Assets.background
@@ -210,10 +209,11 @@ public class MiniGame /*implements Runnable */ {
             //se despliegan las imágenes normales
             
             //el fondo para la pregunta y la pregunta
-            g.drawImage(Assets.pregunta, 250, 50, 300, 100, null);
+            int longitud =  pregunta[level].length();
+            //System.out.println(longitud);
+            g.drawImage(Assets.pregunta, game.getWidth()/2-longitud*4, 50, longitud * 8, 100, null);
             g.setColor(Color.white);
-            g.drawString(pregunta[level], 300, 100);
-            //System.out.println(pregunta[level]);
+            g.drawString(pregunta[level], game.getWidth()/2-(int)(longitud*2.5), 100);
 
             for (int i = 1; i < 5; i++) {//los fondos de las respuestas
                 g.drawImage(Assets.respuesta, 350, i * 150, 150, 50, null);
@@ -221,7 +221,7 @@ public class MiniGame /*implements Runnable */ {
             // la imagen de selección(resalta la respuesta seleccionada)
             g.drawImage(Assets.seleccion, 350, selected * 150, 150, 50, null);
             
-            //cuando se presiona una respuesta resalta dependiendo de si es correcta
+            //cuando se presiona una respuesta resalta dependiendo de si es correcta o incorrecta
             if (acierta) {
                 g.drawImage(Assets.correcta, 350, selected * 150, 100, 50, null);
             }
@@ -241,22 +241,10 @@ public class MiniGame /*implements Runnable */ {
 
             }
         }
-        /*g.drawImage(Assets.pregunta, 250, 175, 100, 50, null); 
-           g.drawString(respuesta[level][1], 300, 200);
-           
-           g.drawImage(Assets.pregunta, 250, 275, 100, 50, null); 
-            g.drawString(respuesta[level][2], 300, 300);
-            
-            g.drawImage(Assets.pregunta, 250, 375, 100, 50, null); 
-            g.drawString(respuesta[level][3], 300, 400);
-            
-            g.drawImage(Assets.pregunta, 250, 475, 100, 50, null); 
-            g.drawString(respuesta[level][4], 300, 500);*/
-
     }
 
     /**
-     * Lee el archi con las preguntas y respuestas de edificio
+     * Lee el archivo con las preguntas y respuestas de edificio
      * Se guardan los valores en 3 arreglos
      * Preguntas
      * Respuestas
@@ -265,7 +253,6 @@ public class MiniGame /*implements Runnable */ {
      * @throws IOException 
      */
     public void leeArchivo(String archivo) throws IOException {
-
         BufferedReader fileIn;
         try {
             fileIn = new BufferedReader(new FileReader(archivo));

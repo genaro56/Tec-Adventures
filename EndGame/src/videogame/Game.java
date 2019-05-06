@@ -26,41 +26,36 @@ import javax.swing.JPanel;
  */
 public class Game implements Runnable {
 
-    public BufferStrategy bs;         // to have several buffers when displaying
-    public Graphics g;                // to paint objects
-    public Display display;           // to display in the game
-    String title;                      // title of the window
-    private int width;                 // width of the window
-    private int height;                // height of the window
-    private Thread thread;             // thread to create the game
-    private boolean running;           // to set the game
-    private Player player;             // to use a player
-    //private Enemy asteroid;          // to have an enemy   
-    private Mapa map;                  // to move the map
-    private KeyManager keyManager;     // to manage the keyboard
-    private MouseManager mouseManager; // to manage the mouse
-    private int life;                  // to manage the lifes 
-    private int score;
-    private boolean inicio;
-    private int dispMen;
-    //Tenemos que hacer un areglo 
-    //o lista encadenada de edificios 
-    //para crear todos lo que vamosa usar
-    private LinkedList<Edificio> edificios;
-    private int cantEdif;
-    private int[] posEdifX = new int[30];
-    private int[] posEdifY = new int[30];
-    private int[] edifWidth = new int[30];
-    private int[] edifHeight = new int[30];
+    public BufferStrategy bs;                   // to have several buffers when displaying
+    public Graphics g;                          // to paint objects
+    public Display display;                     // to display in the game
+    String title;                               // title of the window
+    private int width;                          // width of the window
+    private int height;                         // height of the window
+    private Thread thread;                      // thread to create the game
+    private boolean running;                    // to set the game
+    private Player player;                      // to use a player
+    /* Solo si si inlcuimos enemigos
+    //private Enemy asteroid;                   // to have an enemy*/   
+    private Mapa map;                           // to move the map
+    private KeyManager keyManager;              // to manage the keyboard
+    private MouseManager mouseManager;          // to manage the mouse
+    private int life;                           // to manage the lifes 
+    private int score;                          // to manage the score
+    private boolean inicio;                     // to move from the menu to the game
+    private int dispMen;                        // to animation of menu
+    private LinkedList<Edificio> edificios;     // to save the buidings
+    private int cantEdif;                       // to manage the buildings' quantity
+    
+    private int[] posEdifX = new int[30];       // to save the buildings' possition X
+    private int[] posEdifY = new int[30];       // to save the buildings' possition Y
+    private int[] edifWidth = new int[30];      // to save the buildings' width
+    private int[] edifHeight = new int[30];     // to save the buildings' height
 
-    private Edificio A2;
-
-    //private Edificio rectoria;
-    //private Edificio A2;
-    private Boton boton;
-    private MiniGame minigame;
-    private boolean MG;
-    private boolean intersectando;
+    private Boton boton;                        // to use a button to enter in a minigame
+    private MiniGame minigame;                  // to use minigames
+    private boolean MG;                         // to activate minigame
+    private boolean intersectando;              // to verify player's intejections
 
     /**
      * to create title, width and height and set the game is still not running
@@ -78,13 +73,9 @@ public class Game implements Runnable {
         mouseManager = new MouseManager();
         edificios = new LinkedList<Edificio>();
         inicio = false;
-
         life = 5;
         score = 0;
         MG = false;
-        JPanel campo = new JPanel(new GridLayout(0, 2));
-        JLabel jl_pwf = new JLabel("Escriba la contraseña: ");
-        campo.add(jl_pwf);
     }
 
     /**
@@ -121,46 +112,32 @@ public class Game implements Runnable {
 
     }
 
-    
-
     /**
      * initializing the display window of the game
      */
     private void init() {
         display = new Display(title, getWidth(), getHeight());
-        Assets.init();
-        // Se crea el jugador
-        player = new Player(-10, 520, -20, 50, 50, this);
-        // Se cra el mapa para que se pueda desplazar la vista
-        map = new Mapa(0, 0, getHeight(), getWidth(), this);
-        //minigame = new MiniGame(this, 1);
-        // Aquí se van a crear todos los edificios dentro de la lista
-        /* Algo como esto (Podemos crear un achivo 
-            con todas las ubicaciones y tamaños y de ahí sacar
-            la información y guardarla en un arreglo
-         int iNum = (int)(Math.random()* 8 + 5);
-         for(int i = 0; i < iNum; i++){
-             int iPosX = (int) (Math.random() * (getWidth() - 100));
-             int iPosY = (int) (Math.random() * (getHeight() *0.5d - 100) - 1.5d * getHeight());
-             edifiios.add(new Edificio(iPosX, iPosY, vel, 100, 100, this));                          
-         }
-         */
-        //Esta es una creación individual
-        //rectoria = new Edificio(370, 350, 230, 140, this, 1);
-
-        //A2 = new Edificio(470, 625, 600, 120, this, 2);
+        // Se lee el archivo para obetener la cantidad de edificios y sus ubicaciones
         try {
             leeArchivo("edificios.txt", true);
         } catch (IOException ex) {
             System.out.println("Error en " + ex.toString());
         }
+
+        Assets.init();
+        // Se crea el jugador
+        player = new Player(-10, 300, -20, 50, 50, this);
+        // Se crea el mapa para que se pueda desplazar la vista
+        map = new Mapa(0, 0, getHeight(), getWidth(), this);
+        // Se crea cada uno de los edificios
         for (int i = 0; i < cantEdif; i++) {
             edificios.add(new Edificio(posEdifX[i], posEdifY[i], edifWidth[i], edifHeight[i], this, i));
         }
-
+        // Se crea el botón que se utilizará para entrar a los minijuegos
         boton = new Boton(0, 0, 250, 200, this);
-        display.getJframe().addKeyListener(keyManager);
 
+        
+        display.getJframe().addKeyListener(keyManager);
         display.getJframe().addMouseListener(mouseManager);
         display.getJframe().addMouseMotionListener(mouseManager);
         display.getCanvas().addMouseListener(mouseManager);
@@ -213,28 +190,26 @@ public class Game implements Runnable {
 
     private void tick() {
         keyManager.tick();
-        if(inicio){
-        
+        if (inicio) {
 
-        //Estos son las llamadas a los métodos para 
-        //guardar cargar y reiniciar
-        //Pero necesitamos arreglar los métodos
-        if (getKeyManager().guardar) {
-            try {
-                //Graba los valores en el archivo.
-                grabaArchivo("guardado.txt");
-            } catch (IOException ex) {
-                System.out.println("Error en " + ex.toString());
+            //Estos son las llamadas a los métodos para 
+            //guardar cargar y reiniciar
+            if (getKeyManager().guardar) {
+                try {
+                    //Graba los valores en el archivo.
+                    grabaArchivo("guardado.txt");
+                } catch (IOException ex) {
+                    System.out.println("Error en " + ex.toString());
+                }
             }
-        }
-        if (getKeyManager().cargar) {
-            try {
-                leeArchivo("guardado.txt", false);
-            } catch (IOException ex) {
-                System.out.println("Error en " + ex.toString());
+            if (getKeyManager().cargar) {
+                try {
+                    leeArchivo("guardado.txt", false);
+                } catch (IOException ex) {
+                    System.out.println("Error en " + ex.toString());
+                }
             }
-        }
-        /*if (getKeyManager().reiniciar) {
+            /*if (getKeyManager().reiniciar) {
             for (int i = 0; i < cObject; i++) {
                 Alien alien = aliens.get(i);
                 alien.setDying(false);
@@ -245,62 +220,51 @@ public class Game implements Runnable {
                 System.out.println("Error en " + ex.toString());
             }
         }*/
-        //Aquí se activa cada tick del juego cuando no está pausado
-        if (!getKeyManager().pause) {
-            if (!MG) {
-                move(getKeyManager());
-                //player.tick();
-                //map.tick();
-                //asteroid.tick();
-                //Aquí tenemos que modificar para que sean la intersecciones 
-                //con los edificios y que se active la opción de minijuego
-                /*usar un for para revisar todos los edificios*/
-                intersectando = false;
-                for (int i = 0; i < cantEdif; i++) {
-                    Edificio edif = edificios.get(i);
-                    if (edif.intersecta(player)) {
-                        //boton.setIsVisible(true);
-                        minigame = new MiniGame(this, i, width, height);
-                        player.setColision(true);
-                        intersectando = true;
-                        //boton.setEdificioNo(1);//aquí se pondría el numero del for
-                        //boton.tick();
-                        /*asteroid.setX(getWidth()-100);
-            asteroid.setY(0);
-            asteroid.setVelocity(asteroid.getVelocity() + 1);
-            asteroid.setColision(30);
-            player.setX(0);
-            player.setY(getHeight()-100);
-            player.setColision(30);
-            Assets.bomb.play();
-            life--;*/
-                    } else {                        
-                        boton.setClicked(false);                                          
+            //Aquí se activa cada tick del juego cuando no está pausado
+            if (!getKeyManager().pause) {
+                if (!MG) {
+                    move(getKeyManager());                    
+                    
+                    intersectando = false;
+                    for (int i = 0; i < cantEdif; i++) {
+                        Edificio edif = edificios.get(i);
+                        if (edif.intersecta(player)) {
+                            //boton.setIsVisible(true);
+                            minigame = new MiniGame(this, i, width, height);
+                            player.setColision(true);
+                            intersectando = true;
+                            
+                        } else {
+                            boton.setClicked(false);
+                        }
+                        if (intersectando) {
+                            boton.tick();
+                        }
+                        player.setColision(intersectando);
+                        boton.setIsVisible(intersectando);
                     }
-                    if(intersectando){
-                        boton.tick();
+                    // Esto podría funcionar solo si usamos enemigos
+                    // y lo anterior se usaría para los enemigos
+                    if (life < 0) {
+                        stop();
                     }
-                    player.setColision(intersectando);      
-                    boton.setIsVisible(intersectando);
+                } else {
+                    minigame.tick();
                 }
-                // Esto podría funcionar solo si usamos enemigos
-                // y lo anterior se usaría para los enemigos
-                if (life < 0) {
-                    stop();
-                }
-            } else {
-                minigame.tick();
             }
-        }}
-        
-        else{
-            if(getKeyManager().enter)
+        } else {
+            if (getKeyManager().enter) {
                 inicio = true;
+            }
         }
     }
 
     //Esto sirve para sincronizar los movimientos del mapa y los edificios 
     //con el jugador
+    /**
+     * 
+     * @param km 
+     */
     private void move(KeyManager km) {
         if (km.down || km.left || km.up || km.right) {
             player.getPlayerAb().tick();
@@ -322,16 +286,12 @@ public class Game implements Runnable {
                 for (int i = 0; i < 2; i++) {
                     edificios.get(i).tick();
                 }
-                //rectoria.tick();
-                //A2.tick();
             }
         }
     }
 
-    // Tenemos que definir todas la variables que vamos a guardar 
-    // en el archivo para poder arreglar las funciones
+    
     public void leeArchivo(String archivo, boolean base) throws IOException {
-
         BufferedReader fileIn;
         try {
             fileIn = new BufferedReader(new FileReader(archivo));
@@ -347,7 +307,7 @@ public class Game implements Runnable {
             fileOut.println("280");
             fileOut.close();
             fileIn = new BufferedReader(new FileReader(archivo));
- 
+
         }
         String dato = fileIn.readLine();
         dato = fileIn.readLine();
@@ -366,13 +326,13 @@ public class Game implements Runnable {
             edifWidth[i] = (Integer.parseInt(dato));
             dato = fileIn.readLine();
             edifHeight[i] = (Integer.parseInt(dato));
-            if(!base){
+            if (!base) {
                 Edificio edificio = edificios.get(i);
-            edificio.setX(posEdifX[i]);
-            edificio.setY(posEdifY[i]);
+                edificio.setX(posEdifX[i]);
+                edificio.setY(posEdifY[i]);
             }
         }
-        if(!base){
+        if (!base) {
             dato = fileIn.readLine();
             player.setX(Integer.parseInt(dato));
             dato = fileIn.readLine();
@@ -389,17 +349,16 @@ public class Game implements Runnable {
     }
 
     public void grabaArchivo(String archivo) throws IOException {
-
         PrintWriter fileOut = new PrintWriter(new FileWriter(archivo));
         fileOut.println("");
-        fileOut.println("" + life);        
+        fileOut.println("" + life);
         fileOut.println("");
-        fileOut.println(""+cantEdif);
+        fileOut.println("" + cantEdif);
         for (int i = 0; i < cantEdif; i++) {
             Edificio edificio = edificios.get(i);
             fileOut.println("");
             fileOut.println("" + edificio.getX());
-            fileOut.println("" + edificio.getY());            
+            fileOut.println("" + edificio.getY());
             fileOut.println("" + edifWidth[i]);
             fileOut.println("" + edifHeight[i]);
         }
@@ -408,7 +367,7 @@ public class Game implements Runnable {
         fileOut.println("" + score);
         fileOut.println("" + map.getX());
         fileOut.println("" + map.getY());
-        
+
         fileOut.close();
     }
 
@@ -427,53 +386,50 @@ public class Game implements Runnable {
 
             g = bs.getDrawGraphics();
             //g.drawImage(Assets.background, 0, 0, width, height, null);
-            if(inicio){
-            if (!MG) {
-                map.render(g);
-                player.render(g);
-                for (int i = 0; i < cantEdif; i++) {
-                    edificios.get(i).render(g);
-                }
-                //rectoria.render(g);
-                //A2.render(g);
-                boton.render(g);
-                //asteroid.render(g);
-                g.setColor(Color.yellow);
-                g.drawString("Vidas: " + life, 5, 20);
-                g.setColor(Color.red);
-                g.drawString("Player X: " + (player.getX() - map.getX()), 5, 30);
-                g.drawString("Player y: " + (player.getY() - map.getY()), 5, 40);
-                g.drawString("map X: " + map.getX(), 5, 50);
-                g.drawString("map y: " + map.getY(), 5, 60);
-                //g.drawString("rectoria X: " + rectoria.getX(), 5, 70);
-                // g.drawString("rectoria y: " + rectoria.getY(), 5, 80);
-                g.drawString("Score: " + score, 5, 80);
-                if (life <= 0) {
-                    g.drawImage(Assets.end, (getWidth() / 2) - 450, (getHeight() / 2) - 150, 900, 300, null);
-                }
-                if (getKeyManager().pause) {
-                    g.drawImage(Assets.pause, 0,0, getWidth(), getHeight(), null);
-                }
-                g.drawString("Score: " + score, 5, 80);
-
-            } else {
-                minigame.render(g);
-            }
-            }else{
-                if(dispMen <= 0){
-                    g.drawImage(Assets.menu,0,0, getWidth(), getHeight(), null);
+            if (inicio) {
+                if (!MG) {
+                    map.render(g);
+                    player.render(g);
+                    for (int i = 0; i < cantEdif; i++) {
+                        edificios.get(i).render(g);
+                    }
+                    boton.render(g);
+                    g.setColor(Color.yellow);
+                    g.drawString("Vidas: " + life, 5, 20);
+                    g.setColor(Color.red);
+                    g.drawString("Player X: " + (player.getX() - map.getX()), 5, 30);
+                    g.drawString("Player y: " + (player.getY() - map.getY()), 5, 40);
+                    g.drawString("map X: " + map.getX(), 5, 50);
+                    g.drawString("map y: " + map.getY(), 5, 60);                  
+                                                          
+                    if (life <= 0) {
+                        g.drawImage(Assets.end, (getWidth() / 2) - 450, (getHeight() / 2) - 150, 900, 300, null);
+                    }
+                    if (getKeyManager().pause) {
+                        g.drawImage(Assets.pause, 0, 0, getWidth(), getHeight(), null);
+                    }
                     
-                    dispMen = dispMen <= -30?30:dispMen;
+                    //Para imprimir la puntuación del jugador
+                    g.drawString("Score: " + score, 5, 80);//falta formato
+
+                } else {
+                    minigame.render(g);
                 }
-                else{
-                    g.drawImage(Assets.menu2,0,0, getWidth(), getHeight(), null);
+            } else {
+                // Hacer que parpadee la imagen del menu
+                if (dispMen <= 0) {
+                    g.drawImage(Assets.menu, 0, 0, getWidth(), getHeight(), null);
+
+                    dispMen = dispMen <= -30 ? 30 : dispMen;
+                } else {
+                    g.drawImage(Assets.menu2, 0, 0, getWidth(), getHeight(), null);
                 }
                 dispMen--;
             }
+            
             bs.show();
             g.dispose();
         }
-
     }
 
     /**
@@ -500,5 +456,4 @@ public class Game implements Runnable {
             }
         }
     }
-
 }

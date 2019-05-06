@@ -143,10 +143,10 @@ public class Enemy extends Item{
 
     @Override
     public void render(Graphics g) {
-        if (colision > 0){
+        /*if (colision > 0){
             g.drawImage(Assets.explotion, getX(), getY(), getWidth(), getHeight(), null);
         }
         else
-            g.drawImage(Assets.asteroid, getX(), getY(), getWidth(), getHeight(), null);
+            g.drawImage(Assets.asteroid, getX(), getY(), getWidth(), getHeight(), null);*/
     }
 }
