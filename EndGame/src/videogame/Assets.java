@@ -60,7 +60,7 @@ public class Assets {
         pause = ImageLoader.loadImage("/images/menupausa.png");
         //bomb = new SoundClip("/audio/crash.wav");
         respuesta = ImageLoader.loadImage("/images/botonAzul.png");
-        pregunta = ImageLoader.loadImage("/images/preguntaButton.png");
+        pregunta = ImageLoader.loadImage("/images/preguntaButton (1).png");
         correcta = ImageLoader.loadImage("/images/correcta.png");
         incorrecta = ImageLoader.loadImage("/images/incorrecta.png");
         seleccion = ImageLoader.loadImage("/images/greenSelection.png");

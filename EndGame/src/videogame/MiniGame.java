@@ -223,17 +223,20 @@ public class MiniGame /*implements Runnable */ {
             //se despliegan las imágenes normales
             
             //el fondo para la pregunta y la pregunta
-            int longitud =  pregunta[level].length();
+            int longitud =  pregunta[level].length()*6;
             //System.out.println(longitud);
-            g.drawImage(Assets.pregunta, game.getWidth()/2-longitud*4, 50, longitud * 8, 100, null);
+            /*g.drawImage(Assets.pregunta, game.getWidth()/2-longitud*4, 50, longitud * 8, 100, null);
             g.setColor(Color.white);
-            g.drawString(pregunta[level], game.getWidth()/2-(int)(longitud*2.5), 100);
+            g.drawString(pregunta[level], game.getWidth()/2-(int)(longitud*2.5), 100);*/
+            g.drawImage(Assets.pregunta, (game.getWidth()-longitud)/2 -35, 50, longitud+70, 75, null);
+            g.setColor(Color.white);
+            g.drawString(pregunta[level], (game.getWidth()-longitud)/2+10, 90);
 
             for (int i = 1; i < 5; i++) {//los fondos de las respuestas
-                g.drawImage(Assets.respuesta, respuestas[i].getX()-10, i * 150, respuestas[i].getWidth()+ 20, 50, null);
+                g.drawImage(Assets.respuesta, respuestas[i].getX()-25, i * 150, respuestas[i].getWidth()+ 50, 50, null);
             }
             // la imagen de selección(resalta la respuesta seleccionada)
-            g.drawImage(Assets.seleccion, respuestas[selected].getX()-10, selected * 150, respuestas[selected].getWidth()+ 20, 50, null);
+            g.drawImage(Assets.seleccion, respuestas[selected].getX()-25, selected * 150, respuestas[selected].getWidth()+ 50, 50, null);
             
             //cuando se presiona una respuesta resalta dependiendo de si es correcta o incorrecta
             if (acierta) {
@@ -296,7 +299,7 @@ public class MiniGame /*implements Runnable */ {
      */
     public void iniciaRespuestas() {
         for (int i = 1; i < 5; i++) {
-            int x= (int)respuesta[level][i].length()*7;
+            int x= (int)respuesta[level][i].length()*6;
             respuestas[i] = new Respuesta((width-x)/2, i * 150, x, 50 , respuesta[level][i], i, res[level], game, this);
             System.out.println(i + ": " +  (int)respuesta[level][i].length());
         }

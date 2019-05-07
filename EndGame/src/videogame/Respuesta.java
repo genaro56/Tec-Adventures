@@ -50,7 +50,7 @@ public class Respuesta extends Button {
     public void render(Graphics g) {
         /*if()
         g.drawImage(Assets.pregunta, getX(), getY(), 100, 50, null); */
-        g.drawString(respuesta, getX() + 25, getY() + 25);
+        g.drawString(respuesta, getX() , getY() + 27);
     }
 
 }
