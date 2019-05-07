@@ -51,10 +51,10 @@ public class Assets {
      */
     public static void init() {
         background = ImageLoader.loadImage("/images/edificio.jpg");
-        player = ImageLoader.loadImage("/images/prot.png");
+        player = ImageLoader.loadImage("/images/prot.png").getSubimage(15, 10, 34, 54);
 
         end = ImageLoader.loadImage("/images/GameOver.png");
-        map = ImageLoader.loadImage("/images/bg_alt.png");
+        map = ImageLoader.loadImage("/images/Map.png");
         boton = ImageLoader.loadImage("/images/enterButton.jpg");
         botonC = ImageLoader.loadImage("/images/botonC.png");
         pause = ImageLoader.loadImage("/images/menupausa.png");
@@ -78,7 +78,7 @@ public class Assets {
         }
 
         playerSp = ImageLoader.loadImage("/images/tec3.png");
-
+;
         SpreadSheet spreadsheet = new SpreadSheet(playerSp);
         playerAr = new BufferedImage[9];
         playerAb = new BufferedImage[9];
@@ -86,19 +86,19 @@ public class Assets {
         playerIz = new BufferedImage[9];
 
         for (int x = 0; x < 9; x++) {
-            playerAr[x] = spreadsheet.crop(x * 64, 0, 64, 64);
+            playerAr[x] = spreadsheet.crop(x * 64+15, 10, 34, 54);
         }
 
         for (int x = 0; x < 9; x++) {
-            playerAb[x] = spreadsheet.crop(x * 64, 128, 64, 64);
+            playerAb[x] = spreadsheet.crop(x * 64+15, 138, 34, 54);
         }
 
         for (int x = 0; x < 9; x++) {
-            playerDe[x] = spreadsheet.crop(x * 64, 192, 64, 64);
+            playerDe[x] = spreadsheet.crop(x * 64+15, 202, 34, 54);
         }
 
         for (int x = 0; x < 9; x++) {
-            playerIz[x] = spreadsheet.crop(x * 64, 64, 64, 64);
+            playerIz[x] = spreadsheet.crop(x * 64+15, 74, 34, 54);
         }
     }
 

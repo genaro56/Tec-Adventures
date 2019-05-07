@@ -59,6 +59,7 @@ public class Game implements Runnable {
     private boolean intro;
     private int contIntro;
     private int contEnter;
+    boolean[] intersectar = new boolean[4];
 
     /**
      * to create title, width and height and set the game is still not running
@@ -140,9 +141,9 @@ public class Game implements Runnable {
 
         Assets.init();
         // Se crea el jugador
-        player = new Player(-10, 300, -20, 50, 50, this);
+        player = new Player(0, 300, -20, 50, 50, this);
         // Se crea el mapa para que se pueda desplazar la vista
-        map = new Mapa(0, 0, getHeight(), getWidth(), this);
+        map = new Mapa(0, -225, getHeight()*3, getWidth()*3, this);
         // Se crea cada uno de los edificios
         for (int i = 0; i < cantEdif; i++) {
             edificios.add(new Edificio(posEdifX[i], posEdifY[i], edifWidth[i], edifHeight[i], this, i));
@@ -236,24 +237,48 @@ public class Game implements Runnable {
             //Aquí se activa cada tick del juego cuando no está pausado
             if (!getKeyManager().pause) {
                 if (!MG) {
-                    move(getKeyManager());
+                    
                     contEnter--;
                     intersectando = false;
+                    /*for(int i = 0; i < 4; i++){
+                        intersectar[i] = false;
+                    }*/
                     for (int i = 0; i < cantEdif; i++) {
                         Edificio edif = edificios.get(i);
                         if (edif.intersecta(player)) {
                             //minigame = new MiniGame(this, i, width, height);
                             boton.setEdificioNo(i);
-                            player.setColision(true);
+                            //boolean[] intersectar = new boolean[4];
+                            intersectar = edif.intersectar(player);
+                            /*player.setColisionD(intersectar[0]);
+                            player.setColisionU(intersectar[1]);
+                            player.setColisionL(intersectar[2]);
+                            player.setColisionR(intersectar[3]);*/
+                            if(intersectar[3])
+                                player.setX(player.getX()-3);
+                            if(intersectar[2])
+                                player.setX(player.getX()+3);
+                            if(intersectar[1])
+                                player.setY(player.getY()+3);
+                            if(intersectar[0])
+                                player.setY(player.getY()-3);
+                            //player.setColision(true);
                             intersectando = true;
+                            /*boton.tick();
+                            boton.setIsVisible(intersectando);*/
 
-                        }
+                        }}
+                            /*player.setColisionD(intersectar[0]);
+                            player.setColisionU(intersectar[1]);
+                            player.setColisionL(intersectar[2]);
+                            player.setColisionR(intersectar[3]);*/
                         if (intersectando) {
-                            boton.tick();
+                            boton.tick();                            
                         }
-                        player.setColision(intersectando);
+                        //player.setColision(intersectando);
                         boton.setIsVisible(intersectando);
-                    }
+                    
+                    move(getKeyManager());
                     // Esto podría funcionar solo si usamos enemigos
                     // y lo anterior se usaría para los enemigos
                     if (life < 0) {
@@ -305,7 +330,7 @@ public class Game implements Runnable {
 
             } else {
                 map.tick();
-                for (int i = 0; i < 2; i++) {
+                for (int i = 0; i < cantEdif; i++) {
                     edificios.get(i).tick();
                 }
             }
@@ -419,7 +444,7 @@ public class Game implements Runnable {
                     g.drawString("Vidas: " + life, 5, 20);
                     g.setColor(Color.red);
                     g.drawString("Player X: " + (player.getX() - map.getX()), 5, 30);
-                    g.drawString("Player y: " + (player.getY() - map.getY()), 5, 40);
+                    g.drawString("Player y: " + (player.getY()-225 - map.getY()), 5, 40);
                     g.drawString("map X: " + map.getX(), 5, 50);
                     g.drawString("map y: " + map.getY(), 5, 60);
 

@@ -107,6 +107,27 @@ public class Player extends Item {
         this.colision = colision;
     }
 
+    public void setColisionD(boolean colisionD) {
+        //System.out.println("colisionD: "+colisionD);
+        this.colisionD = colisionD;
+    }
+
+    public void setColisionL(boolean colisionL) {
+        //System.out.println("colisionL: "+colisionL);
+        this.colisionL = colisionL;
+    }
+
+    public void setColisionR(boolean colisionR) {
+        //System.out.println("colisionR: "+colisionR);
+        this.colisionR = colisionR;
+    }
+
+    public void setColisionU(boolean colisionU) {
+        //System.out.println("colisionU: "+colisionU);
+        this.colisionU = colisionU;
+    }
+    
+
     /**
      * 
      * @return 
@@ -137,70 +158,40 @@ public class Player extends Item {
 
     @Override
     public void tick() {
+        System.out.println("U: "+colisionU+", D: "+colisionD+" L: "+colisionL+" R: "+colisionR);
         if (game.getKeyManager().up) {
-            if (colision) {
-                if (!preColision) {
-                    preColision = true;
-                    colisionU = true;
-                }
-            } else {
-                colisionU = false;
-            }
             if (!colisionU) {
                 setY(getY() - 3);
             }
         }
         if (game.getKeyManager().down) {
-            if (colision) {
-                if (!preColision) {
-                    preColision = true;
-                    colisionD = true;
-                }
-            } else {
-                colisionD = false;
-            }
             if (!colisionD) {
                 setY(getY() + 3);
             }
         }
         if (game.getKeyManager().left) {
-            if (colision) {
-                if (!preColision) {
-                    preColision = true;
-                    colisionL = true;
-                }
-            } else {
-                colisionL = false;
-            }
             if (!colisionL) {
                 setX(getX() - 3);
+                System.out.println(colision);
             }
 
         }
         if (game.getKeyManager().right) {
-            if (colision) {
-                if (!preColision) {
-                    preColision = true;
-                    colisionR = true;
-                }
-            } else {
-                colisionR = false;
-            }
             if (!colisionR) {
                 setX(getX() + 3);
             }
 
         }
         // reset x position and y position if colision
-        if (getX() + 40 >= game.getWidth()) {
-            setX(game.getWidth() - 40);
-        } else if (getX() <= -10) {
-            setX(-10);
+        if (getX() + getWidth() >= game.getWidth()) {
+            setX(game.getWidth() - getWidth());
+        } else if (getX() <= 0) {
+            setX(0);
         }
         if (getY() + getHeight() >= game.getHeight()) {
-            setY(game.getHeight() - 50);
-        } else if (getY() <= -10) {
-            setY(-10);
+            setY(game.getHeight() - getHeight());
+        } else if (getY() <= -0) {
+            setY(0);
         }
         preColision = colision;
     }
@@ -210,7 +201,7 @@ public class Player extends Item {
      * @return 
      */
     public Rectangle getPerimetro() {
-        return new Rectangle(getX(), getY()+5, getWidth()-10, getHeight()-5);
+        return new Rectangle(getX(), getY(), getWidth(), getHeight());
     }
 
     @Override
