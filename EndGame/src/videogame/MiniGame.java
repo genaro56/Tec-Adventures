@@ -48,6 +48,7 @@ public class MiniGame /*implements Runnable */ {
     private int selected;                              // para identificar qué respuesta está seleccionada
     private int counter;                               // para crear retrasos en los tiempos
     private boolean finish;                            // para verificar si ya se terminó el minijuego
+    private int contExit;
 
     /**
      * to create title, width and height and set the game is still not running
@@ -66,6 +67,7 @@ public class MiniGame /*implements Runnable */ {
         //mouseManager = new MouseManager();
         //life = 5;
         level = 1;
+        contExit = 30;
         selected = 1; // comienza en la primer respuesta
         counter = 30; // se inicia con un retraso por si se accedió con un enter
         // aquí lee el achivo dependiendo del número del edificio
@@ -116,17 +118,21 @@ public class MiniGame /*implements Runnable */ {
     public void tick() {
         //keyManager.tick();
         if (acierta) {//verifica si la respuesta fue correcta
-            if (level == 5) {//es lo que hace cuando respondió todas las preguntas bien
-                
+            if (level == 5) {//es lo que hace cuando respondió todas las preguntas bien                
                 // botones para salir directamente o mostrar siguiente pantalla
-                if (game.getKeyManager().enter) {
+                if(!finish){
+                if (game.getKeyManager().sig || game.getKeyManager().exit || game.getKeyManager().enter || contExit <= 0) {
                     finish = true;
-                }
-                if (game.getKeyManager().exit) {
+                    contExit = 60;
+                    
+                }}else {
+                System.out.println(contExit);
+                    if (game.getKeyManager().sig || game.getKeyManager().exit || game.getKeyManager().enter || contExit <= 0) {
                     game.setScore(game.getScore() + 10);
+                    game.setContEnter(30);
                     game.setMG(!acierta); //finaliza el minigame
-                    game.setScore(game.getScore() + 10);
-                }
+                    
+                }}contExit--;
             } else {//cuando aún no termina todas las preguntas
                 if (/*game.getKeyManager().enter*/counter <= 0) {
                     ///System.out.println(level); //Solo era para revisión
@@ -140,19 +146,27 @@ public class MiniGame /*implements Runnable */ {
             }
 
         } else {
-            if (falla) {//cuando la respuesta es incorrecta
+            if (falla) {//cuando la respuesta es incorrecta                
                 if(counter <= 0) {
-                if (game.getKeyManager().enter) {
+                if(!finish){
+                    if (((game.getKeyManager().sig || game.getKeyManager().exit ||game.getKeyManager().enter) && !finish) || contExit <= 0) {
                     finish = true;
-                }
-                if (/*game.getKeyManager().sig ||*/game.getKeyManager().exit) {
+                    counter = 30;
+                    contExit = 60;
+                }}
+                else{
+                if(finish){  
+                    System.out.println(contExit);
+                if (game.getKeyManager().sig || game.getKeyManager().exit || game.getKeyManager().enter || contExit <= 0) {
                     //if(game.getKeyManager().exit)
+                    game.setContEnter(30);
                     game.setMG(!falla);//finaliza el minigame
 
                     if(game.getScore() >= 2)
                     game.setScore(game.getScore() - 2);
                     else game.setScore(0);
-                }}else counter--;
+                }
+                }contExit--;}contExit--;}else counter--;
             } else {//cuando no ha respondido
                 if (counter <= 0) {
                     for (int i = 1; i < 5; i++) { //se hace el tick de cada respuesta
@@ -176,7 +190,7 @@ public class MiniGame /*implements Runnable */ {
                     
                     // para seleccionar la respuesta
                     // podríamos usar espacio también
-                    if (game.getKeyManager().enter) { //usamos enter
+                    if (game.getKeyManager().enter || game.getKeyManager().sig) { //usamos enter
                         setAcierta(selected == res[level], selected); //verificamos si es correcta o no
                         setFalla(!acierta, selected);
                         counter = 30;
@@ -282,7 +296,7 @@ public class MiniGame /*implements Runnable */ {
      */
     public void iniciaRespuestas() {
         for (int i = 1; i < 5; i++) {
-            int x= (int)respuesta[level][i].length()*8;
+            int x= (int)respuesta[level][i].length()*7;
             respuestas[i] = new Respuesta((width-x)/2, i * 150, x, 50 , respuesta[level][i], i, res[level], game, this);
             System.out.println(i + ": " +  (int)respuesta[level][i].length());
         }

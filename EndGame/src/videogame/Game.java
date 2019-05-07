@@ -113,9 +113,18 @@ public class Game implements Runnable {
         this.score = score;
     }
 
-    public void startMinigame(int number) {
-
+    public void setContEnter(int contEnter) {
+        this.contEnter = contEnter;
     }
+
+    public int getContEnter() {
+        return contEnter;
+    }
+    public void startMinigame(int i){
+        minigame = new MiniGame(this, i, width, height);
+    }
+    
+    
 
     /**
      * initializing the display window of the game
@@ -228,12 +237,13 @@ public class Game implements Runnable {
             if (!getKeyManager().pause) {
                 if (!MG) {
                     move(getKeyManager());
-
+                    contEnter--;
                     intersectando = false;
                     for (int i = 0; i < cantEdif; i++) {
                         Edificio edif = edificios.get(i);
                         if (edif.intersecta(player)) {
-                            minigame = new MiniGame(this, i, width, height);
+                            //minigame = new MiniGame(this, i, width, height);
+                            boton.setEdificioNo(i);
                             player.setColision(true);
                             intersectando = true;
 
@@ -257,8 +267,10 @@ public class Game implements Runnable {
             contIntro--;
             if (intro){
                 contEnter--;
-            if (getKeyManager().enter && contEnter <= 0 || contIntro <= 0)
+            if (getKeyManager().enter && contEnter <= 0 || contIntro <= 0){
                 inicio = true;
+                contEnter = 30;
+            }
             }else {
                 if (getKeyManager().enter){
                     intro = true;

@@ -58,11 +58,9 @@ public class Entrar extends Button {
      */
     public void tick() {
         if (isVisible) {
-            if (getGame().getKeyManager().enter) {
+            if (getGame().getKeyManager().enter && getGame().getContEnter() <=0 || clicked()){
                 getGame().setMG(true);
-            }
-            if (clicked()) {
-                getGame().setMG(true);
+                getGame().startMinigame(edificioNo);
             }
         }
     }
