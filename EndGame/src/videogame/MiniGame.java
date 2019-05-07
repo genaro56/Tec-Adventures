@@ -216,10 +216,10 @@ public class MiniGame /*implements Runnable */ {
             g.drawString(pregunta[level], game.getWidth()/2-(int)(longitud*2.5), 100);
 
             for (int i = 1; i < 5; i++) {//los fondos de las respuestas
-                g.drawImage(Assets.respuesta, 350, i * 150, 150, 50, null);
+                g.drawImage(Assets.respuesta, respuestas[i].getX()-10, i * 150, respuestas[i].getWidth()+ 20, 50, null);
             }
             // la imagen de selección(resalta la respuesta seleccionada)
-            g.drawImage(Assets.seleccion, 350, selected * 150, 150, 50, null);
+            g.drawImage(Assets.seleccion, respuestas[selected].getX()-10, selected * 150, respuestas[selected].getWidth()+ 20, 50, null);
             
             //cuando se presiona una respuesta resalta dependiendo de si es correcta o incorrecta
             if (acierta) {
@@ -282,8 +282,9 @@ public class MiniGame /*implements Runnable */ {
      */
     public void iniciaRespuestas() {
         for (int i = 1; i < 5; i++) {
-            respuestas[i] = new Respuesta(350, i * 150, respuesta[level][i], i, res[level], game, this);
-            //System.out.println(i + ": " +  res[level]);
+            int x= (int)respuesta[level][i].length()*8;
+            respuestas[i] = new Respuesta((width-x)/2, i * 150, x, 50 , respuesta[level][i], i, res[level], game, this);
+            System.out.println(i + ": " +  (int)respuesta[level][i].length());
         }
     }
 

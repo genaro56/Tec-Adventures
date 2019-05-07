@@ -52,7 +52,7 @@ public class Game implements Runnable {
     private int[] edifWidth = new int[30];      // to save the buildings' width
     private int[] edifHeight = new int[30];     // to save the buildings' height
 
-    private Boton boton;                        // to use a button to enter in a minigame
+    private Entrar boton;                        // to use a button to enter in a minigame
     private MiniGame minigame;                  // to use minigames
     private boolean MG;                         // to activate minigame
     private boolean intersectando;              // to verify player's intejections
@@ -139,7 +139,7 @@ public class Game implements Runnable {
             edificios.add(new Edificio(posEdifX[i], posEdifY[i], edifWidth[i], edifHeight[i], this, i));
         }
         // Se crea el botón que se utilizará para entrar a los minijuegos
-        boton = new Boton(0, 0, 250, 200, this);
+        boton = new Entrar(0, 0, 250, 200, this);
 
         display.getJframe().addKeyListener(keyManager);
         display.getJframe().addMouseListener(mouseManager);
@@ -237,8 +237,6 @@ public class Game implements Runnable {
                             player.setColision(true);
                             intersectando = true;
 
-                        } else {
-                            boton.setClicked(false);
                         }
                         if (intersectando) {
                             boton.tick();
