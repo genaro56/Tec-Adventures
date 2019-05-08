@@ -27,6 +27,7 @@ public class KeyManager implements KeyListener {
     public boolean enter;
     public boolean sig;
     public boolean mute;
+    public boolean zaz; 
     
     
     public boolean shot;
@@ -51,7 +52,9 @@ public class KeyManager implements KeyListener {
         }
         else
            keys[e.getKeyCode()] = true;
+        zaz = false;
     }
+    
 
     @Override
     public void keyReleased(KeyEvent e) {
@@ -71,6 +74,7 @@ public class KeyManager implements KeyListener {
         else
             dpause = true;
         }
+        zaz = true;
     }
     
     
@@ -91,5 +95,6 @@ public class KeyManager implements KeyListener {
         enter = keys[KeyEvent.VK_ENTER];
         sig = keys[KeyEvent.VK_SPACE];
         mute = keys[KeyEvent.VK_M];
+        zaz = keys[KeyEvent.VK_Q];
     }
 }

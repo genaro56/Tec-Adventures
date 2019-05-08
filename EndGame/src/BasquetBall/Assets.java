@@ -19,6 +19,7 @@ public class Assets {
     public static BufferedImage meth;        // to store the end image
     public static SoundClip eat;             // to store the sound
     public static SoundClip crash;           // to store the sound
+    public static BufferedImage pauseMG;
 
     /**
      * initializing the images of the game
@@ -31,5 +32,6 @@ public class Assets {
         meth = ImageLoader.loadImage("/imagesBasquet/canasta(1).png");
         eat = new SoundClip("/audioBasquet/encesta.wav");
         crash = new SoundClip("/audioBasquet/bote.wav");
+        pauseMG = ImageLoader.loadImage("/imagesBasquet/pause_2.png");
     }   
 }

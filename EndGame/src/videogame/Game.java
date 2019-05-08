@@ -81,6 +81,7 @@ public class Game implements Runnable {
     private int cantPasto;
     private pasto[] pastos;
     private boolean caminaPasto;
+    private int contQ;
 
     /**
      * to create title, width and height and set the game is still not running
@@ -106,6 +107,7 @@ public class Game implements Runnable {
         obs = new obstacle[10];
         mute = 0;
         muted = false;
+        cantObs = 0;
 
     }
 
@@ -155,7 +157,23 @@ public class Game implements Runnable {
     public void setScore(int score) {
         this.score = score;
     }
-
+    /**
+     * To set life
+     * 
+     * @param life 
+     */
+    public void setLife(int life) {
+        this.life = life;
+    }
+    /**
+     * To get the life value
+     * 
+     * @return an <code>int</code> value for the life
+     */
+    public int getLife() {
+        return life;
+    }
+    
     /**
      * To set the value of the ContEnter
      *
@@ -224,11 +242,11 @@ public class Game implements Runnable {
         // Se crea el botón que se utilizará para entrar a los minijuegos
         boton = new Entrar(getWidth() - 125, getHeight() - 100, 125, 100, this);
 
-        try {
+        /*try {
             cargaObstaculos("obstaculos");
         } catch (IOException ex) {
             System.out.println("Error en " + ex.toString());
-        }
+        }*/
         try {
             cargaObstaculos("pasto");
         } catch (IOException ex) {
@@ -310,6 +328,11 @@ public class Game implements Runnable {
                 }
                 muted = !muted;
                 mute = 30;
+            }
+            contQ--;
+            if(getKeyManager().zaz && contQ <= 0){
+                player.changeN();
+                contQ = 30;
             }
 
             //Estos son las llamadas a los métodos para 
@@ -674,27 +697,29 @@ public class Game implements Runnable {
                     if (life <= 0) {
                         g.drawImage(Assets.end, (getWidth() / 2) - 450, (getHeight() / 2) - 150, 900, 300, null);
                     }
+                    int y = 40;
                     if (getKeyManager().pause) {
                         g.drawImage(Assets.pause, 0, 0, getWidth(), getHeight(), null);
+                        y+=40;
                     }
                     g.setColor(new Color(0, 0, 102));
 
                     g.setFont(pregunta);
-                    g.drawImage(Assets.tabla, 5, 40,200,100,null);
+                    g.drawImage(Assets.tabla, 0, y,300,100,null);
                     for(int i = 0; i < 10; i++){
                         for(int j = 0; j < 20; j++){
                             g.drawImage(Assets.arbol, 1317+(i*25), 1317+(j*50),50,100,null);
                         }
                     }
 
-                    g.drawString("Vidas: " + life, 5, 80);
-                    g.drawString("Score: " + score, 5, 120);//falta formato
-                    g.setColor(Color.red);
+                    g.drawString("Vidas: " + life, 5, y+40);
+                    g.drawString("Score: " + score, 5, y+80);//falta formato
+                    /*g.setColor(Color.red);
                     g.setFont(stats);
                     g.drawString("Player X: " + (player.getX() - map.getX()), getWidth() - 250, 30);
                     g.drawString("Player y: " + (player.getY() - 450 - map.getY()), getWidth() - 250, 60);
                     g.drawString("map X: " + map.getX(), getWidth() - 250, 90);
-                    g.drawString("map y: " + map.getY(), getWidth() - 250, 120);
+                    g.drawString("map y: " + map.getY(), getWidth() - 250, 120);*/
                     
                     
 

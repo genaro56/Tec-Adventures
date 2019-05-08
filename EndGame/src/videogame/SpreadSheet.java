@@ -16,6 +16,7 @@ import java.awt.image.BufferedImage;
  * @author berny
  */
 public class SpreadSheet {
+    private int n;
 
     private BufferedImage sheet;
 
@@ -25,6 +26,10 @@ public class SpreadSheet {
      */
     public SpreadSheet(BufferedImage sheet) {
         this.sheet = sheet;
+        n = 0;
+    }
+    public void changeN(){
+        n = (n+1)%2;
     }
 
     /**

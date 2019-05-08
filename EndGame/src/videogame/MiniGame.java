@@ -55,6 +55,7 @@ public class MiniGame /*implements Runnable */ {
     // Vamos  usarlas para que se desplieguen preguntas y respuestas en orden aleatorio
     private int[] questionOrder = new int[30];                       // para guardar el orden de las preguntas
     private int[] answerOrder = new int[30];                         // para guardar el orden de las respuestas
+    private int number;
 
 
     /**
@@ -70,8 +71,8 @@ public class MiniGame /*implements Runnable */ {
         acierta = false;
         falla = false;
         this.game = game;
-        //keyManager = new KeyManager();
-        //mouseManager = new MouseManager();
+        this.number = number;
+        System.out.println(number);
         //life = 5;
         level = 1;
         contExit = 30;
@@ -139,16 +140,18 @@ public class MiniGame /*implements Runnable */ {
     }
 
     public void tick() {
-        //keyManager.tick();
+        if(game.getKeyManager().exit){
+            game.setMG(false);
+        }
         if (acierta) {//verifica si la respuesta fue correcta
-            if (level == cantQuestion) {//es lo que hace cuando respondió todas las preguntas bien                
+            if (level == 5) {//es lo que hace cuando respondió todas las preguntas bien                
                 // botones para salir directamente o mostrar siguiente pantalla
                 if(counter <= 0) {
                 if(!finish){
                 if (game.getKeyManager().sig || game.getKeyManager().exit || game.getKeyManager().enter || contExit <= 0) {
                     finish = true;
                     contExit = 60;
-                    
+                    Assets.victory.play();
                 }}else {
                 System.out.println(contExit);
                     if (game.getKeyManager().sig || game.getKeyManager().exit || game.getKeyManager().enter || contExit <= 0) {
@@ -177,6 +180,7 @@ public class MiniGame /*implements Runnable */ {
                     finish = true;
                     counter = 30;
                     contExit = 60;
+                    Assets.derrota.play();
                 }}
                 else{
                 if(finish){  
@@ -217,6 +221,9 @@ public class MiniGame /*implements Runnable */ {
                     if (game.getKeyManager().enter || game.getKeyManager().sig) { //usamos enter
                         setAcierta(answerOrder[selected] == res[questionOrder[level]], selected); //verificamos si es correcta o no
                         setFalla(!acierta, selected);
+                        if(falla){
+                            Assets.falla.play();
+                        }
                         counter = 30;
                     }
                 } else {
@@ -239,9 +246,7 @@ public class MiniGame /*implements Runnable */ {
     public void render(Graphics g) {
         //se imprime el fondo (va a ser uno distinto por cada edificio)
         // vamos a hacer un array de fondos
-        g.drawImage(Assets.background
-                /*aquí irá el nombre del array y el numero de edificio*/
-                , 0, 0, width, height, null);
+        g.drawImage(Assets.background[number], 0, 0, width, height, null);
         
         if (!finish) {//si no ha terminado
             //se despliegan las imágenes normales
@@ -331,8 +336,7 @@ public class MiniGame /*implements Runnable */ {
      *
      */
     public void iniciaRespuestas() {
-        //int iNum = (int)(Math.random()* 4+1);
-        System.out.println("hola");
+        
         for(int j = 1; j < 5; j++){// se limpia el arreglo en cada nivel
             answerOrder[j] = 0;
         }
@@ -353,18 +357,8 @@ public class MiniGame /*implements Runnable */ {
             // se inician las respuestas
             int x= (int)respuesta[questionOrder[level]][iNum].length()*6;
             respuestas[i] = new Respuesta((width-x)/2, i * 150,x,50, respuesta[questionOrder[level]][iNum], iNum, res[questionOrder[level]],i, game, this);
-            
-            //System.out.println(i + ": " +  res[level]);
+            ;
         }
     }
-
-    /*public void iniciaRespuestas() {
-        for (int i = 1; i < 5; i++) {
-            int x= (int)respuesta[level][i].length()*6;
-            respuestas[i] = new Respuesta((width-x)/2, i * 150, x, 50 , respuesta[level][i], i, res[level], game, this);
-            System.out.println(i + ": " +  (int)respuesta[level][i].length());
-        }
-        
-    }*/
 
 }

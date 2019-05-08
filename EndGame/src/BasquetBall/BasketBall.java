@@ -257,8 +257,14 @@ public class BasketBall {
                 life--; // upgrade the lifes
                 vel += 1; // increase the velocity
             }
-            if(game.getKeyManager().exit || life < 1) {
+            if(game.getKeyManager().exit) {
+                
                 game.setScore(game.getScore() + score);
+                game.setMG(false);
+            }
+            if (life < 1) {
+                game.setScore(game.getScore() + score);
+                game.setLife(game.getLife() - 1);
                 game.setMG(false);
             }
         }
@@ -360,7 +366,7 @@ public class BasketBall {
             g.drawString("Puntos: " + score, game.getWidth() - 150, game.getHeight() - 15);
             // if the lifes are 0, display GameOver image
             if (life <= 0 || game.getKeyManager().pause) {
-                g.drawImage(Assets.end, (game.getWidth() / 2) - 450, (game.getHeight() / 2) - 150, 900, 300, null);
+                g.drawImage(Assets.pauseMG, (game.getWidth() / 2) - 450, (game.getHeight() / 2) - 150, 900, 300, null);
             }
     }
 

@@ -22,6 +22,7 @@ public class Player extends Item {
     private Animation playerAb;    // playerAb animation var
     private Animation playerDe;    // playerDe animation var
     private Animation playerIz;    // playerIz animation var
+    private int n;
     
      private boolean caminaPasto;
     private boolean move;
@@ -48,6 +49,7 @@ public class Player extends Item {
         this.playerDe = new Animation(Assets.playerDe, 100);
         this.playerIz = new Animation(Assets.playerIz, 100);
         caminaPasto = false;
+        n = 0;
     }
 
     /**
@@ -129,6 +131,14 @@ public class Player extends Item {
     public Animation getPlayerIz() {
         return playerIz;
     }
+    
+    public void changeN(){
+        playerAr.changeN();
+        playerAb.changeN();
+        playerIz.changeN();
+        playerDe.changeN();
+        n = (n+1)%2;
+    }
     /**
      * Player tick
      * 
@@ -199,7 +209,7 @@ public class Player extends Item {
         } else if (game.getKeyManager().right) {
             g.drawImage(playerDe.getCurrentFrame(), getX(), getY(), getWidth(), getHeight(), null);
         } else {
-            g.drawImage(Assets.player, getX(), getY(), getWidth(), getHeight(), null);
+            g.drawImage(Assets.player[n], getX(), getY(), getWidth(), getHeight(), null);
         }   
     }
 }

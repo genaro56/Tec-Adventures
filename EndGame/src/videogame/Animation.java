@@ -21,19 +21,21 @@ public class Animation {
     private int index;               //to get the index for the next frame
     private long lastTime;           //for the last time
     private long timer;              //to accumulate time
-    private BufferedImage[] frames;  //to store every image
+    private BufferedImage[][] frames;  //to store every image
+    private int n;
 
     /**
      *
      * @param frames
      * @param speed
      */
-    public Animation(BufferedImage[] frames, int speed) {
+    public Animation(BufferedImage[][] frames, int speed) {
         this.frames = frames;
         this.speed = speed;
         index = 0;
         timer = 0;
         lastTime = System.currentTimeMillis();
+        n = 0;
     }
 
     /**
@@ -41,8 +43,12 @@ public class Animation {
      * @return
      */
     public BufferedImage getCurrentFrame() {
-        return frames[index];
+        return frames[n][index];
     }
+
+    public void changeN() {
+        n = (n+1)%2;
+    }   
 
     /**
      *
