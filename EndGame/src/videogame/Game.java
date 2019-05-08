@@ -64,6 +64,7 @@ public class Game implements Runnable {
     private int contIntro;
     private int contEnter;
     boolean[] intersectar = new boolean[4];
+    private int mute;
 
     Font vida = new Font("Bank Gothic", Font.BOLD, 36);
     Font stats = new Font("ink free", Font.PLAIN, 36);
@@ -75,6 +76,7 @@ public class Game implements Runnable {
     private int corriendo;
     private BasketBall basket;
     private int type;
+    private boolean muted;
 
     /**
      * to create title, width and height and set the game is still not running
@@ -98,7 +100,8 @@ public class Game implements Runnable {
         score = 0;
         MG = false;
         obs = new obstacle[10];
-        corriendo = 0;
+        mute = 0;
+        muted = false;
 
     }
 
@@ -171,7 +174,7 @@ public class Game implements Runnable {
         // Se crea el jugador
         player = new Player(0, 300, -20, 34, 54, this);
         // Se crea el mapa para que se pueda desplazar la vista
-        map = new Mapa(0, -225, getHeight() * 3, getWidth() * 3, this);
+        map = new Mapa(0, -450, getHeight() * 3, getWidth() * 3, this);
         // Se crea cada uno de los edificios
         for (int i = 0; i < cantEdif; i++) {
             edificios.add(new Edificio(posEdifX[i], posEdifY[i], edifWidth[i], edifHeight[i], this, i));
@@ -271,8 +274,16 @@ public class Game implements Runnable {
             //Aquí se activa cada tick del juego cuando no está pausado
             if (!getKeyManager().pause) {
                 if (!MG) {
-                    if (getKeyManager().mute) {
-                        Assets.music.stop();
+                    mute--;
+                    if (getKeyManager().mute && mute <= 0) {
+                        if(!muted){
+                            Assets.music.stop();                            
+                        }
+                        else{
+                            Assets.music.play();
+                        }
+                        muted = !muted;
+                        mute = 30;
                     }
                     contEnter--;
                     intersectando = false;
