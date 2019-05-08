@@ -13,12 +13,25 @@ import java.awt.Graphics;
  */
 public class Respuesta extends Button {
 
-    private int orderNumber;
-    private int number;
-    private String respuesta;
-    private boolean correct;
-    private MiniGame minigame;
-
+    private int orderNumber;           // order number 
+    private int number;                // number
+    private String respuesta;          // respuesta     
+    private boolean correct;           // bool de correcta
+    private MiniGame minigame;         // variable minigame
+    /**
+     * To create x, y, widht, height, respuesta, number, correct, orderNumber, game, and minigame variables
+     * 
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+     * @param respuesta
+     * @param number
+     * @param correct
+     * @param orderNumber
+     * @param game
+     * @param minigame 
+     */
     public Respuesta(int x, int y, int width, int height, String respuesta, int number, int correct,int orderNumber, Game game, MiniGame minigame) {
         super(x, y, width, height, game);
 
@@ -32,7 +45,10 @@ public class Respuesta extends Button {
             this.correct = false;
         }
     }
-
+    /**
+     * Respuesta tick 
+     *
+     */
     public void tick() {
         // moving player depending on flags
         if (clicked()) {

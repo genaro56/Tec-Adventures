@@ -13,12 +13,12 @@ import java.awt.Graphics;
  */
 public abstract class Button extends Item {
 
-    private int width;             //
-    private int height;            //
-    private Game game;             //
+    private int width;             // width
+    private int height;            // height
+    private Game game;             // game variable
 
     /**
-     * *
+     * 
      * @param x
      * @param y
      * @param width
