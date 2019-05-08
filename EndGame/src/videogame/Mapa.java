@@ -14,33 +14,57 @@ import java.awt.Rectangle;
  */
 public class Mapa  extends Item{
 
-    private int width;
-    private int height;
-    private Game game;
-    
+    private int width;         // Mapa width
+    private int height;        // Mapa height
+    private Game game;         // game variable
+    /**
+     * To create x, y, width, height and game variables
+     * 
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+     * @param game 
+     */
     public Mapa(int x, int y, int width, int height, Game game) {
         super(x, y);
         this.width = width;
         this.height = height;
         this.game = game;
     }
-
+    /**
+     * To get the width 
+     *
+     * @return an <code>int</code> value with the width
+     */
     public int getWidth() {
         return width;
     }
-
+    /**
+     * To get the height
+     *
+     * @return an <code>int</code> value with the height
+     */
     public int getHeight() {
         return height;
     }
-
+    /**
+     * To set width
+     * @param width 
+     */
     public void setWidth(int width) {
         this.width = width;
     }
-
+    /**
+     * To set height
+     * @param height 
+     */
     public void setHeight(int height) {
         this.height = height;
-    }  
-
+    }
+    /**
+     * Mapa tick
+     */
     @Override
     public void tick() {
         if (game.getKeyManager().up) {
@@ -56,7 +80,10 @@ public class Mapa  extends Item{
            setX(getX() - 3);
         }
     }
-
+    /**
+     * Mapa render
+     * @param g 
+     */
     @Override
     public void render(Graphics g) {
         g.drawImage(Assets.map, getX(), getY(), getWidth(), getHeight(), null);        

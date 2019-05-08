@@ -14,13 +14,25 @@ import java.awt.Rectangle;
  */
 public class Edificio extends Obj {    
     
-    private int edN;
-
+    private int edN;   // numero edificio
+    /**
+     * To create x, y, widht, height, game and edN variable
+     * 
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+     * @param game
+     * @param edN 
+     */
     public Edificio(int x, int y, int width, int height, Game game, /*String name*/ int edN) {
         super(x, y,width,height,game);
         this.edN = edN;
     }
-
+    /**
+     * edificio render
+     * @param g 
+     */
     @Override
     public void render(Graphics g) {
         g.drawImage(Assets.edificios[edN], getX(), getY(), getWidth(), getHeight(), null); 

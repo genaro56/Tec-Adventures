@@ -14,17 +14,18 @@ import java.awt.Rectangle;
  */
 public class Player extends Item {
 
-    private int direction;         //
-    private int width;             //
-    private int height;            //
-    private Game game;             //
-    private Animation playerAr;    //
-    private Animation playerAb;    //
-    private Animation playerDe;    //
-    private Animation playerIz;    //
+    private int direction;         // item direction
+    private int width;             //  item width
+    private int height;            //  item height
+    private Game game;             //  game variable
+    private Animation playerAr;    // playerAr animation var
+    private Animation playerAb;    // playerAb animation var
+    private Animation playerDe;    // playerDe animation var
+    private Animation playerIz;    // playerIz animation var
 
     /**
-     *
+     * To create x, y, direction, width, height and game variables
+     * 
      * @param x
      * @param y
      * @param direction
@@ -45,31 +46,31 @@ public class Player extends Item {
     }
 
     /**
-     *
-     * @return
+     * To get direction
+     * @return an <code>int</code> with the value of direction
      */
     public int getDirection() {
         return direction;
     }
 
     /**
-     *
-     * @return
+     * To get width
+     * @return an <code>int</code> with the value of width
      */
     public int getWidth() {
         return width;
     }
 
     /**
-     *
-     * @return
+     * To get height
+     * @return an <code>int</code> with the value of height
      */
     public int getHeight() {
         return height;
     }
 
     /**
-     *
+     * To set direction
      * @param direction
      */
     public void setDirection(int direction) {
@@ -77,7 +78,7 @@ public class Player extends Item {
     }
 
     /**
-     *
+     * To set width
      * @param width
      */
     public void setWidth(int width) {
@@ -85,41 +86,44 @@ public class Player extends Item {
     }
 
     /**
-     *
+     * To set height
      * @param height
      */
     public void setHeight(int height) {
         this.height = height;
     }
-
     /**
-     *
-     * @return
+     * To get PlayerAb
+     * @return an <code>int</code> with the value of PlayerAb
      */
     public Animation getPlayerAb() {
         return playerAb;
     }
-
+    /**
+     * To get PlayerAr
+     * @return an <code>int</code> with the value of PlayerAr
+     */
     public Animation getPlayerAr() {
         return playerAr;
     }
-
     /**
-     *
-     * @return
+     * To get PlayerDe
+     * @return an <code>int</code> with the value of PlayerDe
      */
     public Animation getPlayerDe() {
         return playerDe;
     }
-
     /**
-     *
-     * @return
+     * To get PlayerIz
+     * @return an <code>int</code> with the value of PlayerIz
      */
     public Animation getPlayerIz() {
         return playerIz;
     }
-
+    /**
+     * Player tick
+     * 
+     */
     @Override
     public void tick() {
         if (game.getKeyManager().up) {
@@ -150,13 +154,16 @@ public class Player extends Item {
     }
 
     /**
-     *
-     * @return
+     * To get perimetro
+     * @return an <code>Rectangle</code> with the value of perimetro
      */
     public Rectangle getPerimetro() {
         return new Rectangle(getX(), getY(), getWidth(), getHeight());
     }
-
+    /**
+     * Player render
+     * @param g 
+     */
     @Override
     public void render(Graphics g) {
         if (game.getKeyManager().up) {

@@ -257,7 +257,7 @@ public class BasketBall {
                 life--; // upgrade the lifes
                 vel += 1; // increase the velocity
             }
-            if(game.getKeyManager().exit || life < 1){
+            if(game.getKeyManager().exit || life < 1) {
                 game.setScore(game.getScore() + score);
                 game.setMG(false);
             }
@@ -362,9 +362,6 @@ public class BasketBall {
             if (life <= 0 || game.getKeyManager().pause) {
                 g.drawImage(Assets.end, (game.getWidth() / 2) - 450, (game.getHeight() / 2) - 150, 900, 300, null);
             }
-        
-
     }
-
 
 }

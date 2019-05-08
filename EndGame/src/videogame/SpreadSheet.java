@@ -20,7 +20,7 @@ public class SpreadSheet {
     private BufferedImage sheet;
 
     /**
-     *
+     * Constructor of sheet
      * @param sheet
      */
     public SpreadSheet(BufferedImage sheet) {
@@ -28,7 +28,7 @@ public class SpreadSheet {
     }
 
     /**
-     *
+     * To create BufferedImage
      * @param x
      * @param y
      * @param width

@@ -122,27 +122,49 @@ public class Game implements Runnable {
     public int getHeight() {
         return height;
     }
-
+    /**
+     * To set the MG
+     * @param MG 
+     */
     public void setMG(boolean MG) {
         this.MG = MG;
     }
-
+    /**
+     * To get the score of the Game
+     * 
+     * an <code>int</code> value with the Score
+     * @return 
+     */
     public int getScore() {
         return score;
     }
-
+    /**
+     * To set the value of the score
+     * @param score 
+     */
     public void setScore(int score) {
         this.score = score;
     }
-
+    /**
+     * To set the value of the ContEnter
+     * @param contEnter 
+     */
     public void setContEnter(int contEnter) {
         this.contEnter = contEnter;
     }
-
+    /**
+     * To get the value of the ContEnter
+     * 
+     * an <code>int</code> value with the ContEnter
+     * @return 
+     */
     public int getContEnter() {
         return contEnter;
     }
-
+    /**
+     * To set the value of the startMinigame
+     * @param i 
+     */
     public void startMinigame(int i) {
         type = i;
         if(i == 10){
@@ -153,7 +175,9 @@ public class Game implements Runnable {
             setMG(true);
         
     }
-
+    /**
+     * initializing the basket variable
+     */
     public void startBasquetball() {
         basket = new BasketBall(this);
     }
@@ -230,11 +254,20 @@ public class Game implements Runnable {
         }
         stop();
     }
-
+    /**
+     * To get the value of KeyManager
+     * 
+     * @return an  <code>KeyManager</code> value with the Key Manager
+     */
     public KeyManager getKeyManager() {
         return keyManager;
     }
-
+    /**
+     * TO get the value of the Mouse Manager
+     * 
+     * 
+     * @return <code>MouseManager</code> value with the MouseManager 
+     */
     public MouseManager getMouseManager() {
         return mouseManager;
     }
@@ -395,7 +428,13 @@ public class Game implements Runnable {
             }
         }
     }
-
+    /**
+     * Funcion que permite leer los archivos  
+     *
+     * @param archivo
+     * @param base
+     * @throws IOException 
+     */
     public void leeArchivo(String archivo, boolean base) throws IOException {
         BufferedReader fileIn;
         try {
@@ -451,7 +490,12 @@ public class Game implements Runnable {
 
         fileIn.close();
     }
-
+    /**
+     * Funcion que permite grabar los archivos
+     * 
+     * @param archivo
+     * @throws IOException 
+     */
     public void grabaArchivo(String archivo) throws IOException {
         PrintWriter fileOut = new PrintWriter(new FileWriter(archivo));
         fileOut.println("");
@@ -474,7 +518,12 @@ public class Game implements Runnable {
 
         fileOut.close();
     }
-
+    /**
+     * Funcion que permite cargar los obstaculos del mapa
+     * 
+     * @param archivo
+     * @throws IOException 
+     */
     public void cargaObstaculos(String archivo) throws IOException {
         BufferedReader fileIn;
         try {
@@ -512,7 +561,9 @@ public class Game implements Runnable {
 
         fileIn.close();
     }
-
+    /**
+     * Aqui se hace el render general del juego
+     */
     private void render() {
         // get the buffer strategy from the display
         bs = display.getCanvas().getBufferStrategy();
