@@ -49,6 +49,7 @@ public class MiniGame /*implements Runnable */ {
     private int counter;                               // para crear retrasos en los tiempos
     private boolean finish;                            // para verificar si ya se terminó el minijuego
     private int contExit;
+    private int cantQuestion;
 
     /**
      * to create title, width and height and set the game is still not running
@@ -118,8 +119,9 @@ public class MiniGame /*implements Runnable */ {
     public void tick() {
         //keyManager.tick();
         if (acierta) {//verifica si la respuesta fue correcta
-            if (level == 5) {//es lo que hace cuando respondió todas las preguntas bien                
+            if (level == cantQuestion) {//es lo que hace cuando respondió todas las preguntas bien                
                 // botones para salir directamente o mostrar siguiente pantalla
+                if(counter <= 0) {
                 if(!finish){
                 if (game.getKeyManager().sig || game.getKeyManager().exit || game.getKeyManager().enter || contExit <= 0) {
                     finish = true;
@@ -132,7 +134,7 @@ public class MiniGame /*implements Runnable */ {
                     game.setContEnter(30);
                     game.setMG(!acierta); //finaliza el minigame
                     
-                }}contExit--;
+                }}contExit--;}counter--;
             } else {//cuando aún no termina todas las preguntas
                 if (/*game.getKeyManager().enter*/counter <= 0) {
                     ///System.out.println(level); //Solo era para revisión
@@ -276,17 +278,25 @@ public class MiniGame /*implements Runnable */ {
         } catch (FileNotFoundException e) {
             File puntos = new File(archivo);
             PrintWriter fileOut = new PrintWriter(puntos);
-            fileOut.println("100,demo");
+            fileOut.println(1);
+            fileOut.println("Pregunta de prueba");
+            fileOut.println("Respuesta 1");
+            fileOut.println("Respuesta 2");
+            fileOut.println("Respuesta 3");
+            fileOut.println("Respuesta 4");
+            fileOut.println(1);            
             fileOut.close();
             fileIn = new BufferedReader(new FileReader(archivo));
         }
-        for (int i = 1; i < 6; i++) {
+        String dato = fileIn.readLine();
+        cantQuestion = (Integer.parseInt(dato));
+        for (int i = 1; i <= cantQuestion; i++) {
             pregunta[i] = fileIn.readLine();
 
             for (int j = 1; j < 5; j++) {
                 respuesta[i][j] = fileIn.readLine();
             }
-            String dato = fileIn.readLine();
+            dato = fileIn.readLine();
             res[i] = (Integer.parseInt(dato));
         }
 

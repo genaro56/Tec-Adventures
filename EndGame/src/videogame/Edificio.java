@@ -72,19 +72,19 @@ public class Edificio extends Item {
     }
 
     public Rectangle getPerimetroO() {
-        return new Rectangle(getX(), getY(), getWidth(), 3);
+        return new Rectangle(getX(), getY()+3, getWidth(), 3);
     }
 
     public Rectangle getPerimetroU() {
-        return new Rectangle(getX(), getY() + getHeight() - 3, getWidth(), 3);
+        return new Rectangle(getX(), getY() + getHeight() - 6, getWidth(), 3);
     }
 
     public Rectangle getPerimetroR() {
-        return new Rectangle(getX() + getWidth() - 3, getY(),50, getHeight());
+        return new Rectangle(getX() + getWidth() - 6, getY(),50, getHeight());
     }
 
     public Rectangle getPerimetroL() {
-        return new Rectangle(getX(), getY(), 3, getHeight());
+        return new Rectangle(getX()+3, getY(), 3, getHeight());
     }
 
     public boolean intersecta(Player obj) {
