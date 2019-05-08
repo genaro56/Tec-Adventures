@@ -161,10 +161,7 @@ public class Game implements Runnable {
         }
         // Se crea el botón que se utilizará para entrar a los minijuegos
         boton = new Entrar(getWidth() - 125, getHeight() - 100, 125, 100, this);
-        for(int i = 0; i < 10; i++){
-            obstacle obst = new obstacle(0,0,25,25,this);
-            obs[i] = obst;
-        }
+        
         try {
             cargaObstaculos("obstaculos");
         } catch (IOException ex) {
@@ -282,7 +279,7 @@ public class Game implements Runnable {
                             intersectando = true;
                         }
                     }
-                    for (int i = 0; i < 10; i++) {
+                    for (int i = 0; i < cantObs; i++) {
                         
                         if (obs[i].intersecta(player)) {
                             boton.setEdificioNo(i);
@@ -363,7 +360,7 @@ public class Game implements Runnable {
                 for (int i = 0; i < cantEdif; i++) {
                     edificios.get(i).tick();
                 }
-                for(int i = 0; i < 10; i++){
+                for(int i = 0; i < cantObs; i++){
                     obs[i].tick();
                 }
             }
@@ -467,17 +464,20 @@ public class Game implements Runnable {
         System.out.println(dato);
         dato = fileIn.readLine();
         System.out.println(dato);
+        int x;
+        int y;
         cantObs = (Integer.parseInt(dato));
+        obs = new obstacle[cantObs];
+        
+            
         for (int i = 0; i < cantObs; i++) {
             dato = fileIn.readLine();
             dato = fileIn.readLine();
-            System.out.println(dato);
-            obs[i].setX(Integer.parseInt(dato));
-            System.out.println(obs[i].getX());
+            x =(Integer.parseInt(dato));
             dato = fileIn.readLine();
-            System.out.println(dato);
-            obs[i].setY(Integer.parseInt(dato));            
-            System.out.println(obs[i].getY());
+            y = (Integer.parseInt(dato)); 
+            obstacle obst = new obstacle(x,y,this);
+            obs[i] = obst;
         }
 
         fileIn.close();
@@ -502,7 +502,7 @@ public class Game implements Runnable {
                 if (!MG) {
                     
                     map.render(g);
-                    for(int i = 0; i < 10; i++){
+                    for(int i = 0; i < cantObs; i++){
                         obs[i].render(g);
                     }
                     player.render(g);

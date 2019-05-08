@@ -14,8 +14,8 @@ import java.awt.Graphics;
 public class obstacle  extends Obj{
     private int iNum;
     private int jNum;
-    public obstacle(int x, int y, int width, int height, Game game) {
-        super(x, y,width,height,game);
+    public obstacle(int x, int y, Game game) {
+        super(x, y,25,25,game);
         iNum = (int)(Math.random()* 5);
         jNum = (int)(Math.random()* 5);
     }
