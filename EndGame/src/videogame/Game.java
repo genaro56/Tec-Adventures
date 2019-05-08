@@ -422,6 +422,7 @@ public class Game implements Runnable {
         dato = fileIn.readLine();
         dato = fileIn.readLine();
         cantEdif = (Integer.parseInt(dato));
+        System.out.println(cantEdif);
         for (int i = 0; i < cantEdif; i++) {
             dato = fileIn.readLine();
             dato = fileIn.readLine();

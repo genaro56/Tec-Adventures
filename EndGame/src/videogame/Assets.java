@@ -76,7 +76,7 @@ public class Assets {
         arbol = new BufferedImage[5][5];
 
         for (int i = 0; i < 30; i++) {
-            edificios[i] = ImageLoader.loadImage("/images/Edificios/edificio_" + i + ".jpg");
+            edificios[i] = ImageLoader.loadImage("/images/Edificios/edificio_" + i + ".png");
             System.out.println("exito" + i);
         }
         for (int i = 0; i < 5; i++) {
