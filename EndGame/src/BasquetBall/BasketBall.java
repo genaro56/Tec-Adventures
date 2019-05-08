@@ -6,6 +6,9 @@
 package BasquetBall;
 
 
+import static java.awt.Color.black;
+import static java.awt.Color.white;
+import java.awt.Font;
 import java.awt.Graphics;
 
 import java.io.BufferedReader;
@@ -58,7 +61,7 @@ public class BasketBall {
         life = 5;
         score = 0;
         down = 0;
-        vel = 1;
+        vel = 3;
         end = false;
         init();
     }
@@ -143,7 +146,7 @@ public class BasketBall {
         int longitud = 200;
         player = new Player((game.getWidth() / 2) - longitud/2, game.getHeight() + 50, longitud, 20, game);
         //adding element obj
-        obj = new Obj(game.getWidth() / 2 - 10, game.getHeight() - 100, vel, 20, 20, game, this);
+        obj = new Obj(game.getWidth() / 2 - 10, game.getHeight() - 100, vel, 50, 50, game, this);
         //adding elements to bricks
         int iNum = 7;
         int jNum = 4;
@@ -182,6 +185,7 @@ public class BasketBall {
         if (!game.getKeyManager().pause) {
             // avancing player with colision       
             player.tick();
+            
 
             // ticking the objs
             obj.setVelocity(vel);
@@ -252,6 +256,10 @@ public class BasketBall {
                 down -= 10; // reset the colissions in the life
                 life--; // upgrade the lifes
                 vel += 1; // increase the velocity
+            }
+            if(game.getKeyManager().exit || life < 1){
+                game.setScore(game.getScore() + score);
+                game.setMG(false);
             }
         }
 
@@ -344,8 +352,12 @@ public class BasketBall {
             }
 
             // display score & lifes
-            g.drawString("Vidas: " + (int) life, 5, 15);
-            g.drawString("Puntos: " + score, game.getWidth() - 75, 15);
+            g.setColor(black);
+            g.setFont(new Font("Arial", Font.PLAIN, 24));
+            g.drawString("Vidas: " + (int) life, 5, game.getHeight() - 15);
+            g.setColor(black);
+            g.setFont(new Font("Arial", Font.PLAIN, 24));
+            g.drawString("Puntos: " + score, game.getWidth() - 150, game.getHeight() - 15);
             // if the lifes are 0, display GameOver image
             if (life <= 0 || game.getKeyManager().pause) {
                 g.drawImage(Assets.end, (game.getWidth() / 2) - 450, (game.getHeight() / 2) - 150, 900, 300, null);
