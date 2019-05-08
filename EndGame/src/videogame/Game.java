@@ -409,7 +409,7 @@ public class Game implements Runnable {
             player.getPlayerIz().tick();
             if (km.right && map.getX() <= getWidth() - map.getWidth()
                     || km.right && player.getX() <= getWidth() / 4 - 50
-                    || km.left && map.getX() >= -50
+                    || km.left && map.getX() >= 0
                     || km.left && player.getX() >= getWidth() / 4 + 50
                     || km.up && map.getY() >= 0
                     || km.up && player.getY() >= getHeight() / 2 + 50
@@ -442,7 +442,9 @@ public class Game implements Runnable {
         } catch (FileNotFoundException e) {
             File puntos = new File(archivo);
             PrintWriter fileOut = new PrintWriter(puntos);
+            fileOut.println("Vidas");
             fileOut.println("5");
+            fileOut.println("Edificios");
             fileOut.println("1");
             fileOut.println("Rectoria");
             fileOut.println("450");
@@ -459,6 +461,7 @@ public class Game implements Runnable {
         dato = fileIn.readLine();
         dato = fileIn.readLine();
         cantEdif = (Integer.parseInt(dato));
+        System.out.println(cantEdif);
         for (int i = 0; i < cantEdif; i++) {
             dato = fileIn.readLine();
             dato = fileIn.readLine();
@@ -584,10 +587,10 @@ public class Game implements Runnable {
 
                     map.render(g);
                     for(int i = 0; i < cantObs; i++){
-
                         obs[i].render(g);
                     }
                     player.render(g);
+                    
                     for (int i = 0; i < cantEdif; i++) {
                         edificios.get(i).render(g);
                     }
@@ -608,7 +611,7 @@ public class Game implements Runnable {
                     g.setColor(Color.red);
                     g.setFont(stats);
                     g.drawString("Player X: " + (player.getX() - map.getX()), getWidth() - 250, 30);
-                    g.drawString("Player y: " + (player.getY() - 225 - map.getY()), getWidth() - 250, 60);
+                    g.drawString("Player y: " + (player.getY()-450 - map.getY()), getWidth() - 250, 60);
                     g.drawString("map X: " + map.getX(), getWidth() - 250, 90);
                     g.drawString("map y: " + map.getY(), getWidth() - 250, 120);
 
