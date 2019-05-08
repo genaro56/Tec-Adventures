@@ -24,12 +24,12 @@ public class Assets {
      * initializing the images of the game
      */
     public static void init() {
-        background = ImageLoader.loadImage("/imagesBasquet/Background.jpg");
+        background = ImageLoader.loadImage("/imagesBasquet/cancha.jpg");
         player = ImageLoader.loadImage("/imagesBasquet/barra.png");
-        obj = ImageLoader.loadImage("/imagesBasquet/galleta.png");
+        obj = ImageLoader.loadImage("/imagesBasquet/basket.png");
         end = ImageLoader.loadImage("/imagesBasquet/GameOver.png");
-        meth = ImageLoader.loadImage("/imagesBasquet/meth.jpg");
-        eat = new SoundClip("/audioBasquet/Eat");
-        crash = new SoundClip("/audioBasquet/Splat.wav");
+        meth = ImageLoader.loadImage("/imagesBasquet/canasta(1).png");
+        eat = new SoundClip("/audioBasquet/encesta.wav");
+        crash = new SoundClip("/audioBasquet/bote.wav");
     }   
 }
