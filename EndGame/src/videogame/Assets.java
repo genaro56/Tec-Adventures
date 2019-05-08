@@ -26,6 +26,7 @@ public class Assets {
     public static BufferedImage map;          // to store the player image
     /* Lo podemos usar para introducir los sonidos
     //public static SoundClip bomb;             // to store the sound*/
+    public static SoundClip music;             // to store the sound
     public static BufferedImage end;          // to store the end image    
     public static BufferedImage boton;        // to store the button image 
     public static BufferedImage botonC;       // to store the button image
@@ -44,6 +45,7 @@ public class Assets {
     public static BufferedImage intro;         //
     public static BufferedImage intro2;        //
     public static BufferedImage[] edificios;  // to store buildings's images
+    public static BufferedImage[][] arbol;
     //public int cantEdif;         
 
     /**
@@ -58,7 +60,7 @@ public class Assets {
         boton = ImageLoader.loadImage("/images/enterButton.jpg");
         //botonC = ImageLoader.loadImage("/images/botonC.png");
         pause = ImageLoader.loadImage("/images/menupausa.png");
-        //bomb = new SoundClip("/audio/crash.wav");
+        music = new SoundClip("/audio/reptilia.wav");
         respuesta = ImageLoader.loadImage("/images/respuesta.png");
         pregunta = ImageLoader.loadImage("/images/pregunta.png");
         correcta = ImageLoader.loadImage("/images/correcta.png");
@@ -71,10 +73,16 @@ public class Assets {
         intro = ImageLoader.loadImage("/images/intro.png");
         intro2 = ImageLoader.loadImage("/images/intro2.png");
         edificios = new BufferedImage[30];
+        arbol = new BufferedImage[5][5];
 
         for (int i = 0; i < 30; i++) {
             edificios[i] = ImageLoader.loadImage("/images/Edificios/edificio_" + i + ".jpg");
             System.out.println("exito" + i);
+        }
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++){
+            arbol[i][j] = ImageLoader.loadImage("/images/arbustos.png").getSubimage(i*116, j*120, 116, 120);
+            }
         }
 
         playerSp = ImageLoader.loadImage("/images/tec3.png");

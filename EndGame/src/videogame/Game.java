@@ -66,6 +66,8 @@ public class Game implements Runnable {
     Font stats = new Font("ink free", Font.PLAIN, 36);
     Font pregunta = new Font("OCR A Extended", Font.BOLD, 36);
     Font respuesta = new Font("Edwardian Script ITC", Font.BOLD, 36);
+    
+    private obstacle[] obs; 
 
     /**
      * to create title, width and height and set the game is still not running
@@ -88,6 +90,9 @@ public class Game implements Runnable {
         life = 5;
         score = 0;
         MG = false;
+        obs = new obstacle[10];
+        
+        
     }
 
     /**
@@ -155,6 +160,10 @@ public class Game implements Runnable {
         }
         // Se crea el botón que se utilizará para entrar a los minijuegos
         boton = new Entrar(getWidth() - 125, getHeight() - 100, 125, 100, this);
+        for(int i = 0; i < 10; i++){
+            obstacle obst = new obstacle(50*i,100,50,50,this);
+            obs[i] = obst;
+        }
 
         display.getJframe().addKeyListener(keyManager);
         display.getJframe().addMouseListener(mouseManager);
@@ -242,6 +251,7 @@ public class Game implements Runnable {
             //Aquí se activa cada tick del juego cuando no está pausado
             if (!getKeyManager().pause) {
                 if (!MG) {
+                    
                     contEnter--;
                     intersectando = false;
                     for (int i = 0; i < cantEdif; i++) {
@@ -286,6 +296,7 @@ public class Game implements Runnable {
                 if (getKeyManager().enter && contEnter <= 0 || contIntro <= 0) {
                     inicio = true;
                     contEnter = 30;
+                    Assets.music.play();
                 }
             } else {
                 if (getKeyManager().enter) {
@@ -425,6 +436,9 @@ public class Game implements Runnable {
             if (inicio) {
                 if (!MG) {
                     map.render(g);
+                    for(int i = 0; i < 10; i++){
+                        obs[i].render(g);
+                    }
                     player.render(g);
                     for (int i = 0; i < cantEdif; i++) {
                         edificios.get(i).render(g);
