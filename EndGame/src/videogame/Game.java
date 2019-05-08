@@ -6,6 +6,7 @@
 package videogame;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.image.BufferStrategy;
@@ -60,6 +61,11 @@ public class Game implements Runnable {
     private int contIntro;
     private int contEnter;
     boolean[] intersectar = new boolean[4];
+
+    Font vida = new Font("Bank Gothic", Font.BOLD, 36);
+    Font stats = new Font("ink free", Font.PLAIN, 36);
+    Font pregunta = new Font("OCR A Extended", Font.BOLD, 36);
+    Font respuesta = new Font("Edwardian Script ITC", Font.BOLD, 36);
 
     /**
      * to create title, width and height and set the game is still not running
@@ -140,7 +146,7 @@ public class Game implements Runnable {
 
         Assets.init();
         // Se crea el jugador
-        player = new Player(0, 300, -20, 50, 50, this);
+        player = new Player(0, 300, -20, 34, 54, this);
         // Se crea el mapa para que se pueda desplazar la vista
         map = new Mapa(0, -225, getHeight() * 3, getWidth() * 3, this);
         // Se crea cada uno de los edificios
@@ -148,7 +154,7 @@ public class Game implements Runnable {
             edificios.add(new Edificio(posEdifX[i], posEdifY[i], edifWidth[i], edifHeight[i], this, i));
         }
         // Se crea el botón que se utilizará para entrar a los minijuegos
-        boton = new Entrar(0, 0, 250, 200, this);
+        boton = new Entrar(getWidth() - 125, getHeight() - 100, 125, 100, this);
 
         display.getJframe().addKeyListener(keyManager);
         display.getJframe().addMouseListener(mouseManager);
@@ -349,7 +355,6 @@ public class Game implements Runnable {
         for (int i = 0; i < cantEdif; i++) {
             dato = fileIn.readLine();
             dato = fileIn.readLine();
-            System.out.println(dato);
             posEdifX[i] = (Integer.parseInt(dato));
             dato = fileIn.readLine();
             posEdifY[i] = (Integer.parseInt(dato));
@@ -425,13 +430,6 @@ public class Game implements Runnable {
                         edificios.get(i).render(g);
                     }
                     boton.render(g);
-                    g.setColor(Color.yellow);
-                    g.drawString("Vidas: " + life, 5, 20);
-                    g.setColor(Color.red);
-                    g.drawString("Player X: " + (player.getX() - map.getX()), 5, 30);
-                    g.drawString("Player y: " + (player.getY() - 225 - map.getY()), 5, 40);
-                    g.drawString("map X: " + map.getX(), 5, 50);
-                    g.drawString("map y: " + map.getY(), 5, 60);
 
                     if (life <= 0) {
                         g.drawImage(Assets.end, (getWidth() / 2) - 450, (getHeight() / 2) - 150, 900, 300, null);
@@ -439,9 +437,18 @@ public class Game implements Runnable {
                     if (getKeyManager().pause) {
                         g.drawImage(Assets.pause, 0, 0, getWidth(), getHeight(), null);
                     }
+                    g.setColor(new Color(0, 0, 102));
 
-                    //Para imprimir la puntuación del jugador
+                    g.setFont(pregunta);
+
+                    g.drawString("Vidas: " + life, 5, 40);
                     g.drawString("Score: " + score, 5, 80);//falta formato
+                    g.setColor(Color.red);
+                    g.setFont(stats);
+                    /*g.drawString("Player X: " + (player.getX() - map.getX()), 5, 30);
+                    g.drawString("Player y: " + (player.getY() - 225 - map.getY()), 5, 40);
+                    g.drawString("map X: " + map.getX(), 5, 50);
+                    g.drawString("map y: " + map.getY(), 5, 60);*/
 
                 } else {
                     minigame.render(g);

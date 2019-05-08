@@ -71,11 +71,11 @@ public class Entrar extends Button {
      */
     public void render(Graphics g) {
         if (isVisible) {
-            if (!clicked()) {
+            /*if (!clicked()) {*/
                 g.drawImage(Assets.boton, getX(), getY(), getWidth(), getHeight(), null);
-            } else {
+            /*} else {
                 g.drawImage(Assets.botonC, getX(), getY(), getWidth(), getHeight(), null);
-            }
+            }*/
         }
     }
 }

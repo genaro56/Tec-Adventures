@@ -11,9 +11,11 @@ import java.awt.GridLayout;
 import java.awt.image.BufferStrategy;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -262,10 +264,10 @@ public class MiniGame /*implements Runnable */ {
             
             //cuando se presiona una respuesta resalta dependiendo de si es correcta o incorrecta
             if (acierta) {
-                g.drawImage(Assets.correcta, 350, selected * 150, 100, 50, null);
+                g.drawImage(Assets.correcta,respuestas[selected].getX()-25 , selected * 150, respuestas[selected].getWidth()+ 50, 50, null);
             }
             if (falla) {
-                g.drawImage(Assets.incorrecta, 350, selected * 150, 100, 50, null);
+                g.drawImage(Assets.incorrecta, respuestas[selected].getX()-25, selected * 150, respuestas[selected].getWidth()+ 50, 50, null);
             }
             
             // se imprime las respuestas
@@ -294,7 +296,7 @@ public class MiniGame /*implements Runnable */ {
     public void leeArchivo(String archivo) throws IOException {
         BufferedReader fileIn;
         try {
-            fileIn = new BufferedReader(new FileReader(archivo));
+            fileIn = new BufferedReader(new InputStreamReader(new FileInputStream(archivo), "ISO-8859-1"));
         } catch (FileNotFoundException e) {
             File puntos = new File(archivo);
             PrintWriter fileOut = new PrintWriter(puntos);
@@ -307,7 +309,7 @@ public class MiniGame /*implements Runnable */ {
             fileOut.println("Respuesta 4");
             fileOut.println(1);}            
             fileOut.close();
-            fileIn = new BufferedReader(new FileReader(archivo));
+            fileIn = new BufferedReader(new InputStreamReader(new FileInputStream(archivo), "ISO-8859-1"));
         }
         String dato = fileIn.readLine();
         cantQuestion = (Integer.parseInt(dato));
