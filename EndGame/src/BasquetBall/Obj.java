@@ -152,7 +152,7 @@ public class Obj extends Item{
         if (getY() + 20 >= game.getHeight()) {
             basket.setLife(basket.getLife() - 1);            
             count = 100;
-            setX(game.getWidth()/2 - 10);
+            setX(game.getWidth()/2 - 25);
             setY(game.getHeight() - 100); 
             setDirX(0);
             setDirY(0);
@@ -165,7 +165,7 @@ public class Obj extends Item{
         if (getX() <= 0){
             dirX = 1;
         }
-        if (getX() + 20 >= game.getWidth()){
+        if (getX() + 50 >= game.getWidth()){
             dirX = -1;
         }
         

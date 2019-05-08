@@ -12,9 +12,7 @@ import java.awt.Graphics;
  * @author jesus
  */
 public class pasto extends Obj{
-<<<<<<< HEAD
-    public pasto(int x, int y, int width, int height, Game game) {
-=======
+
     /**
      * To create x, y, width, height, game and edN variables
      * 
@@ -23,10 +21,8 @@ public class pasto extends Obj{
      * @param width
      * @param height
      * @param game
-     * @param edN 
      */
-    public pasto(int x, int y, int width, int height, Game game, /*String name*/ int edN) {
->>>>>>> a4daf64746ce1645513147357fd0aedda2310cd3
+    public pasto(int x, int y, int width, int height, Game game) {
         super(x, y,width,height,game);
     }
     /**

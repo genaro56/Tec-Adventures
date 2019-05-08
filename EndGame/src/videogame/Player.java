@@ -12,20 +12,8 @@ import java.awt.Rectangle;
  *
  * @author jesus
  */
-public class Player extends Item {
+public class Player extends Item {   
 
-<<<<<<< HEAD
-    private int direction;         //
-    private int width;             //
-    private int height;            //
-    private Game game;             //
-    private Animation playerAr;    //
-    private Animation playerAb;    //
-    private Animation playerDe;    //
-    private Animation playerIz;    //
-    private boolean caminaPasto;
-    private boolean move;
-=======
     private int direction;         // item direction
     private int width;             //  item width
     private int height;            //  item height
@@ -34,7 +22,10 @@ public class Player extends Item {
     private Animation playerAb;    // playerAb animation var
     private Animation playerDe;    // playerDe animation var
     private Animation playerIz;    // playerIz animation var
->>>>>>> a4daf64746ce1645513147357fd0aedda2310cd3
+    
+     private boolean caminaPasto;
+    private boolean move;
+
 
     /**
      * To create x, y, direction, width, height and game variables
@@ -106,16 +97,10 @@ public class Player extends Item {
     public void setHeight(int height) {
         this.height = height;
     }
-<<<<<<< HEAD
 
     public void setCaminaPasto(boolean caminaPasto) {
         this.caminaPasto = caminaPasto;
     }
-    
-    
-
-=======
->>>>>>> a4daf64746ce1645513147357fd0aedda2310cd3
     /**
      * To get PlayerAb
      * @return an <code>int</code> with the value of PlayerAb
@@ -169,7 +154,7 @@ public class Player extends Item {
         }
         if(move){
             if(caminaPasto){
-                Assets.camina.play();                
+             //   Assets.camina.play();                
             }
            /* else{
                 Assets.camina.stop();
@@ -215,6 +200,6 @@ public class Player extends Item {
             g.drawImage(playerDe.getCurrentFrame(), getX(), getY(), getWidth(), getHeight(), null);
         } else {
             g.drawImage(Assets.player, getX(), getY(), getWidth(), getHeight(), null);
-        }
+        }   
     }
 }

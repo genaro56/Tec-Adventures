@@ -125,59 +125,72 @@ public class Game implements Runnable {
     public int getHeight() {
         return height;
     }
+
     /**
      * To set the MG
-     * @param MG 
+     *
+     * @param MG
      */
     public void setMG(boolean MG) {
         this.MG = MG;
     }
+
     /**
      * To get the score of the Game
-     * 
+     *
      * an <code>int</code> value with the Score
-     * @return 
+     *
+     * @return
      */
     public int getScore() {
         return score;
     }
+
     /**
      * To set the value of the score
-     * @param score 
+     *
+     * @param score
      */
     public void setScore(int score) {
         this.score = score;
     }
+
     /**
      * To set the value of the ContEnter
-     * @param contEnter 
+     *
+     * @param contEnter
      */
     public void setContEnter(int contEnter) {
         this.contEnter = contEnter;
     }
+
     /**
      * To get the value of the ContEnter
-     * 
+     *
      * an <code>int</code> value with the ContEnter
-     * @return 
+     *
+     * @return
      */
     public int getContEnter() {
         return contEnter;
     }
+
     /**
      * To set the value of the startMinigame
-     * @param i 
+     *
+     * @param i
      */
     public void startMinigame(int i) {
         type = i;
-        if(i == 10){
+        if (i == 14) {
             startBasquetball();
-        }else{
+        } else {
             minigame = new MiniGame(this, i, width, height);
         }
-            setMG(true);
-        
+        setMG(true);
+
     }
+
     /**
      * initializing the basket variable
      */
@@ -262,19 +275,21 @@ public class Game implements Runnable {
         }
         stop();
     }
+
     /**
      * To get the value of KeyManager
-     * 
+     *
      * @return an  <code>KeyManager</code> value with the Key Manager
      */
     public KeyManager getKeyManager() {
         return keyManager;
     }
+
     /**
      * TO get the value of the Mouse Manager
-     * 
-     * 
-     * @return <code>MouseManager</code> value with the MouseManager 
+     *
+     *
+     * @return <code>MouseManager</code> value with the MouseManager
      */
     public MouseManager getMouseManager() {
         return mouseManager;
@@ -283,6 +298,17 @@ public class Game implements Runnable {
     private void tick() {
         keyManager.tick();
         if (inicio) {
+            mute--;
+            if (getKeyManager().mute && mute <= 0) {
+                if (!muted) {
+                    Assets.music.stop();
+                } else {
+                    Assets.music.play();
+                    Assets.music.setLooping(true);
+                }
+                muted = !muted;
+                mute = 30;
+            }
 
             //Estos son las llamadas a los métodos para 
             //guardar cargar y reiniciar
@@ -317,11 +343,11 @@ public class Game implements Runnable {
                 if (!MG) {
                     mute--;
                     if (getKeyManager().mute && mute <= 0) {
-                        if(!muted){
-                            Assets.music.stop();                            
-                        }
-                        else{
+                        if (!muted) {
+                            Assets.music.stop();
+                        } else {
                             Assets.music.play();
+                            Assets.music.setLooping(true);
                         }
                         muted = !muted;
                         mute = 30;
@@ -367,12 +393,12 @@ public class Game implements Runnable {
                     }
                     player.setCaminaPasto(false);
                     for (int i = 0; i < cantPasto; i++) {
-                        if(pastos[i].intersecta(player)){
-                            player.setCaminaPasto(true);                            
+                        if (pastos[i].intersecta(player)) {
+                            player.setCaminaPasto(true);
                         }
                     }
-                    if(caminaPasto){
-                        
+                    if (caminaPasto) {
+
                     }
                     if (intersectando) {
                         boton.tick();
@@ -386,9 +412,9 @@ public class Game implements Runnable {
                         stop();
                     }
                 } else {
-                    if(type == 10){
+                    if (type == 14) {
                         basket.tick();
-                    }else{
+                    } else {
                         minigame.tick();
                     }
                 }
@@ -401,6 +427,7 @@ public class Game implements Runnable {
                     inicio = true;
                     contEnter = 30;
                     Assets.music.play();
+                    Assets.music.setLooping(true);
                 }
             } else {
                 if (getKeyManager().enter) {
@@ -439,21 +466,22 @@ public class Game implements Runnable {
                 for (int i = 0; i < cantEdif; i++) {
                     edificios.get(i).tick();
                 }
-                for(int i = 0; i < cantObs; i++){
+                for (int i = 0; i < cantObs; i++) {
                     obs[i].tick();
                 }
-                for(int i = 0; i < cantPasto; i++){
+                for (int i = 0; i < cantPasto; i++) {
                     pastos[i].tick();
                 }
             }
         }
     }
+
     /**
-     * Funcion que permite leer los archivos  
+     * Funcion que permite leer los archivos
      *
      * @param archivo
      * @param base
-     * @throws IOException 
+     * @throws IOException
      */
     public void leeArchivo(String archivo, boolean base) throws IOException {
         BufferedReader fileIn;
@@ -513,11 +541,12 @@ public class Game implements Runnable {
 
         fileIn.close();
     }
+
     /**
      * Funcion que permite grabar los archivos
-     * 
+     *
      * @param archivo
-     * @throws IOException 
+     * @throws IOException
      */
     public void grabaArchivo(String archivo) throws IOException {
         PrintWriter fileOut = new PrintWriter(new FileWriter(archivo));
@@ -541,11 +570,12 @@ public class Game implements Runnable {
 
         fileOut.close();
     }
+
     /**
      * Funcion que permite cargar los obstaculos del mapa
-     * 
+     *
      * @param archivo
-     * @throws IOException 
+     * @throws IOException
      */
     public void cargaObstaculos(String archivo) throws IOException {
         BufferedReader fileIn;
@@ -569,41 +599,40 @@ public class Game implements Runnable {
         int x;
         int y;
         int n = (Integer.parseInt(dato));
-        if(archivo == "obstaculos"){
+        if (archivo == "obstaculos") {
             cantObs = n;
             obs = new obstacle[cantObs];
-        }
-        else if( archivo == "pasto"){
+        } else if (archivo == "pasto") {
             cantPasto = n;
             pastos = new pasto[cantPasto];
-            
-        }   
+
+        }
         for (int i = 0; i < n; i++) {
             dato = fileIn.readLine();
             dato = fileIn.readLine();
-            x =(Integer.parseInt(dato));
+            x = (Integer.parseInt(dato));
             dato = fileIn.readLine();
-            y = (Integer.parseInt(dato)); 
-            
-            if(archivo == "obstaculos"){
-                obstacle obst = new obstacle(x,y,this);
-            obs[i] = obst;
-        }
-        else if( archivo == "pasto"){
-            int w, h;
-            dato = fileIn.readLine();
-            w =(Integer.parseInt(dato));
-            dato = fileIn.readLine();
-            System.out.println(dato);
-            h = (Integer.parseInt(dato));
-            pasto pasto = new pasto(x,y,w,h,this);            
-                    pastos[i] = pasto;
-        }
+            y = (Integer.parseInt(dato));
+
+            if (archivo == "obstaculos") {
+                obstacle obst = new obstacle(x, y, this);
+                obs[i] = obst;
+            } else if (archivo == "pasto") {
+                int w, h;
+                dato = fileIn.readLine();
+                w = (Integer.parseInt(dato));
+                dato = fileIn.readLine();
+                System.out.println(dato);
+                h = (Integer.parseInt(dato));
+                pasto pasto = new pasto(x, y, w, h, this);
+                pastos[i] = pasto;
+            }
 
         }
 
         fileIn.close();
     }
+
     /**
      * Aqui se hace el render general del juego
      */
@@ -626,11 +655,11 @@ public class Game implements Runnable {
                 if (!MG) {
 
                     map.render(g);
-                    for(int i = 0; i < cantObs; i++){
+                    for (int i = 0; i < cantObs; i++) {
                         obs[i].render(g);
                     }
                     player.render(g);
-                    
+
                     for (int i = 0; i < cantEdif; i++) {
                         edificios.get(i).render(g);
                     }
@@ -649,19 +678,19 @@ public class Game implements Runnable {
 
                     g.setFont(pregunta);
 
-                    g.drawString("Vidas: " + life, 5, 40);
-                    g.drawString("Score: " + score, 5, 80);//falta formato
-                    g.setColor(Color.red);
+                    g.drawString("Vidas: " + life, 5, 80);
+                    g.drawString("Score: " + score, 5, 120);//falta formato
+                    /*g.setColor(Color.red);
                     g.setFont(stats);
                     g.drawString("Player X: " + (player.getX() - map.getX()), getWidth() - 250, 30);
-                    g.drawString("Player y: " + (player.getY()-450 - map.getY()), getWidth() - 250, 60);
+                    g.drawString("Player y: " + (player.getY() - 450 - map.getY()), getWidth() - 250, 60);
                     g.drawString("map X: " + map.getX(), getWidth() - 250, 90);
-                    g.drawString("map y: " + map.getY(), getWidth() - 250, 120);
+                    g.drawString("map y: " + map.getY(), getWidth() - 250, 120);*/
 
                 } else {
-                    if(type == 10){
+                    if (type == 14) {
                         basket.render(g);
-                    }else{
+                    } else {
                         minigame.render(g);
                     }
                 }
