@@ -26,6 +26,7 @@ public class KeyManager implements KeyListener {
     public boolean exit;         // flag to load game
     public boolean enter;
     public boolean sig;
+    public boolean mute;
     
     
     public boolean shot;
@@ -83,6 +84,6 @@ public class KeyManager implements KeyListener {
         exit = keys[KeyEvent.VK_ESCAPE];
         enter = keys[KeyEvent.VK_ENTER];
         sig = keys[KeyEvent.VK_SPACE];
-        
+        mute = keys[KeyEvent.VK_M];
     }
 }

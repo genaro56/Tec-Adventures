@@ -81,7 +81,7 @@ public class Assets {
         }
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++){
-            arbol[i][j] = ImageLoader.loadImage("/images/arbustos.png").getSubimage(i*116, j*120, 116, 120);
+            arbol[i][j] = ImageLoader.loadImage("/images/arbustos.png").getSubimage(i*116, j*120, 116, 110);
             }
         }
 

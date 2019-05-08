@@ -68,6 +68,7 @@ public class Game implements Runnable {
     Font respuesta = new Font("Edwardian Script ITC", Font.BOLD, 36);
     
     private obstacle[] obs; 
+    private int cantObs;
 
     /**
      * to create title, width and height and set the game is still not running
@@ -161,8 +162,13 @@ public class Game implements Runnable {
         // Se crea el botón que se utilizará para entrar a los minijuegos
         boton = new Entrar(getWidth() - 125, getHeight() - 100, 125, 100, this);
         for(int i = 0; i < 10; i++){
-            obstacle obst = new obstacle(50*i,100,50,50,this);
+            obstacle obst = new obstacle(0,0,25,25,this);
             obs[i] = obst;
+        }
+        try {
+            cargaObstaculos("obstaculos");
+        } catch (IOException ex) {
+            System.out.println("Error en " + ex.toString());
         }
 
         display.getJframe().addKeyListener(keyManager);
@@ -251,7 +257,9 @@ public class Game implements Runnable {
             //Aquí se activa cada tick del juego cuando no está pausado
             if (!getKeyManager().pause) {
                 if (!MG) {
-                    
+                    if(getKeyManager().mute){
+                        Assets.music.stop();
+                    }
                     contEnter--;
                     intersectando = false;
                     for (int i = 0; i < cantEdif; i++) {
@@ -259,6 +267,26 @@ public class Game implements Runnable {
                         if (edif.intersecta(player)) {
                             boton.setEdificioNo(i);
                             intersectar = edif.intersectar(player);
+                            if (intersectar[3]) {
+                                player.setX(player.getX() - 3);
+                            }
+                            if (intersectar[2]) {
+                                player.setX(player.getX() + 3);
+                            }
+                            if (intersectar[1]) {
+                                player.setY(player.getY() + 3);
+                            }
+                            if (intersectar[0]) {
+                                player.setY(player.getY() - 3);
+                            }
+                            intersectando = true;
+                        }
+                    }
+                    for (int i = 0; i < 10; i++) {
+                        
+                        if (obs[i].intersecta(player)) {
+                            boton.setEdificioNo(i);
+                            intersectar = obs[i].intersectar(player);
                             if (intersectar[3]) {
                                 player.setX(player.getX() - 3);
                             }
@@ -334,6 +362,9 @@ public class Game implements Runnable {
                 map.tick();
                 for (int i = 0; i < cantEdif; i++) {
                     edificios.get(i).tick();
+                }
+                for(int i = 0; i < 10; i++){
+                    obs[i].tick();
                 }
             }
         }
@@ -417,6 +448,40 @@ public class Game implements Runnable {
 
         fileOut.close();
     }
+    
+    public void cargaObstaculos(String archivo) throws IOException {
+        BufferedReader fileIn;
+        try {
+            fileIn = new BufferedReader(new FileReader(archivo));
+        } catch (FileNotFoundException e) {
+            File puntos = new File(archivo);
+            PrintWriter fileOut = new PrintWriter(puntos);
+            fileOut.println("1");
+            fileOut.println("0");
+            fileOut.println("0");
+            fileOut.close();
+            fileIn = new BufferedReader(new FileReader(archivo));
+
+        }
+        String dato = fileIn.readLine();
+        System.out.println(dato);
+        dato = fileIn.readLine();
+        System.out.println(dato);
+        cantObs = (Integer.parseInt(dato));
+        for (int i = 0; i < cantObs; i++) {
+            dato = fileIn.readLine();
+            dato = fileIn.readLine();
+            System.out.println(dato);
+            obs[i].setX(Integer.parseInt(dato));
+            System.out.println(obs[i].getX());
+            dato = fileIn.readLine();
+            System.out.println(dato);
+            obs[i].setY(Integer.parseInt(dato));            
+            System.out.println(obs[i].getY());
+        }
+
+        fileIn.close();
+    }
 
     private void render() {
         // get the buffer strategy from the display
@@ -435,6 +500,7 @@ public class Game implements Runnable {
             //g.drawImage(Assets.background, 0, 0, width, height, null);
             if (inicio) {
                 if (!MG) {
+                    
                     map.render(g);
                     for(int i = 0; i < 10; i++){
                         obs[i].render(g);
@@ -459,10 +525,10 @@ public class Game implements Runnable {
                     g.drawString("Score: " + score, 5, 80);//falta formato
                     g.setColor(Color.red);
                     g.setFont(stats);
-                    /*g.drawString("Player X: " + (player.getX() - map.getX()), 5, 30);
-                    g.drawString("Player y: " + (player.getY() - 225 - map.getY()), 5, 40);
-                    g.drawString("map X: " + map.getX(), 5, 50);
-                    g.drawString("map y: " + map.getY(), 5, 60);*/
+                    g.drawString("Player X: " + (player.getX() - map.getX()), getWidth()-250, 30);
+                    g.drawString("Player y: " + (player.getY() - 225 - map.getY()), getWidth()-250, 60);
+                    g.drawString("map X: " + map.getX(), getWidth()-250, 90);
+                    g.drawString("map y: " + map.getY(), getWidth()-250, 120);
 
                 } else {
                     minigame.render(g);
