@@ -41,20 +41,20 @@ public class MiniGame /*implements Runnable */ {
     //private int life;                                  // to manage the lifes 
     /// Los tamaños de los areglos pueden variar dependiendo de
     // la cantidade de preguntas
-    private String[] pregunta = new String[6];         // para guardar todas las preguntas del edifico
+    private String[] pregunta = new String[30];         // para guardar todas las preguntas del edifico
     // la cantidad de respuestas por pregunta
-    private String[][] respuesta = new String[6][5];   // para guardar todas las respuestas de cada pregunta
+    private String[][] respuesta = new String[30][30];   // para guardar todas las respuestas de cada pregunta
     private int level;                                 // para controlar en qué número de pregunta se encuentra
-    private Respuesta[] respuestas = new Respuesta[5]; // para crear todas las repuestas
-    private int[] res = new int[6];                    // para almacenar el numero de la respuesta correcta de cada pregunta
+    private Respuesta[] respuestas = new Respuesta[30]; // para crear todas las repuestas
+    private int[] res = new int[30];                    // para almacenar el numero de la respuesta correcta de cada pregunta
     private int selected;                              // para identificar qué respuesta está seleccionada
     private int counter;                               // para crear retrasos en los tiempos
     private boolean finish;                            // para verificar si ya se terminó el minijuego
     private int contExit;
     private int cantQuestion;
     // Vamos  usarlas para que se desplieguen preguntas y respuestas en orden aleatorio
-    private int[] questionOrder = new int[6];                       // para guardar el orden de las preguntas
-    private int[] answerOrder = new int[5];                         // para guardar el orden de las respuestas
+    private int[] questionOrder = new int[30];                       // para guardar el orden de las preguntas
+    private int[] answerOrder = new int[30];                         // para guardar el orden de las respuestas
 
 
     /**

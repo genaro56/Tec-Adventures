@@ -5,6 +5,7 @@
  */
 package videogame;
 
+//import basquetball.Gameplay;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -20,6 +21,8 @@ import java.io.PrintWriter;
 import java.util.LinkedList;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import BasquetBall.BasketBall;
+import javax.swing.JFrame;
 
 /**
  *
@@ -66,9 +69,12 @@ public class Game implements Runnable {
     Font stats = new Font("ink free", Font.PLAIN, 36);
     Font pregunta = new Font("OCR A Extended", Font.BOLD, 36);
     Font respuesta = new Font("Edwardian Script ITC", Font.BOLD, 36);
-    
-    private obstacle[] obs; 
+
+    private obstacle[] obs;
     private int cantObs;
+    private int corriendo;
+    private BasketBall basket;
+    private int type;
 
     /**
      * to create title, width and height and set the game is still not running
@@ -92,8 +98,8 @@ public class Game implements Runnable {
         score = 0;
         MG = false;
         obs = new obstacle[10];
-        
-        
+        corriendo = 0;
+
     }
 
     /**
@@ -135,7 +141,18 @@ public class Game implements Runnable {
     }
 
     public void startMinigame(int i) {
-        minigame = new MiniGame(this, i, width, height);
+        type = i;
+        if(i == 10){
+            startBasquetball();
+        }else{
+            minigame = new MiniGame(this, i, width, height);
+        }
+            setMG(true);
+        
+    }
+
+    public void startBasquetball() {
+        basket = new BasketBall(this);
     }
 
     /**
@@ -161,7 +178,7 @@ public class Game implements Runnable {
         }
         // Se crea el botón que se utilizará para entrar a los minijuegos
         boton = new Entrar(getWidth() - 125, getHeight() - 100, 125, 100, this);
-        
+
         try {
             cargaObstaculos("obstaculos");
         } catch (IOException ex) {
@@ -254,7 +271,7 @@ public class Game implements Runnable {
             //Aquí se activa cada tick del juego cuando no está pausado
             if (!getKeyManager().pause) {
                 if (!MG) {
-                    if(getKeyManager().mute){
+                    if (getKeyManager().mute) {
                         Assets.music.stop();
                     }
                     contEnter--;
@@ -280,9 +297,7 @@ public class Game implements Runnable {
                         }
                     }
                     for (int i = 0; i < cantObs; i++) {
-                        
                         if (obs[i].intersecta(player)) {
-                            boton.setEdificioNo(i);
                             intersectar = obs[i].intersectar(player);
                             if (intersectar[3]) {
                                 player.setX(player.getX() - 3);
@@ -296,7 +311,6 @@ public class Game implements Runnable {
                             if (intersectar[0]) {
                                 player.setY(player.getY() - 3);
                             }
-                            intersectando = true;
                         }
                     }
                     if (intersectando) {
@@ -311,7 +325,11 @@ public class Game implements Runnable {
                         stop();
                     }
                 } else {
-                    minigame.tick();
+                    if(type == 10){
+                        basket.tick();
+                    }else{
+                        minigame.tick();
+                    }
                 }
             }
         } else {
@@ -445,7 +463,7 @@ public class Game implements Runnable {
 
         fileOut.close();
     }
-    
+
     public void cargaObstaculos(String archivo) throws IOException {
         BufferedReader fileIn;
         try {
@@ -478,6 +496,7 @@ public class Game implements Runnable {
             y = (Integer.parseInt(dato)); 
             obstacle obst = new obstacle(x,y,this);
             obs[i] = obst;
+
         }
 
         fileIn.close();
@@ -500,9 +519,10 @@ public class Game implements Runnable {
             //g.drawImage(Assets.background, 0, 0, width, height, null);
             if (inicio) {
                 if (!MG) {
-                    
+
                     map.render(g);
                     for(int i = 0; i < cantObs; i++){
+
                         obs[i].render(g);
                     }
                     player.render(g);
@@ -525,13 +545,17 @@ public class Game implements Runnable {
                     g.drawString("Score: " + score, 5, 80);//falta formato
                     g.setColor(Color.red);
                     g.setFont(stats);
-                    g.drawString("Player X: " + (player.getX() - map.getX()), getWidth()-250, 30);
-                    g.drawString("Player y: " + (player.getY() - 225 - map.getY()), getWidth()-250, 60);
-                    g.drawString("map X: " + map.getX(), getWidth()-250, 90);
-                    g.drawString("map y: " + map.getY(), getWidth()-250, 120);
+                    g.drawString("Player X: " + (player.getX() - map.getX()), getWidth() - 250, 30);
+                    g.drawString("Player y: " + (player.getY() - 225 - map.getY()), getWidth() - 250, 60);
+                    g.drawString("map X: " + map.getX(), getWidth() - 250, 90);
+                    g.drawString("map y: " + map.getY(), getWidth() - 250, 120);
 
                 } else {
-                    minigame.render(g);
+                    if(type == 10){
+                        basket.render(g);
+                    }else{
+                        minigame.render(g);
+                    }
                 }
             } else {
                 // Hacer que parpadee la imagen del menu
