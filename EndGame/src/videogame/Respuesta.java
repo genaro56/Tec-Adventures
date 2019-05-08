@@ -13,16 +13,18 @@ import java.awt.Graphics;
  */
 public class Respuesta extends Button {
 
+    private int orderNumber;
     private int number;
     private String respuesta;
     private boolean correct;
     private MiniGame minigame;
 
-    public Respuesta(int x, int y, int width, int height, String respuesta, int number, int correct, Game game, MiniGame minigame) {
+    public Respuesta(int x, int y, int width, int height, String respuesta, int number, int correct,int orderNumber, Game game, MiniGame minigame) {
         super(x, y, width, height, game);
 
         this.respuesta = respuesta;
         this.minigame = minigame;
+        this.orderNumber = orderNumber;
         this.number = number;
         if (number == correct) { // verifica si es el numero de la respuesta correcta
             this.correct = true;
@@ -34,8 +36,8 @@ public class Respuesta extends Button {
     public void tick() {
         // moving player depending on flags
         if (clicked()) {
-            minigame.setAcierta(correct, number); // se verifica si es la respuesta correcta
-            minigame.setFalla(!correct, number);
+            minigame.setAcierta(correct, orderNumber); // se verifica si es la respuesta correcta
+            minigame.setFalla(!correct, orderNumber);
             minigame.setCounter(30); // se inicia el conter del minigame
 
         }

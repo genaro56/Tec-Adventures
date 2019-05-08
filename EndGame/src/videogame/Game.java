@@ -121,11 +121,10 @@ public class Game implements Runnable {
     public int getContEnter() {
         return contEnter;
     }
-    public void startMinigame(int i){
+
+    public void startMinigame(int i) {
         minigame = new MiniGame(this, i, width, height);
     }
-    
-    
 
     /**
      * initializing the display window of the game
@@ -143,7 +142,7 @@ public class Game implements Runnable {
         // Se crea el jugador
         player = new Player(0, 300, -20, 50, 50, this);
         // Se crea el mapa para que se pueda desplazar la vista
-        map = new Mapa(0, -225, getHeight()*3, getWidth()*3, this);
+        map = new Mapa(0, -225, getHeight() * 3, getWidth() * 3, this);
         // Se crea cada uno de los edificios
         for (int i = 0; i < cantEdif; i++) {
             edificios.add(new Edificio(posEdifX[i], posEdifY[i], edifWidth[i], edifHeight[i], this, i));
@@ -237,47 +236,33 @@ public class Game implements Runnable {
             //Aquí se activa cada tick del juego cuando no está pausado
             if (!getKeyManager().pause) {
                 if (!MG) {
-                    
                     contEnter--;
                     intersectando = false;
-                    /*for(int i = 0; i < 4; i++){
-                        intersectar[i] = false;
-                    }*/
                     for (int i = 0; i < cantEdif; i++) {
                         Edificio edif = edificios.get(i);
                         if (edif.intersecta(player)) {
-                            //minigame = new MiniGame(this, i, width, height);
                             boton.setEdificioNo(i);
-                            //boolean[] intersectar = new boolean[4];
                             intersectar = edif.intersectar(player);
-                            /*player.setColisionD(intersectar[0]);
-                            player.setColisionU(intersectar[1]);
-                            player.setColisionL(intersectar[2]);
-                            player.setColisionR(intersectar[3]);*/
-                            if(intersectar[3])
-                                player.setX(player.getX()-3);
-                            if(intersectar[2])
-                                player.setX(player.getX()+3);
-                            if(intersectar[1])
-                                player.setY(player.getY()+3);
-                            if(intersectar[0])
-                                player.setY(player.getY()-3);
-                            //player.setColision(true);
+                            if (intersectar[3]) {
+                                player.setX(player.getX() - 3);
+                            }
+                            if (intersectar[2]) {
+                                player.setX(player.getX() + 3);
+                            }
+                            if (intersectar[1]) {
+                                player.setY(player.getY() + 3);
+                            }
+                            if (intersectar[0]) {
+                                player.setY(player.getY() - 3);
+                            }
                             intersectando = true;
-                            /*boton.tick();
-                            boton.setIsVisible(intersectando);*/
-
-                        }}
-                            /*player.setColisionD(intersectar[0]);
-                            player.setColisionU(intersectar[1]);
-                            player.setColisionL(intersectar[2]);
-                            player.setColisionR(intersectar[3]);*/
-                        if (intersectando) {
-                            boton.tick();                            
                         }
-                        //player.setColision(intersectando);
-                        boton.setIsVisible(intersectando);
-                    
+                    }
+                    if (intersectando) {
+                        boton.tick();
+                    }
+                    boton.setIsVisible(intersectando);
+
                     move(getKeyManager());
                     // Esto podría funcionar solo si usamos enemigos
                     // y lo anterior se usaría para los enemigos
@@ -290,14 +275,14 @@ public class Game implements Runnable {
             }
         } else {
             contIntro--;
-            if (intro){
+            if (intro) {
                 contEnter--;
-            if (getKeyManager().enter && contEnter <= 0 || contIntro <= 0){
-                inicio = true;
-                contEnter = 30;
-            }
-            }else {
-                if (getKeyManager().enter){
+                if (getKeyManager().enter && contEnter <= 0 || contIntro <= 0) {
+                    inicio = true;
+                    contEnter = 30;
+                }
+            } else {
+                if (getKeyManager().enter) {
                     intro = true;
                     contIntro = 1200;
                     contEnter = 30;
@@ -444,7 +429,7 @@ public class Game implements Runnable {
                     g.drawString("Vidas: " + life, 5, 20);
                     g.setColor(Color.red);
                     g.drawString("Player X: " + (player.getX() - map.getX()), 5, 30);
-                    g.drawString("Player y: " + (player.getY()-225 - map.getY()), 5, 40);
+                    g.drawString("Player y: " + (player.getY() - 225 - map.getY()), 5, 40);
                     g.drawString("map X: " + map.getX(), 5, 50);
                     g.drawString("map y: " + map.getY(), 5, 60);
 

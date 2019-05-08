@@ -50,6 +50,10 @@ public class MiniGame /*implements Runnable */ {
     private boolean finish;                            // para verificar si ya se terminó el minijuego
     private int contExit;
     private int cantQuestion;
+    // Vamos  usarlas para que se desplieguen preguntas y respuestas en orden aleatorio
+    private int[] questionOrder = new int[6];                       // para guardar el orden de las preguntas
+    private int[] answerOrder = new int[5];                         // para guardar el orden de las respuestas
+
 
     /**
      * to create title, width and height and set the game is still not running
@@ -71,6 +75,22 @@ public class MiniGame /*implements Runnable */ {
         contExit = 30;
         selected = 1; // comienza en la primer respuesta
         counter = 30; // se inicia con un retraso por si se accedió con un enter
+        
+        for (int i = 1; i < 6; i++) { // se crea el orden aleatorio de las preguntas
+            boolean no;
+            int iNum;
+            do{// se crea valor aleatorio
+                no =  false;
+            iNum = (int)(Math.random()* 5+1);
+            for(int j = 1; j < 5; j++){ // se verifica que no esté la pegunta
+                if(iNum == questionOrder[j]){                    
+                    no = true;
+                }
+            }
+            }while(no);
+            questionOrder[i] = iNum;// se guarda el numero de pregunta
+        }
+
         // aquí lee el achivo dependiendo del número del edificio
         try {
             leeArchivo("edificio" + number);
@@ -193,7 +213,7 @@ public class MiniGame /*implements Runnable */ {
                     // para seleccionar la respuesta
                     // podríamos usar espacio también
                     if (game.getKeyManager().enter || game.getKeyManager().sig) { //usamos enter
-                        setAcierta(selected == res[level], selected); //verificamos si es correcta o no
+                        setAcierta(answerOrder[selected] == res[questionOrder[level]], selected); //verificamos si es correcta o no
                         setFalla(!acierta, selected);
                         counter = 30;
                     }
@@ -225,14 +245,14 @@ public class MiniGame /*implements Runnable */ {
             //se despliegan las imágenes normales
             
             //el fondo para la pregunta y la pregunta
-            int longitud =  pregunta[level].length()*6;
+            int longitud =  pregunta[questionOrder[level]].length()*6;
             //System.out.println(longitud);
             /*g.drawImage(Assets.pregunta, game.getWidth()/2-longitud*4, 50, longitud * 8, 100, null);
             g.setColor(Color.white);
             g.drawString(pregunta[level], game.getWidth()/2-(int)(longitud*2.5), 100);*/
             g.drawImage(Assets.pregunta, (game.getWidth()-longitud)/2 -35, 50, longitud+70, 75, null);
             g.setColor(Color.white);
-            g.drawString(pregunta[level], (game.getWidth()-longitud)/2+10, 90);
+            g.drawString(pregunta[questionOrder[level]], (game.getWidth()-longitud)/2+10, 90);
 
             for (int i = 1; i < 5; i++) {//los fondos de las respuestas
                 g.drawImage(Assets.respuesta, respuestas[i].getX()-25, i * 150, respuestas[i].getWidth()+ 50, 50, null);
@@ -250,7 +270,7 @@ public class MiniGame /*implements Runnable */ {
             
             // se imprime las respuestas
             for (int i = 1; i < 5; i++) {
-                respuestas[i].render(g);
+                respuestas[answerOrder[i]].render(g);
             }
         } else { // se despliega una imagen si ya terminaron las preguntas
             if (acierta) {
@@ -278,13 +298,14 @@ public class MiniGame /*implements Runnable */ {
         } catch (FileNotFoundException e) {
             File puntos = new File(archivo);
             PrintWriter fileOut = new PrintWriter(puntos);
-            fileOut.println(1);
+            fileOut.println(5);
+            for(int i = 0; i <5; i++){
             fileOut.println("Pregunta de prueba");
             fileOut.println("Respuesta 1");
             fileOut.println("Respuesta 2");
             fileOut.println("Respuesta 3");
             fileOut.println("Respuesta 4");
-            fileOut.println(1);            
+            fileOut.println(1);}            
             fileOut.close();
             fileIn = new BufferedReader(new FileReader(archivo));
         }
@@ -308,11 +329,40 @@ public class MiniGame /*implements Runnable */ {
      *
      */
     public void iniciaRespuestas() {
+        //int iNum = (int)(Math.random()* 4+1);
+        System.out.println("hola");
+        for(int j = 1; j < 5; j++){// se limpia el arreglo en cada nivel
+            answerOrder[j] = 0;
+        }
+        for (int i = 1; i < 5; i++) {
+            //respuestas[i] = new Respuesta(350, i * 150, respuesta[level][i], i, res[level], game, this);
+            boolean no;
+            int iNum;
+            do{// se crea el orden aleatorio
+                no =  false;
+            iNum = (int)(Math.random()* 4+1);
+            for(int j = 1; j < i; j++){//se verifica que no se haya insertado la respuestas
+                if(iNum == answerOrder[j]){                    
+                    no = true;
+                }
+            }
+            }while(no);
+            answerOrder[i] = iNum; //se inicia el arreglo del orden de respuestas
+            // se inician las respuestas
+            int x= (int)respuesta[questionOrder[level]][iNum].length()*6;
+            respuestas[i] = new Respuesta((width-x)/2, i * 150,x,50, respuesta[questionOrder[level]][iNum], iNum, res[questionOrder[level]],i, game, this);
+            
+            //System.out.println(i + ": " +  res[level]);
+        }
+    }
+
+    /*public void iniciaRespuestas() {
         for (int i = 1; i < 5; i++) {
             int x= (int)respuesta[level][i].length()*6;
             respuestas[i] = new Respuesta((width-x)/2, i * 150, x, 50 , respuesta[level][i], i, res[level], game, this);
             System.out.println(i + ": " +  (int)respuesta[level][i].length());
         }
-    }
+        
+    }*/
 
 }

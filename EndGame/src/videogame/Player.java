@@ -30,13 +30,13 @@ public class Player extends Item {
     private Animation playerIz;    //
 
     /**
-     * 
+     *
      * @param x
      * @param y
      * @param direction
      * @param width
      * @param height
-     * @param game 
+     * @param game
      */
     public Player(int x, int y, int direction, int width, int height, Game game) {
         super(x, y);
@@ -52,56 +52,56 @@ public class Player extends Item {
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public int getDirection() {
         return direction;
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public int getWidth() {
         return width;
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public int getHeight() {
         return height;
     }
 
     /**
-     * 
-     * @param direction 
+     *
+     * @param direction
      */
     public void setDirection(int direction) {
         this.direction = direction;
     }
 
     /**
-     * 
-     * @param width 
+     *
+     * @param width
      */
     public void setWidth(int width) {
         this.width = width;
     }
 
     /**
-     * 
-     * @param height 
+     *
+     * @param height
      */
     public void setHeight(int height) {
         this.height = height;
     }
 
     /**
-     * 
-     * @param colision 
+     *
+     * @param colision
      */
     public void setColision(boolean colision) {
         this.colision = colision;
@@ -126,11 +126,10 @@ public class Player extends Item {
         //System.out.println("colisionU: "+colisionU);
         this.colisionU = colisionU;
     }
-    
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public Animation getPlayerAb() {
         return playerAb;
@@ -141,16 +140,16 @@ public class Player extends Item {
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public Animation getPlayerDe() {
         return playerDe;
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public Animation getPlayerIz() {
         return playerIz;
@@ -158,7 +157,6 @@ public class Player extends Item {
 
     @Override
     public void tick() {
-        System.out.println("U: "+colisionU+", D: "+colisionD+" L: "+colisionL+" R: "+colisionR);
         if (game.getKeyManager().up) {
             if (!colisionU) {
                 setY(getY() - 3);
@@ -197,8 +195,8 @@ public class Player extends Item {
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public Rectangle getPerimetro() {
         return new Rectangle(getX(), getY(), getWidth(), getHeight());
