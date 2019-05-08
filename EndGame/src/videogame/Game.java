@@ -42,6 +42,7 @@ public class Game implements Runnable {
     /* Solo si si inlcuimos enemigos
     //private Enemy asteroid;                   // to have an enemy*/
     private Mapa map;                           // to move the map
+    private Mapa arboles;                           // to move the map
     private KeyManager keyManager;              // to manage the keyboard
     private MouseManager mouseManager;          // to manage the mouse
     private int life;                           // to manage the lifes 
@@ -214,7 +215,8 @@ public class Game implements Runnable {
         // Se crea el jugador
         player = new Player(0, 300, -20, 34, 54, this);
         // Se crea el mapa para que se pueda desplazar la vista
-        map = new Mapa(0, -450, getHeight() * 3, getWidth() * 3, this);
+        map = new Mapa(0, -450, getHeight() * 3, getWidth() * 3, this,0);
+        arboles = new Mapa(0, -450, getHeight() * 3, getWidth() * 3, this,1);
         // Se crea cada uno de los edificios
         for (int i = 0; i < cantEdif; i++) {
             edificios.add(new Edificio(posEdifX[i], posEdifY[i], edifWidth[i], edifHeight[i], this, i));
@@ -463,6 +465,7 @@ public class Game implements Runnable {
 
             } else {
                 map.tick();
+                arboles.tick();
                 for (int i = 0; i < cantEdif; i++) {
                     edificios.get(i).tick();
                 }
@@ -659,7 +662,7 @@ public class Game implements Runnable {
                         obs[i].render(g);
                     }
                     player.render(g);
-
+                    arboles.render(g);
                     for (int i = 0; i < cantEdif; i++) {
                         edificios.get(i).render(g);
                     }
@@ -677,15 +680,23 @@ public class Game implements Runnable {
                     g.setColor(new Color(0, 0, 102));
 
                     g.setFont(pregunta);
+                    g.drawImage(Assets.tabla, 5, 40,200,100,null);
+                    for(int i = 0; i < 10; i++){
+                        for(int j = 0; j < 20; j++){
+                            g.drawImage(Assets.arbol, 1317+(i*25), 1317+(j*50),50,100,null);
+                        }
+                    }
 
                     g.drawString("Vidas: " + life, 5, 80);
                     g.drawString("Score: " + score, 5, 120);//falta formato
-                    /*g.setColor(Color.red);
+                    g.setColor(Color.red);
                     g.setFont(stats);
                     g.drawString("Player X: " + (player.getX() - map.getX()), getWidth() - 250, 30);
                     g.drawString("Player y: " + (player.getY() - 450 - map.getY()), getWidth() - 250, 60);
                     g.drawString("map X: " + map.getX(), getWidth() - 250, 90);
-                    g.drawString("map y: " + map.getY(), getWidth() - 250, 120);*/
+                    g.drawString("map y: " + map.getY(), getWidth() - 250, 120);
+                    
+                    
 
                 } else {
                     if (type == 14) {
@@ -693,6 +704,7 @@ public class Game implements Runnable {
                     } else {
                         minigame.render(g);
                     }
+                    
                 }
             } else {
                 // Hacer que parpadee la imagen del menu

@@ -23,7 +23,7 @@ public class Assets {
     //public static BufferedImage asteroid;     // to store the player image
     //public static BufferedImage colision;     // to store the player image
     //public static BufferedImage explotion;    // to store the player image
-    public static BufferedImage map;          // to store the player image
+    public static BufferedImage[] map;          // to store the player image
     /* Lo podemos usar para introducir los sonidos
     //public static SoundClip bomb;             // to store the sound*/
     public static SoundClip music;             // to store the sound
@@ -46,8 +46,9 @@ public class Assets {
     public static BufferedImage intro;         //
     public static BufferedImage intro2;        //
     public static BufferedImage[] edificios;  // to store buildings's images
-    public static BufferedImage[][] arbol;
-    //public int cantEdif;         
+    public static BufferedImage arbol;
+    public static BufferedImage tabla;
+    public static BufferedImage arboles;
 
     /**
      * initializing the images of the game
@@ -57,7 +58,7 @@ public class Assets {
         player = ImageLoader.loadImage("/images/prot.png").getSubimage(15, 10, 34, 54);
 
         end = ImageLoader.loadImage("/images/GameOver.png");
-        map = ImageLoader.loadImage("/images/Map.png");
+        
         boton = ImageLoader.loadImage("/images/enterButton.jpg");
         //botonC = ImageLoader.loadImage("/images/botonC.png");
         pause = ImageLoader.loadImage("/images/menupausa.png");
@@ -74,18 +75,20 @@ public class Assets {
         menu2 = ImageLoader.loadImage("/images/menu2.jpeg");
         intro = ImageLoader.loadImage("/images/intro.png");
         intro2 = ImageLoader.loadImage("/images/intro2.png");
+        tabla = ImageLoader.loadImage("/images/tabla.png");
         edificios = new BufferedImage[30];
-        arbol = new BufferedImage[5][5];
+        map = new BufferedImage[2];
+        
+        map[0] = ImageLoader.loadImage("/images/Map.png");
+        map[1] = ImageLoader.loadImage("/images/Arbolitos.png");
+        
 
         for (int i = 0; i < 30; i++) {
             edificios[i] = ImageLoader.loadImage("/images/Edificios/edificio_" + i + ".png");
             System.out.println("exito" + i);
         }
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++){
-            arbol[i][j] = ImageLoader.loadImage("/images/arbustos.png").getSubimage(i*116, j*120, 116, 110);
-            }
-        }
+        arbol= ImageLoader.loadImage("/images/Arbol.png");
+        arboles= ImageLoader.loadImage("/images/Arbolitos.png");
 
         playerSp = ImageLoader.loadImage("/images/tec3.png");
 ;

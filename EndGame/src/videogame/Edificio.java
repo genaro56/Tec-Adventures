@@ -25,8 +25,12 @@ public class Edificio extends Obj {
      * @param game
      * @param edN 
      */
-    public Edificio(int x, int y, int width, int height, Game game, /*String name*/ int edN) {
-        super(x, y,width,height,game);
+    public Edificio(int x, int y, int width, int height, Game game,int edN) {
+        
+            super(x, y,width,height,game);            
+        if(edN == 15){
+            setY(getY()+100);
+        }
         this.edN = edN;
     }
     /**
@@ -35,6 +39,10 @@ public class Edificio extends Obj {
      */
     @Override
     public void render(Graphics g) {
-        g.drawImage(Assets.edificios[edN], getX(), getY(), getWidth(), getHeight(), null); 
+        if(edN == 15){
+            g.drawImage(Assets.edificios[edN], getX(), getY()-100, getWidth(), getHeight(), null);
+        } 
+        else
+            g.drawImage(Assets.edificios[edN], getX(), getY(), getWidth(), getHeight(), null);
     }
 }

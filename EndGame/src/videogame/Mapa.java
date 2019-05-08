@@ -17,6 +17,7 @@ public class Mapa  extends Item{
     private int width;         // Mapa width
     private int height;        // Mapa height
     private Game game;         // game variable
+    private int mN;
     /**
      * To create x, y, width, height and game variables
      * 
@@ -26,11 +27,12 @@ public class Mapa  extends Item{
      * @param height
      * @param game 
      */
-    public Mapa(int x, int y, int width, int height, Game game) {
+    public Mapa(int x, int y, int width, int height, Game game, int mN) {
         super(x, y);
         this.width = width;
         this.height = height;
         this.game = game;
+        this.mN = mN;
     }
     /**
      * To get the width 
@@ -86,6 +88,6 @@ public class Mapa  extends Item{
      */
     @Override
     public void render(Graphics g) {
-        g.drawImage(Assets.map, getX(), getY(), getWidth(), getHeight(), null);        
+        g.drawImage(Assets.map[mN], getX(), getY(), getWidth(), getHeight(), null);        
     }
 }

@@ -22,7 +22,7 @@ public class obstacle  extends Obj{
      * @param game 
      */
     public obstacle(int x, int y, Game game) {
-        super(x, y,25,25,game);
+        super(x, y,50,100,game);
         iNum = (int)(Math.random()* 5);
         jNum = (int)(Math.random()* 5);
     }
@@ -33,7 +33,7 @@ public class obstacle  extends Obj{
      */
     @Override
     public void render(Graphics g) {
-        g.drawImage(Assets.arbol[iNum][jNum], getX(), getY(), getWidth(), getHeight(), null);         
+        g.drawImage(Assets.arbol, getX(), getY(), getWidth(), getHeight(), null);         
     }
     
 }
