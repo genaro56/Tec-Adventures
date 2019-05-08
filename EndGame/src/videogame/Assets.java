@@ -27,6 +27,7 @@ public class Assets {
     /* Lo podemos usar para introducir los sonidos
     //public static SoundClip bomb;             // to store the sound*/
     public static SoundClip music;             // to store the sound
+    public static SoundClip camina;             // to store the sound
     public static BufferedImage end;          // to store the end image    
     public static BufferedImage boton;        // to store the button image 
     public static BufferedImage botonC;       // to store the button image
@@ -61,6 +62,7 @@ public class Assets {
         //botonC = ImageLoader.loadImage("/images/botonC.png");
         pause = ImageLoader.loadImage("/images/menupausa.png");
         music = new SoundClip("/audio/reptilia.wav");
+        camina = new SoundClip("/audio/camina.wav");
         respuesta = ImageLoader.loadImage("/images/respuesta.png");
         pregunta = ImageLoader.loadImage("/images/pregunta.png");
         correcta = ImageLoader.loadImage("/images/correcta.png");

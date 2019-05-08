@@ -22,6 +22,8 @@ public class Player extends Item {
     private Animation playerAb;    //
     private Animation playerDe;    //
     private Animation playerIz;    //
+    private boolean caminaPasto;
+    private boolean move;
 
     /**
      *
@@ -42,6 +44,7 @@ public class Player extends Item {
         this.playerAb = new Animation(Assets.playerAb, 100);
         this.playerDe = new Animation(Assets.playerDe, 100);
         this.playerIz = new Animation(Assets.playerIz, 100);
+        caminaPasto = false;
     }
 
     /**
@@ -92,6 +95,12 @@ public class Player extends Item {
         this.height = height;
     }
 
+    public void setCaminaPasto(boolean caminaPasto) {
+        this.caminaPasto = caminaPasto;
+    }
+    
+    
+
     /**
      *
      * @return
@@ -122,19 +131,34 @@ public class Player extends Item {
 
     @Override
     public void tick() {
+        move = false;
         if (game.getKeyManager().up) {
             setY(getY() - 3);
+            move = true;
         }
         if (game.getKeyManager().down) {
             setY(getY() + 3);
+            move = true;
         }
         if (game.getKeyManager().left) {
             setX(getX() - 3);
-
+            move = true;
         }
         if (game.getKeyManager().right) {
             setX(getX() + 3);
+            move = true;
         }
+        if(move){
+            if(caminaPasto){
+                Assets.camina.play();                
+            }
+           /* else{
+                Assets.camina.stop();
+            }*/
+        }
+        /*else{
+            Assets.camina.stop();
+        }*/
 
         // reset x position and y position if colision
         if (getX() + getWidth() >= game.getWidth()) {

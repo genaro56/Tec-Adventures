@@ -12,13 +12,13 @@ import java.awt.Graphics;
  * @author jesus
  */
 public class pasto extends Obj{
-    public pasto(int x, int y, int width, int height, Game game, /*String name*/ int edN) {
+    public pasto(int x, int y, int width, int height, Game game) {
         super(x, y,width,height,game);
     }
 
     @Override
     public void render(Graphics g) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        g.drawImage(Assets.boton, getX(), getY(), getWidth(), getHeight(), null);
     }
     
     

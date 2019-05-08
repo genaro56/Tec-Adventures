@@ -77,6 +77,9 @@ public class Game implements Runnable {
     private BasketBall basket;
     private int type;
     private boolean muted;
+    private int cantPasto;
+    private pasto[] pastos;
+    private boolean caminaPasto;
 
     /**
      * to create title, width and height and set the game is still not running
@@ -184,6 +187,11 @@ public class Game implements Runnable {
 
         try {
             cargaObstaculos("obstaculos");
+        } catch (IOException ex) {
+            System.out.println("Error en " + ex.toString());
+        }
+        try {
+            cargaObstaculos("pasto");
         } catch (IOException ex) {
             System.out.println("Error en " + ex.toString());
         }
@@ -324,6 +332,15 @@ public class Game implements Runnable {
                             }
                         }
                     }
+                    player.setCaminaPasto(false);
+                    for (int i = 0; i < cantPasto; i++) {
+                        if(pastos[i].intersecta(player)){
+                            player.setCaminaPasto(true);                            
+                        }
+                    }
+                    if(caminaPasto){
+                        
+                    }
                     if (intersectando) {
                         boton.tick();
                     }
@@ -391,6 +408,9 @@ public class Game implements Runnable {
                 }
                 for(int i = 0; i < cantObs; i++){
                     obs[i].tick();
+                }
+                for(int i = 0; i < cantPasto; i++){
+                    pastos[i].tick();
                 }
             }
         }
@@ -485,7 +505,8 @@ public class Game implements Runnable {
         } catch (FileNotFoundException e) {
             File puntos = new File(archivo);
             PrintWriter fileOut = new PrintWriter(puntos);
-            fileOut.println("1");
+            fileOut.println("Objetos");
+            fileOut.println("1:");
             fileOut.println("0");
             fileOut.println("0");
             fileOut.close();
@@ -498,18 +519,37 @@ public class Game implements Runnable {
         System.out.println(dato);
         int x;
         int y;
-        cantObs = (Integer.parseInt(dato));
-        obs = new obstacle[cantObs];
-        
+        int n = (Integer.parseInt(dato));
+        if(archivo == "obstaculos"){
+            cantObs = n;
+            obs = new obstacle[cantObs];
+        }
+        else if( archivo == "pasto"){
+            cantPasto = n;
+            pastos = new pasto[cantPasto];
             
-        for (int i = 0; i < cantObs; i++) {
+        }   
+        for (int i = 0; i < n; i++) {
             dato = fileIn.readLine();
             dato = fileIn.readLine();
             x =(Integer.parseInt(dato));
             dato = fileIn.readLine();
             y = (Integer.parseInt(dato)); 
-            obstacle obst = new obstacle(x,y,this);
+            
+            if(archivo == "obstaculos"){
+                obstacle obst = new obstacle(x,y,this);
             obs[i] = obst;
+        }
+        else if( archivo == "pasto"){
+            int w, h;
+            dato = fileIn.readLine();
+            w =(Integer.parseInt(dato));
+            dato = fileIn.readLine();
+            System.out.println(dato);
+            h = (Integer.parseInt(dato));
+            pasto pasto = new pasto(x,y,w,h,this);            
+                    pastos[i] = pasto;
+        }
 
         }
 
@@ -543,6 +583,9 @@ public class Game implements Runnable {
                     for (int i = 0; i < cantEdif; i++) {
                         edificios.get(i).render(g);
                     }
+                    /*for(int i = 0; i < cantPasto; i++){
+                        pastos[i].render(g);
+                    }*/
                     boton.render(g);
 
                     if (life <= 0) {
