@@ -82,6 +82,8 @@ public class Game implements Runnable {
     private pasto[] pastos;
     private boolean caminaPasto;
     private int contQ;
+    private static int staticWidth;
+    private static int staticHeight;
 
     /**
      * to create title, width and height and set the game is still not running
@@ -92,8 +94,8 @@ public class Game implements Runnable {
      */
     public Game(String title, int width, int height) {
         this.title = title;
-        this.width = width;
-        this.height = height;
+        this.width = staticWidth = width;
+        this.height = staticHeight = height;
         running = false;
         keyManager = new KeyManager();
         mouseManager = new MouseManager();
