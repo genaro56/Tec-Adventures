@@ -222,14 +222,16 @@ public class Game implements Runnable {
      */
     private void init() {
         display = new Display(title, getWidth(), getHeight());
-        // Se lee el archivo para obetener la cantidad de edificios y sus ubicaciones
+        Assets.init(); 
+        
+        // Se lee el archivo para obetener la cantidad de edificios y sus ubicaciones              
         try {
-            leeArchivo("edificios.txt", true);
+            leeArchivo("../src/Archives/edificios.txt", true);
         } catch (IOException ex) {
             System.out.println("Error en " + ex.toString());
         }
 
-        Assets.init();
+        
         // Se crea el jugador
         player = new Player(0, 300, -20, 34, 54, this);
         // Se crea el mapa para que se pueda desplazar la vista
@@ -248,7 +250,7 @@ public class Game implements Runnable {
             System.out.println("Error en " + ex.toString());
         }*/
         try {
-            cargaObstaculos("pasto");
+            cargaObstaculos("../src/Archives/pasto");
         } catch (IOException ex) {
             System.out.println("Error en " + ex.toString());
         }
@@ -611,7 +613,10 @@ public class Game implements Runnable {
             File puntos = new File(archivo);
             PrintWriter fileOut = new PrintWriter(puntos);
             fileOut.println("Objetos");
+            fileOut.println("1");
             fileOut.println("1:");
+            fileOut.println("0");
+            fileOut.println("0");
             fileOut.println("0");
             fileOut.println("0");
             fileOut.close();
@@ -625,10 +630,10 @@ public class Game implements Runnable {
         int x;
         int y;
         int n = (Integer.parseInt(dato));
-        if (archivo == "obstaculos") {
+        if (archivo == "../src/Archives/obstaculos") {
             cantObs = n;
             obs = new obstacle[cantObs];
-        } else if (archivo == "pasto") {
+        } else if (archivo == "../src/Archives/pasto") {
             cantPasto = n;
             pastos = new pasto[cantPasto];
 
@@ -640,10 +645,10 @@ public class Game implements Runnable {
             dato = fileIn.readLine();
             y = (Integer.parseInt(dato));
 
-            if (archivo == "obstaculos") {
+            if (archivo == "../src/Archives/obstaculos") {
                 obstacle obst = new obstacle(x, y, this);
                 obs[i] = obst;
-            } else if (archivo == "pasto") {
+            } else if (archivo == "../src/Archives/pasto") {
                 int w, h;
                 dato = fileIn.readLine();
                 w = (Integer.parseInt(dato));
