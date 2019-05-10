@@ -75,6 +75,7 @@ public class Entrar extends Button {
         if (isVisible) {
             /*if (!clicked()) {*/
                 g.drawImage(Assets.boton, getX(), getY(), getWidth(), getHeight(), null);
+                g.drawImage(Assets.nombres[edificioNo], getGame().getWidth()-300 , 40,300,100, null);
             /*} else {
                 g.drawImage(Assets.botonC, getX(), getY(), getWidth(), getHeight(), null);
             }*/

@@ -46,6 +46,7 @@ public class Assets {
     public static BufferedImage intro;         //
     public static BufferedImage intro2;        //
     public static BufferedImage[] edificios;  // to store buildings's images
+    public static BufferedImage[] nombres;  // to store buildings's images
     public static BufferedImage arbol;
     public static BufferedImage tabla;
     public static BufferedImage arboles;
@@ -84,6 +85,7 @@ public class Assets {
         intro2 = ImageLoader.loadImage("/Images/intro2.jpg");
         tabla = ImageLoader.loadImage("/Images/tabla.png");
         edificios = new BufferedImage[30];
+        nombres = new BufferedImage[30];
         map = new BufferedImage[2];
 
         map[0] = ImageLoader.loadImage("/Images/Map.png");
@@ -91,6 +93,7 @@ public class Assets {
 
         for (int i = 0; i < 30; i++) {
             edificios[i] = ImageLoader.loadImage("/Images/Edificios/edificio_" + i + ".png");
+            nombres[i] = ImageLoader.loadImage("/Images/nombres/edificio_" + i + ".png");
             background[i] = ImageLoader.loadImage("/Images/fondos/edificio_" + i + ".jpeg");
             System.out.println("exito" + i);
         }
