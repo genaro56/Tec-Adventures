@@ -247,7 +247,7 @@ public class BasketBall {
                         obj.setDirY(1);
                         obj.setDirX(1);
                     }
-                    bloque.setX(getWidth() * -10);
+                    bloque.setX(-1000);
                 }
             }
 
