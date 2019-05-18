@@ -1,3 +1,4 @@
+@@ -1,27 +0,0 @@
 posiciones:
 Mapa: -50 -500
 
@@ -9,7 +10,7 @@ Aulas1[edif1]:
 Aulas2[edif2]: 400 600
 Aulas3[edif3]:
 Aulas4[edif2]:
-Aulas5(BiotecnologÃ­a)[edif5]:
+Aulas5(Biotecnología)[edif5]:
 Aulas6[edif6]:
 Aulas7[edif7]:
 CIAP[edif8]:
@@ -24,4 +25,3 @@ TheFoodBox[edif13]:
 Domo[edif20]:
 Gimnasio[edif21]:
 Pesas[edif22]:
-

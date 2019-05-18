@@ -96,7 +96,7 @@ public class MiniGame /*implements Runnable */ {
 
         // aquí lee el achivo dependiendo del número del edificio
         try {
-            leeArchivo("../src/Archives/edificio" + number);
+            leeArchivo("../src/archives/edificio" + number);
         } catch (IOException ex) {
             System.out.println("Error en " + ex.toString());
         }

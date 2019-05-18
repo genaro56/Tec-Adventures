@@ -82,8 +82,8 @@ public class Game implements Runnable {
     private pasto[] pastos;
     private boolean caminaPasto;
     private int contQ;
-    private static int staticWidth;
-    private static int staticHeight;
+    //private static int staticWidth;
+    //private static int staticHeight;
 
     /**
      * to create title, width and height and set the game is still not running
@@ -94,8 +94,8 @@ public class Game implements Runnable {
      */
     public Game(String title, int width, int height) {
         this.title = title;
-        this.width = staticWidth = width;
-        this.height = staticHeight = height;
+        this.width = /*staticWidth =*/ width;
+        this.height = /*staticHeight =*/ height;
         running = false;
         keyManager = new KeyManager();
         mouseManager = new MouseManager();
@@ -228,7 +228,7 @@ public class Game implements Runnable {
         
         // Se lee el archivo para obetener la cantidad de edificios y sus ubicaciones              
         try {
-            leeArchivo("../src/Archives/edificios.txt", true);
+            leeArchivo("../src/archives/edificios.txt", true);
         } catch (IOException ex) {
             System.out.println("Error en " + ex.toString());
         }
@@ -252,7 +252,7 @@ public class Game implements Runnable {
             System.out.println("Error en " + ex.toString());
         }*/
         try {
-            cargaObstaculos("../src/Archives/pasto");
+            cargaObstaculos("../src/archives/pasto");
         } catch (IOException ex) {
             System.out.println("Error en " + ex.toString());
         }
@@ -319,7 +319,7 @@ public class Game implements Runnable {
         return mouseManager;
     }
 
-    private void tick() {
+    private void tick() {        
         keyManager.tick();
         if (inicio) {
             mute--;
@@ -344,14 +344,14 @@ public class Game implements Runnable {
             if (getKeyManager().guardar) {
                 try {
                     //Graba los valores en el archivo.
-                    grabaArchivo("guardado.txt");
+                    grabaArchivo("../src/archives/guardado.txt");
                 } catch (IOException ex) {
                     System.out.println("Error en " + ex.toString());
                 }
             }
             if (getKeyManager().cargar) {
                 try {
-                    leeArchivo("guardado.txt", false);
+                    leeArchivo("../src/archives/guardado.txt", false);
                 } catch (IOException ex) {
                     System.out.println("Error en " + ex.toString());
                 }
@@ -565,8 +565,10 @@ public class Game implements Runnable {
             score = (Integer.parseInt(dato));
             dato = fileIn.readLine();
             map.setX(Integer.parseInt(dato));
+            arboles.setX(Integer.parseInt(dato));
             dato = fileIn.readLine();
             map.setY(Integer.parseInt(dato));
+            arboles.setY(Integer.parseInt(dato));
         }
 
         fileIn.close();
@@ -632,10 +634,10 @@ public class Game implements Runnable {
         int x;
         int y;
         int n = (Integer.parseInt(dato));
-        if (archivo == "../src/Archives/obstaculos") {
+        if (archivo == "../src/archives/obstaculos") {
             cantObs = n;
             obs = new obstacle[cantObs];
-        } else if (archivo == "../src/Archives/pasto") {
+        } else if (archivo == "../src/archives/pasto") {
             cantPasto = n;
             pastos = new pasto[cantPasto];
 
@@ -647,10 +649,10 @@ public class Game implements Runnable {
             dato = fileIn.readLine();
             y = (Integer.parseInt(dato));
 
-            if (archivo == "../src/Archives/obstaculos") {
+            if (archivo == "../src/archives/obstaculos") {
                 obstacle obst = new obstacle(x, y, this);
                 obs[i] = obst;
-            } else if (archivo == "../src/Archives/pasto") {
+            } else if (archivo == "../src/archives/pasto") {
                 int w, h;
                 dato = fileIn.readLine();
                 w = (Integer.parseInt(dato));
